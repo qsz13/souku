@@ -69,6 +69,8 @@ BOOL hasGotPOI;
     [self.search AMapPlaceSearch:request];
 }
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!坐标会偏移
+
 -(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation
 updatingLocation:(BOOL)updatingLocation
 {

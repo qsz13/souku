@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeViewController : UIViewController
+@interface HomeViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
+@property (strong, nonatomic) UIBarButtonItem *mapButton;
+@property (strong, nonatomic) UIBarButtonItem *refreshButton;
+@property (strong, nonatomic) UIBarButtonItem *searchButton;
+@property (strong, nonatomic) UIBarItem *appLogo;
+@property (strong, nonatomic) UIBarItem *appName;
+@property (strong, nonatomic) UITableView *parkingLotTableView;
+@property (strong, nonatomic) NSArray *parkArray;
 @end
