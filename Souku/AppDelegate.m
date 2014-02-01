@@ -7,13 +7,47 @@
 //
 
 #import "AppDelegate.h"
+#import "APIKey.h"
+#import <MAMapKit/MAMapKit.h>
+#import "HomeViewController.h"
+#import "AroundViewController.h"
+#import "FavouriteViewController.h"
+#import "SettingViewController.h"
 
 @implementation AppDelegate
 
+- (void)configureAPIKey
+{
+    [MAMapServices sharedServices].apiKey = (NSString *)APIKey;
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self configureAPIKey];
+    
+    
+    
+
+    UIViewController *homeViewController = [[HomeViewController alloc] init];
+    UIViewController *aroundViewController = [[AroundViewController alloc] init];
+    UIViewController *favouriteViewController = [[FavouriteViewController alloc] init];
+    UIViewController *settingViewController = [[SettingViewController alloc] init];
+    
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    
+    UINavigationController* homeNavigationController = [[UINavigationController alloc]
+                                                        initWithRootViewController:homeViewController];
+
+    UINavigationController* aroundNavigationController = [[UINavigationController alloc]
+                                             initWithRootViewController:aroundViewController];
+    
+    
+    self.tabBarController.viewControllers = @[homeNavigationController, aroundNavigationController, favouriteViewController, settingViewController];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    self.window.rootViewController = self.tabBarController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

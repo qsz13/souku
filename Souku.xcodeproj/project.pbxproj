@@ -19,6 +19,22 @@
 		353DCA50189D470300D8A6DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA38189D470300D8A6DF /* UIKit.framework */; };
 		353DCA58189D470300D8A6DF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA56189D470300D8A6DF /* InfoPlist.strings */; };
 		353DCA5A189D470300D8A6DF /* SoukuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA59189D470300D8A6DF /* SoukuTests.m */; };
+		353DCA64189D479100D8A6DF /* MAMapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA63189D479100D8A6DF /* MAMapKit.framework */; };
+		353DCA66189D47AB00D8A6DF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA65189D47AB00D8A6DF /* QuartzCore.framework */; };
+		353DCA68189D47B400D8A6DF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA67189D47B400D8A6DF /* CoreLocation.framework */; };
+		353DCA6A189D47BC00D8A6DF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA69189D47BC00D8A6DF /* SystemConfiguration.framework */; };
+		353DCA6C189D47C400D8A6DF /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA6B189D47C400D8A6DF /* CoreTelephony.framework */; };
+		353DCA6E189D47CC00D8A6DF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA6D189D47CC00D8A6DF /* libz.dylib */; };
+		353DCA72189D47DF00D8A6DF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA71189D47DF00D8A6DF /* Security.framework */; };
+		353DCA74189D480100D8A6DF /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA73189D480100D8A6DF /* AMap.bundle */; };
+		353DCA79189D49F200D8A6DF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA78189D49F200D8A6DF /* HomeViewController.m */; };
+		353DCA7B189D4D4A00D8A6DF /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA7A189D4D4A00D8A6DF /* libstdc++.6.0.9.dylib */; };
+		353DCA7E189D4FCB00D8A6DF /* AroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA7D189D4FCB00D8A6DF /* AroundViewController.m */; };
+		353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */; };
+		353DCA84189D4FF000D8A6DF /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA83189D4FF000D8A6DF /* SettingViewController.m */; };
+		353DCA8A189D5D7200D8A6DF /* AroundMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA89189D5D7200D8A6DF /* AroundMapViewController.m */; };
+		353DCA8C189D60C200D8A6DF /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */; };
+		353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA8E189D646C00D8A6DF /* POIAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +64,31 @@
 		353DCA55189D470300D8A6DF /* SoukuTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoukuTests-Info.plist"; sourceTree = "<group>"; };
 		353DCA57189D470300D8A6DF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		353DCA59189D470300D8A6DF /* SoukuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoukuTests.m; sourceTree = "<group>"; };
+		353DCA63189D479100D8A6DF /* MAMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MAMapKit.framework; path = AMap_iOS_API_Lib_V2.1.3/2D/MAMapKit.framework; sourceTree = "<group>"; };
+		353DCA65189D47AB00D8A6DF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		353DCA67189D47B400D8A6DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		353DCA69189D47BC00D8A6DF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		353DCA6B189D47C400D8A6DF /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		353DCA6D189D47CC00D8A6DF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		353DCA6F189D47D600D8A6DF /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		353DCA71189D47DF00D8A6DF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		353DCA73189D480100D8A6DF /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = AMap_iOS_API_Lib_V2.1.3/2D/MAMapKit.framework/Versions/2.1.3/Resources/AMap.bundle; sourceTree = "<group>"; };
+		353DCA76189D486100D8A6DF /* APIKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIKey.h; sourceTree = "<group>"; };
+		353DCA77189D49F200D8A6DF /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		353DCA78189D49F200D8A6DF /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		353DCA7A189D4D4A00D8A6DF /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		353DCA7C189D4FCB00D8A6DF /* AroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AroundViewController.h; sourceTree = "<group>"; };
+		353DCA7D189D4FCB00D8A6DF /* AroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AroundViewController.m; sourceTree = "<group>"; };
+		353DCA7F189D4FE000D8A6DF /* FavouriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavouriteViewController.h; sourceTree = "<group>"; };
+		353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavouriteViewController.m; sourceTree = "<group>"; };
+		353DCA82189D4FF000D8A6DF /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		353DCA83189D4FF000D8A6DF /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		353DCA88189D5D7200D8A6DF /* AroundMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AroundMapViewController.h; sourceTree = "<group>"; };
+		353DCA89189D5D7200D8A6DF /* AroundMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AroundMapViewController.m; sourceTree = "<group>"; };
+		353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AMapSearchKit.framework; path = AMap_iOS_API_Lib_V2.1.3/Search/AMapSearchKit.framework; sourceTree = "<group>"; };
+		353DCA8D189D646C00D8A6DF /* POIAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAnnotation.h; sourceTree = "<group>"; };
+		353DCA8E189D646C00D8A6DF /* POIAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAnnotation.m; sourceTree = "<group>"; };
+		353DCA90189D68D200D8A6DF /* Guangzhou.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Guangzhou.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +96,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				353DCA8C189D60C200D8A6DF /* AMapSearchKit.framework in Frameworks */,
+				353DCA7B189D4D4A00D8A6DF /* libstdc++.6.0.9.dylib in Frameworks */,
+				353DCA72189D47DF00D8A6DF /* Security.framework in Frameworks */,
+				353DCA6E189D47CC00D8A6DF /* libz.dylib in Frameworks */,
+				353DCA6C189D47C400D8A6DF /* CoreTelephony.framework in Frameworks */,
+				353DCA6A189D47BC00D8A6DF /* SystemConfiguration.framework in Frameworks */,
+				353DCA68189D47B400D8A6DF /* CoreLocation.framework in Frameworks */,
+				353DCA66189D47AB00D8A6DF /* QuartzCore.framework in Frameworks */,
+				353DCA64189D479100D8A6DF /* MAMapKit.framework in Frameworks */,
 				353DCA37189D470300D8A6DF /* CoreGraphics.framework in Frameworks */,
 				353DCA39189D470300D8A6DF /* UIKit.framework in Frameworks */,
 				353DCA35189D470300D8A6DF /* Foundation.framework in Frameworks */,
@@ -81,6 +131,7 @@
 				353DCA53189D470300D8A6DF /* SoukuTests */,
 				353DCA33189D470300D8A6DF /* Frameworks */,
 				353DCA32189D470300D8A6DF /* Products */,
+				353DCA73189D480100D8A6DF /* AMap.bundle */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +147,16 @@
 		353DCA33189D470300D8A6DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */,
+				353DCA7A189D4D4A00D8A6DF /* libstdc++.6.0.9.dylib */,
+				353DCA71189D47DF00D8A6DF /* Security.framework */,
+				353DCA6F189D47D600D8A6DF /* libstdc++.dylib */,
+				353DCA6D189D47CC00D8A6DF /* libz.dylib */,
+				353DCA6B189D47C400D8A6DF /* CoreTelephony.framework */,
+				353DCA69189D47BC00D8A6DF /* SystemConfiguration.framework */,
+				353DCA67189D47B400D8A6DF /* CoreLocation.framework */,
+				353DCA65189D47AB00D8A6DF /* QuartzCore.framework */,
+				353DCA63189D479100D8A6DF /* MAMapKit.framework */,
 				353DCA34189D470300D8A6DF /* Foundation.framework */,
 				353DCA36189D470300D8A6DF /* CoreGraphics.framework */,
 				353DCA38189D470300D8A6DF /* UIKit.framework */,
@@ -109,8 +170,22 @@
 			children = (
 				353DCA43189D470300D8A6DF /* AppDelegate.h */,
 				353DCA44189D470300D8A6DF /* AppDelegate.m */,
+				353DCA77189D49F200D8A6DF /* HomeViewController.h */,
+				353DCA78189D49F200D8A6DF /* HomeViewController.m */,
+				353DCA7C189D4FCB00D8A6DF /* AroundViewController.h */,
+				353DCA7D189D4FCB00D8A6DF /* AroundViewController.m */,
+				353DCA88189D5D7200D8A6DF /* AroundMapViewController.h */,
+				353DCA89189D5D7200D8A6DF /* AroundMapViewController.m */,
+				353DCA7F189D4FE000D8A6DF /* FavouriteViewController.h */,
+				353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */,
+				353DCA82189D4FF000D8A6DF /* SettingViewController.h */,
+				353DCA83189D4FF000D8A6DF /* SettingViewController.m */,
 				353DCA46189D470300D8A6DF /* Images.xcassets */,
+				353DCA75189D483D00D8A6DF /* Configuration */,
 				353DCA3B189D470300D8A6DF /* Supporting Files */,
+				353DCA8D189D646C00D8A6DF /* POIAnnotation.h */,
+				353DCA8E189D646C00D8A6DF /* POIAnnotation.m */,
+				353DCA90189D68D200D8A6DF /* Guangzhou.gpx */,
 			);
 			path = Souku;
 			sourceTree = "<group>";
@@ -142,6 +217,14 @@
 				353DCA56189D470300D8A6DF /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		353DCA75189D483D00D8A6DF /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				353DCA76189D486100D8A6DF /* APIKey.h */,
+			);
+			name = Configuration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				353DCA74189D480100D8A6DF /* AMap.bundle in Resources */,
 				353DCA3F189D470300D8A6DF /* InfoPlist.strings in Resources */,
 				353DCA47189D470300D8A6DF /* Images.xcassets in Resources */,
 			);
@@ -240,7 +324,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				353DCA45189D470300D8A6DF /* AppDelegate.m in Sources */,
+				353DCA7E189D4FCB00D8A6DF /* AroundViewController.m in Sources */,
+				353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */,
 				353DCA41189D470300D8A6DF /* main.m in Sources */,
+				353DCA79189D49F200D8A6DF /* HomeViewController.m in Sources */,
+				353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */,
+				353DCA8A189D5D7200D8A6DF /* AroundMapViewController.m in Sources */,
+				353DCA84189D4FF000D8A6DF /* SettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,9 +449,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/danielqiu/Workspace/Souku/AMap_iOS_API_Lib_V2.1.3/2D,
+					/Users/danielqiu/Workspace/Souku/AMap_iOS_API_Lib_V2.1.3/Search,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Souku/Souku-Prefix.pch";
 				INFOPLIST_FILE = "Souku/Souku-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -372,9 +468,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/danielqiu/Workspace/Souku/AMap_iOS_API_Lib_V2.1.3/2D,
+					/Users/danielqiu/Workspace/Souku/AMap_iOS_API_Lib_V2.1.3/Search,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Souku/Souku-Prefix.pch";
 				INFOPLIST_FILE = "Souku/Souku-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
