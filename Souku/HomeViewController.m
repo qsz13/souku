@@ -18,25 +18,37 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"home";
+        self.title = @"主页";
         //self.tabBarItem.image = [UIImage imageNamed:@"homeItem"];
+        self.navigationItem.title = @"";
+        self.mapButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemAction) target:(self) action:@selector(map)];
+        self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemRefresh) target:(self) action:@selector(refresh)];
+        self.searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemSearch) target:(self) action:@selector(search)];
+        
+        self.appLogo = [[UIBarButtonItem alloc] init];
+        [self.appLogo setTitle:@"logo"];
+        self.appName = [[UIBarButtonItem alloc] init];
+        [self.appName setTitle:@"搜库"];
     }
     return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.navigationItem.title = @"";
-    self.mapButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemAction) target:(self) action:@selector(map)];
-    self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemRefresh) target:(self) action:@selector(refresh)];
-    self.searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemSearch) target:(self) action:@selector(search)];
-    self.appLogo = [[UIBarButtonItem alloc] init];
-    [self.appLogo setTitle:@"logo"];
-    self.appName = [[UIBarButtonItem alloc] init];
-    [self.appName setTitle:@"搜库"];
-    //[self.appLogo setImage: [UIImage imageNamed:@"logo"]];
-    NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.mapButton,self.refreshButton,self.searchButton, nil];
-    self.navigationItem.rightBarButtonItems = topRightButtons;
+    if(self.view == self.parkingLotTableView)
+    {
+        NSLog(@"mapButton");
+        NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.mapButton,self.refreshButton,self.searchButton, nil];
+        self.navigationItem.rightBarButtonItems = topRightButtons;
+
+    }
+    else if(self.view == self.mapView)
+    {
+        NSLog(@"listButton");
+        NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.listButton,self.refreshButton,self.searchButton, nil];
+        self.navigationItem.rightBarButtonItems = topRightButtons;
+
+    }
     NSArray *topLeftButtons= @[self.appLogo,self.appName];
     self.navigationItem.leftBarButtonItems = topLeftButtons;
 
@@ -47,10 +59,7 @@
 {
     NSLog(@"change to map");
     if(self.mapView == nil){
-        NSLog(@"create map");
-        self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
-        self.mapView.delegate = self;
-
+        NSLog(@"mapview nil!!!!");
     }
     self.view = self.mapView;
     if(self.listButton ==nil){
@@ -82,6 +91,8 @@
 -(void)search
 {
     NSLog(@"search");
+    
+    
 }
 
 -(void)initTableView
@@ -92,17 +103,36 @@
     self.parkingLotTableView.dataSource = self;
     [self.parkingLotTableView reloadData];
     
-    self.view = self.parkingLotTableView;
+    
 
+}
+
+-(void)initMapView
+{
+    self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
+    self.mapView.delegate = self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self initTableView];
-	// Do any additional setup after loading the view.
+    [self initMapView];
+    self.view = self.parkingLotTableView;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.mapView.showsUserLocation = YES;    //YES 为打开定位，NO为关闭定位
+    [self.mapView setUserTrackingMode: MAUserTrackingModeFollow animated:YES];
+}
+
+-(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation
+updatingLocation:(BOOL)updatingLocation
+{
+    self.currentLocation = userLocation.location;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

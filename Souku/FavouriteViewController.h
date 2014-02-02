@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FavouriteViewController : UIViewController
+@interface FavouriteViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *favouriteTableView;
+@property (nonatomic, strong) NSArray *favouriteItemArray;
 
 @end

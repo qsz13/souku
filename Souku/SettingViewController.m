@@ -18,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"setting";
+        self.title = @"设置";
         //self.tabBarItem.image = [UIImage imageNamed:@"settingItem"];
     }
     return self;

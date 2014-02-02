@@ -18,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"favourite";
+        self.title = @"收藏";
         //self.tabBarItem.image = [UIImage imageNamed:@"favouriteItem"];
     }
     return self;
@@ -27,8 +27,34 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    self.favouriteTableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.favouriteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    self.favouriteTableView.delegate = self;
+    self.favouriteTableView.dataSource = self;
+    [self.favouriteTableView reloadData];
+    
+    self.view = self.favouriteTableView;
+
 }
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.favouriteItemArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"favCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    cell.textLabel.text = [self.favouriteItemArray objectAtIndex:indexPath.row];
+    return cell;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
