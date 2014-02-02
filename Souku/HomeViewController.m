@@ -30,16 +30,48 @@
     self.mapButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemAction) target:(self) action:@selector(map)];
     self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemRefresh) target:(self) action:@selector(refresh)];
     self.searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemSearch) target:(self) action:@selector(search)];
+    self.appLogo = [[UIBarButtonItem alloc] init];
+    [self.appLogo setTitle:@"logo"];
+    self.appName = [[UIBarButtonItem alloc] init];
+    [self.appName setTitle:@"搜库"];
+    //[self.appLogo setImage: [UIImage imageNamed:@"logo"]];
     NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.mapButton,self.refreshButton,self.searchButton, nil];
     self.navigationItem.rightBarButtonItems = topRightButtons;
+    NSArray *topLeftButtons= @[self.appLogo,self.appName];
+    self.navigationItem.leftBarButtonItems = topLeftButtons;
 
 
-    
 }
 
 -(void)map
 {
     NSLog(@"change to map");
+    if(self.mapView == nil){
+        NSLog(@"create map");
+        self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
+        self.mapView.delegate = self;
+
+    }
+    self.view = self.mapView;
+    if(self.listButton ==nil){
+        self.listButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(list)];
+    }
+    NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.listButton,self.refreshButton,self.searchButton, nil];
+    self.navigationItem.rightBarButtonItems = topRightButtons;
+}
+
+-(void)list
+{
+    NSLog(@"list");
+    if(self.mapButton == nil){
+        NSLog(@"mapButton nil!!");
+    }
+    NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.mapButton,self.refreshButton,self.searchButton, nil];
+    self.navigationItem.rightBarButtonItems = topRightButtons;
+    if(self.parkingLotTableView == nil){
+        NSLog(@"parkingLotTableView is nil");
+    }
+    self.view = self.parkingLotTableView;
 }
 
 -(void)refresh

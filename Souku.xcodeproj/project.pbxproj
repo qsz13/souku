@@ -13,7 +13,6 @@
 		353DCA3F189D470300D8A6DF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA3D189D470300D8A6DF /* InfoPlist.strings */; };
 		353DCA41189D470300D8A6DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA40189D470300D8A6DF /* main.m */; };
 		353DCA45189D470300D8A6DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA44189D470300D8A6DF /* AppDelegate.m */; };
-		353DCA47189D470300D8A6DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA46189D470300D8A6DF /* Images.xcassets */; };
 		353DCA4E189D470300D8A6DF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA4D189D470300D8A6DF /* XCTest.framework */; };
 		353DCA4F189D470300D8A6DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA34189D470300D8A6DF /* Foundation.framework */; };
 		353DCA50189D470300D8A6DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA38189D470300D8A6DF /* UIKit.framework */; };
@@ -35,6 +34,7 @@
 		353DCA8A189D5D7200D8A6DF /* AroundMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA89189D5D7200D8A6DF /* AroundMapViewController.m */; };
 		353DCA8C189D60C200D8A6DF /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */; };
 		353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA8E189D646C00D8A6DF /* POIAnnotation.m */; };
+		353DCA92189DFEAB00D8A6DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA91189DFEAB00D8A6DF /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +58,6 @@
 		353DCA42189D470300D8A6DF /* Souku-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Souku-Prefix.pch"; sourceTree = "<group>"; };
 		353DCA43189D470300D8A6DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		353DCA44189D470300D8A6DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		353DCA46189D470300D8A6DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		353DCA4C189D470300D8A6DF /* SoukuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoukuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		353DCA4D189D470300D8A6DF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		353DCA55189D470300D8A6DF /* SoukuTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoukuTests-Info.plist"; sourceTree = "<group>"; };
@@ -89,6 +88,7 @@
 		353DCA8D189D646C00D8A6DF /* POIAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAnnotation.h; sourceTree = "<group>"; };
 		353DCA8E189D646C00D8A6DF /* POIAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAnnotation.m; sourceTree = "<group>"; };
 		353DCA90189D68D200D8A6DF /* Guangzhou.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Guangzhou.gpx; sourceTree = "<group>"; };
+		353DCA91189DFEAB00D8A6DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,7 +180,7 @@
 				353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */,
 				353DCA82189D4FF000D8A6DF /* SettingViewController.h */,
 				353DCA83189D4FF000D8A6DF /* SettingViewController.m */,
-				353DCA46189D470300D8A6DF /* Images.xcassets */,
+				353DCA91189DFEAB00D8A6DF /* Images.xcassets */,
 				353DCA75189D483D00D8A6DF /* Configuration */,
 				353DCA3B189D470300D8A6DF /* Supporting Files */,
 				353DCA8D189D646C00D8A6DF /* POIAnnotation.h */,
@@ -302,9 +302,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				353DCA92189DFEAB00D8A6DF /* Images.xcassets in Resources */,
 				353DCA74189D480100D8A6DF /* AMap.bundle in Resources */,
 				353DCA3F189D470300D8A6DF /* InfoPlist.strings in Resources */,
-				353DCA47189D470300D8A6DF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
