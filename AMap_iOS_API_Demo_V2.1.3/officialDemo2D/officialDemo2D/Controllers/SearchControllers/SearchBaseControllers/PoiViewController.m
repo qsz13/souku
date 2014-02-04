@@ -243,7 +243,7 @@
     {
         self.searchType = AMapSearchType_PlaceID;
     }
-    
+
     return self;
 }
 

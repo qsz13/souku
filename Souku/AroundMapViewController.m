@@ -15,6 +15,9 @@
 @implementation AroundMapViewController
 
 @synthesize currentLocation;
+@synthesize poiAnnotations;
+@synthesize poiAnnotationView;
+
 BOOL hasGotPOI;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -27,18 +30,87 @@ BOOL hasGotPOI;
     return self;
 }
 
--(void)viewWillAppear:(BOOL)animated
+
+- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    [super viewWillAppear: animated];
-    self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
-    self.mapView.delegate = self;
-    [self.view addSubview:self.mapView];
+    id<MAAnnotation> annotation = view.annotation;
+    
+    if ([annotation isKindOfClass:[POIAnnotation class]])
+    {
+        POIAnnotation *poiAnnotation = (POIAnnotation*)annotation;
+        
+        LocationDetailViewController *detail = [[LocationDetailViewController alloc] init];
+        detail.poi = poiAnnotation.poi;
+        
+        /* 进入POI详情页面. */
+        [self.navigationController pushViewController:detail animated:YES];
+    }
 }
 
+- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
+{
+   
+    if ([annotation isKindOfClass:[POIAnnotation class]])
+    {
+        //NSLog(@"!!!!!");
+        static NSString *poiIdentifier = @"poiIdentifier";
+        poiAnnotationView = (MAPinAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:poiIdentifier];
+        if (poiAnnotationView == nil)
+        {
+            poiAnnotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:poiIdentifier];
+            
+            poiAnnotationView.canShowCallout = YES;
+            
+            poiAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            
+        }
+        
+        return poiAnnotationView;
+    }
+    
+    return nil;
+}
+
+
+
+- (void)initBaseNavigationBar
+{
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:self
+                                                                            action:@selector(returnAction)];
+}
+
+- (void)returnAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self clearMapView];
+    
+    [self clearSearch];
+}
+- (void)clearMapView
+{
+    self.mapView.showsUserLocation = NO;
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    
+    [self.mapView removeOverlays:self.mapView.overlays];
+    
+    self.mapView.delegate = nil;
+}
+
+- (void)clearSearch
+{
+    self.search.delegate = nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
+    self.mapView.delegate = self;
+    [self.view addSubview:self.mapView];
+    [self initBaseNavigationBar];
 	// Do any additional setup after loading the view.
 }
 
@@ -51,6 +123,8 @@ BOOL hasGotPOI;
 
 - (void)searchPoiByCenterCoordinate
 {
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    NSLog(@"search!!!!!!!!\n\n");
     AMapPlaceSearchRequest *request = [[AMapPlaceSearchRequest alloc] init];
     
     request.searchType          = AMapSearchType_PlaceAround;
@@ -103,7 +177,7 @@ updatingLocation:(BOOL)updatingLocation
         return;
     }
     
-    NSMutableArray *poiAnnotations = [NSMutableArray arrayWithCapacity:response.pois.count];
+    poiAnnotations = [NSMutableArray arrayWithCapacity:response.pois.count];
     
     [response.pois enumerateObjectsUsingBlock:^(AMapPOI *obj, NSUInteger idx, BOOL *stop) {
         
@@ -126,6 +200,40 @@ updatingLocation:(BOOL)updatingLocation
     }
 }
 
+
+-(void) showAnnotations
+{
+    
+    /* 将结果以annotation的形式加载到地图上. */
+    [self.mapView addAnnotations:poiAnnotations];
+    
+    /* 如果只有一个结果，设置其为中心点. */
+    if (poiAnnotations.count == 1)
+    {
+        self.mapView.centerCoordinate = [poiAnnotations[0] coordinate];
+    }
+    /* 如果有多个结果, 设置地图使所有的annotation都可见. */
+    else
+    {
+        [self.mapView showAnnotations:poiAnnotations animated:YES];
+    }
+
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -134,7 +242,7 @@ updatingLocation:(BOOL)updatingLocation
 
 -(void)mapView:(MAMapView*)mapView didFailToLocateUserWithError:(NSError*)error
 {
-    NSLog(@"get location failed");
+    NSLog(@"qsz:get location failed");
 }
 
 @end

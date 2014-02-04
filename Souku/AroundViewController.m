@@ -15,7 +15,6 @@
 @implementation AroundViewController
 
 @synthesize aroundItem;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -70,6 +69,8 @@
     AroundMapViewController *aroundMapViewController = [[AroundMapViewController alloc] init];
     aroundMapViewController.searchKey = [self.aroundItem objectAtIndex:indexPath.row];
     aroundMapViewController.hidesBottomBarWhenPushed = YES;
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.selected = NO;
     [[self navigationController] pushViewController:aroundMapViewController animated:YES];
 
 }

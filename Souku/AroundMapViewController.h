@@ -11,6 +11,7 @@
 #import <AMapSearchKit/AMapSearchAPI.h>
 #import "APIKey.h"
 #import "POIAnnotation.h"
+#import "LocationDetailViewController.h"
 
 @interface AroundMapViewController : UIViewController<MAMapViewDelegate, AMapSearchDelegate>
 
@@ -18,6 +19,6 @@
 @property (nonatomic, strong) AMapSearchAPI *search;  
 @property (strong, nonatomic) NSString *searchKey;
 @property (strong, nonatomic) CLLocation *currentLocation;
-
-
+@property (strong, nonatomic) NSMutableArray *poiAnnotations;
+@property (strong, nonatomic) MAPinAnnotationView *poiAnnotationView;
 @end

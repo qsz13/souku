@@ -35,6 +35,7 @@
 		353DCA8C189D60C200D8A6DF /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */; };
 		353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA8E189D646C00D8A6DF /* POIAnnotation.m */; };
 		353DCA92189DFEAB00D8A6DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA91189DFEAB00D8A6DF /* Images.xcassets */; };
+		35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AF0940189F573000642587 /* LocationDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,8 @@
 		353DCA8E189D646C00D8A6DF /* POIAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAnnotation.m; sourceTree = "<group>"; };
 		353DCA90189D68D200D8A6DF /* Guangzhou.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Guangzhou.gpx; sourceTree = "<group>"; };
 		353DCA91189DFEAB00D8A6DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		35AF093F189F573000642587 /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
+		35AF0940189F573000642587 /* LocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,9 +151,9 @@
 			isa = PBXGroup;
 			children = (
 				353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */,
-				353DCA7A189D4D4A00D8A6DF /* libstdc++.6.0.9.dylib */,
 				353DCA71189D47DF00D8A6DF /* Security.framework */,
 				353DCA6F189D47D600D8A6DF /* libstdc++.dylib */,
+				353DCA7A189D4D4A00D8A6DF /* libstdc++.6.0.9.dylib */,
 				353DCA6D189D47CC00D8A6DF /* libz.dylib */,
 				353DCA6B189D47C400D8A6DF /* CoreTelephony.framework */,
 				353DCA69189D47BC00D8A6DF /* SystemConfiguration.framework */,
@@ -180,11 +183,13 @@
 				353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */,
 				353DCA82189D4FF000D8A6DF /* SettingViewController.h */,
 				353DCA83189D4FF000D8A6DF /* SettingViewController.m */,
+				35AF093F189F573000642587 /* LocationDetailViewController.h */,
+				35AF0940189F573000642587 /* LocationDetailViewController.m */,
+				353DCA8D189D646C00D8A6DF /* POIAnnotation.h */,
+				353DCA8E189D646C00D8A6DF /* POIAnnotation.m */,
 				353DCA91189DFEAB00D8A6DF /* Images.xcassets */,
 				353DCA75189D483D00D8A6DF /* Configuration */,
 				353DCA3B189D470300D8A6DF /* Supporting Files */,
-				353DCA8D189D646C00D8A6DF /* POIAnnotation.h */,
-				353DCA8E189D646C00D8A6DF /* POIAnnotation.m */,
 				353DCA90189D68D200D8A6DF /* Guangzhou.gpx */,
 			);
 			path = Souku;
@@ -326,6 +331,7 @@
 				353DCA45189D470300D8A6DF /* AppDelegate.m in Sources */,
 				353DCA7E189D4FCB00D8A6DF /* AroundViewController.m in Sources */,
 				353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */,
+				35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */,
 				353DCA41189D470300D8A6DF /* main.m in Sources */,
 				353DCA79189D49F200D8A6DF /* HomeViewController.m in Sources */,
 				353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */,
@@ -543,6 +549,7 @@
 				353DCA5F189D470300D8A6DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		353DCA60189D470300D8A6DF /* Build configuration list for PBXNativeTarget "SoukuTests" */ = {
 			isa = XCConfigurationList;
@@ -551,6 +558,7 @@
 				353DCA62189D470300D8A6DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
