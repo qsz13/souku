@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3505596518A12480002519E0 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3505596418A12480002519E0 /* NavigationViewController.m */; };
 		353DCA35189D470300D8A6DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA34189D470300D8A6DF /* Foundation.framework */; };
 		353DCA37189D470300D8A6DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA36189D470300D8A6DF /* CoreGraphics.framework */; };
 		353DCA39189D470300D8A6DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA38189D470300D8A6DF /* UIKit.framework */; };
@@ -35,6 +36,7 @@
 		353DCA8C189D60C200D8A6DF /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */; };
 		353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA8E189D646C00D8A6DF /* POIAnnotation.m */; };
 		353DCA92189DFEAB00D8A6DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA91189DFEAB00D8A6DF /* Images.xcassets */; };
+		3561939E18A0E60400030B11 /* LocationDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3561939D18A0E60400030B11 /* LocationDetail.xib */; };
 		35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AF0940189F573000642587 /* LocationDetailViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3505596318A12480002519E0 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
+		3505596418A12480002519E0 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		353DCA31189D470300D8A6DF /* Souku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Souku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		353DCA34189D470300D8A6DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		353DCA36189D470300D8A6DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -90,6 +94,7 @@
 		353DCA8E189D646C00D8A6DF /* POIAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAnnotation.m; sourceTree = "<group>"; };
 		353DCA90189D68D200D8A6DF /* Guangzhou.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Guangzhou.gpx; sourceTree = "<group>"; };
 		353DCA91189DFEAB00D8A6DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3561939D18A0E60400030B11 /* LocationDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationDetail.xib; sourceTree = "<group>"; };
 		35AF093F189F573000642587 /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
 		35AF0940189F573000642587 /* LocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,10 +192,13 @@
 				35AF0940189F573000642587 /* LocationDetailViewController.m */,
 				353DCA8D189D646C00D8A6DF /* POIAnnotation.h */,
 				353DCA8E189D646C00D8A6DF /* POIAnnotation.m */,
+				3505596318A12480002519E0 /* NavigationViewController.h */,
+				3505596418A12480002519E0 /* NavigationViewController.m */,
 				353DCA91189DFEAB00D8A6DF /* Images.xcassets */,
 				353DCA75189D483D00D8A6DF /* Configuration */,
 				353DCA3B189D470300D8A6DF /* Supporting Files */,
 				353DCA90189D68D200D8A6DF /* Guangzhou.gpx */,
+				3561939D18A0E60400030B11 /* LocationDetail.xib */,
 			);
 			path = Souku;
 			sourceTree = "<group>";
@@ -310,6 +318,7 @@
 				353DCA92189DFEAB00D8A6DF /* Images.xcassets in Resources */,
 				353DCA74189D480100D8A6DF /* AMap.bundle in Resources */,
 				353DCA3F189D470300D8A6DF /* InfoPlist.strings in Resources */,
+				3561939E18A0E60400030B11 /* LocationDetail.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +339,7 @@
 			files = (
 				353DCA45189D470300D8A6DF /* AppDelegate.m in Sources */,
 				353DCA7E189D4FCB00D8A6DF /* AroundViewController.m in Sources */,
+				3505596518A12480002519E0 /* NavigationViewController.m in Sources */,
 				353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */,
 				35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */,
 				353DCA41189D470300D8A6DF /* main.m in Sources */,
@@ -455,6 +465,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hongming Zhu (H5SJ56Z88P)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/danielqiu/Workspace/Souku/AMap_iOS_API_Lib_V2.1.3/2D,
@@ -463,8 +474,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Souku/Souku-Prefix.pch";
 				INFOPLIST_FILE = "Souku/Souku-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5981D3E2-14DD-419A-A6C1-D48C88B12E28";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -474,6 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hongming Zhu (H5SJ56Z88P)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/danielqiu/Workspace/Souku/AMap_iOS_API_Lib_V2.1.3/2D,
@@ -482,8 +496,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Souku/Souku-Prefix.pch";
 				INFOPLIST_FILE = "Souku/Souku-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5981D3E2-14DD-419A-A6C1-D48C88B12E28";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

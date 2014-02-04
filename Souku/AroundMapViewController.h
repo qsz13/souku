@@ -18,7 +18,7 @@
 @property (nonatomic, strong) MAMapView *mapView;
 @property (nonatomic, strong) AMapSearchAPI *search;  
 @property (strong, nonatomic) NSString *searchKey;
-@property (strong, nonatomic) CLLocation *currentLocation;
+@property (strong, nonatomic) MAUserLocation *currentLocation;
 @property (strong, nonatomic) NSMutableArray *poiAnnotations;
 @property (strong, nonatomic) MAPinAnnotationView *poiAnnotationView;
 @end

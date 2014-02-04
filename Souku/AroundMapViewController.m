@@ -39,7 +39,7 @@ BOOL hasGotPOI;
     {
         POIAnnotation *poiAnnotation = (POIAnnotation*)annotation;
         
-        LocationDetailViewController *detail = [[LocationDetailViewController alloc] init];
+        LocationDetailViewController *detail = [[LocationDetailViewController alloc] initWithNibName:@"LocationDetail" bundle:nil];
         detail.poi = poiAnnotation.poi;
         
         /* 进入POI详情页面. */
@@ -111,14 +111,13 @@ BOOL hasGotPOI;
     self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
     [self initBaseNavigationBar];
-	// Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     self.mapView.showsUserLocation = YES;    //YES 为打开定位，NO为关闭定位
-    [self.mapView setUserTrackingMode: MAUserTrackingModeFollow animated:YES];
+    [self.mapView setUserTrackingMode: MAUserTrackingModeNone animated:YES];
 }
 
 - (void)searchPoiByCenterCoordinate
@@ -148,7 +147,7 @@ BOOL hasGotPOI;
 -(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation
 updatingLocation:(BOOL)updatingLocation
 {
-    currentLocation = userLocation.location;
+    currentLocation = userLocation;
     if(!hasGotPOI)
     {
         [self searchPoiByCenterCoordinate];

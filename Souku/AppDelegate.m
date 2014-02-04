@@ -39,12 +39,13 @@
     
     UINavigationController* homeNavigationController = [[UINavigationController alloc]
                                                         initWithRootViewController:homeViewController];
-
     UINavigationController* aroundNavigationController = [[UINavigationController alloc]
                                              initWithRootViewController:aroundViewController];
     UINavigationController* favouriteNavigationController = [[UINavigationController alloc] initWithRootViewController:favouriteViewController];
+    UINavigationController* settingNavigationController = [[UINavigationController alloc] initWithRootViewController: settingViewController];
     
-    self.tabBarController.viewControllers = @[homeNavigationController, aroundNavigationController, favouriteNavigationController, settingViewController];
+    
+    self.tabBarController.viewControllers = @[homeNavigationController, aroundNavigationController, favouriteNavigationController, settingNavigationController];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tabBarController;

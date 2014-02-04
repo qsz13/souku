@@ -24,10 +24,25 @@
     return self;
 }
 
+-(void)initPOIName
+{
+    UILabel *POIName = [[UILabel alloc] init];
+    POIName.backgroundColor  = [UIColor clearColor];
+    POIName.textColor        = [UIColor whiteColor];
+    POIName.text = @"POI Name";
+    //[POIName drawTextInRect:CGRectMake(30, 30, 80, 30)];
+    [self.view addSubview:POIName];
+    
+    
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+    [self initPOIName];
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning

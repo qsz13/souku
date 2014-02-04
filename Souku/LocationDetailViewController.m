@@ -33,11 +33,102 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+   
     // Dispose of any resources that can be recreated.
 }
 
 
 
+
+
+
+
+#pragma mark - Life Cycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self initTitle];
+    [self initContent];
+    [self initButton];
+
+}
+
+- (void)initTitle
+{
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.backgroundColor  = [UIColor clearColor];
+    titleLabel.text             = @"详细信息";
+    [titleLabel sizeToFit];
+    self.navigationItem.titleView = titleLabel;
+}
+
+
+-(void)initContent
+{
+    self.poiNameLabel.text = self.poi.name;
+    self.poiNameLabel.font = [UIFont systemFontOfSize:18];
+    [self.poiNameLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGSize s = [self.poiNameLabel.text sizeWithFont:[UIFont systemFontOfSize:20]
+                  constrainedToSize:CGSizeMake(self.view.bounds.size.width - 40,     CGFLOAT_MAX)  // - 40 For cell padding
+                      lineBreakMode:NSLineBreakByWordWrapping];
+    
+    [self.poiNameLabel setFrame:CGRectMake(50, 50, s.width, s.height)];
+    
+    self.addressLabel.text = self.poi.address;
+    NSArray *phoneArray = [self.poi.tel componentsSeparatedByString:@";"];
+    
+    self.phoneNumber.text = self.poi.tel;
+    for(NSString *p in phoneArray)
+    {
+        
+    }
+    
+//    CGSize maxSize = CGSizeMake(self.poiNameLabel.frame.size.width, MAXFLOAT);
+//    
+//    CGRect labelRect = [self.poiNameLabel.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.poiNameLabel.font} context:nil];
+//    [self.poiNameLabel setFrame:labelRect];
+    
+}
+
+
+-(void)initButton
+{
+    [self.navigationButton addTarget:self action:@selector(pushToNavigation) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+}
+
+
+-(void)pushToNavigation
+{
+    NavigationViewController *navigationViewController = [[NavigationViewController alloc] init];
+    [[self navigationController] pushViewController:navigationViewController animated:YES];
+}
+
+//-(void)initPOIName
+//{
+//
+//    UILabel *POINameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 100, 800, 30)];
+//    POINameLabel.text = self.poi.name;
+//    [self.view addSubview:POINameLabel];
+//    
+//    
+//}
+//
+//-(void)initAdress
+//{
+//    
+//    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 110, 300, 30)];
+//    addressLabel.text = self.poi.address;
+//    [self.view addSubview:addressLabel];
+//}
+
+
+
+/*
 
 - (NSString *)titleForIndexPath:(NSIndexPath *)indexPath
 {
@@ -254,28 +345,7 @@
     
     [self.view addSubview:self.tableView];
 }
+*/
 
-- (void)initTitle:(NSString *)title
-{
-    UILabel *titleLabel = [[UILabel alloc] init];
-    
-    titleLabel.backgroundColor  = [UIColor clearColor];
-    titleLabel.textColor        = [UIColor whiteColor];
-    titleLabel.text             = title;
-    [titleLabel sizeToFit];
-    
-    self.navigationItem.titleView = titleLabel;
-}
-
-#pragma mark - Life Cycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self initTitle:@"POI信息 (AMapPOI)"];
-    
-    [self initTableView];
-}
 
 @end
