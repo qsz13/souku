@@ -63,6 +63,12 @@
     self.navigationItem.titleView = titleLabel;
 }
 
+-(void)viewDidLayoutSubviews
+{
+    self.addressLabel.numberOfLines = 0;
+    self.addressLabel.text = self.poi.address;
+    [self.addressLabel sizeToFit];
+}
 
 -(void)initContent
 {
@@ -76,7 +82,14 @@
     
     [self.poiNameLabel setFrame:CGRectMake(50, 50, s.width, s.height)];
     
-    self.addressLabel.text = self.poi.address;
+    
+    
+//    UILabel *testLabel = [[UILabel alloc]initWithFrame:CGRectMake(50,200,100,40)];
+//    testLabel.numberOfLines = 0;
+//    testLabel.text = self.poi.address;
+//    [testLabel sizeToFit];
+//    [self.view addSubview:testLabel];
+    
     NSArray *phoneArray = [self.poi.tel componentsSeparatedByString:@";"];
     
     self.phoneNumber.text = self.poi.tel;
@@ -93,6 +106,9 @@
 }
 
 
+
+
+
 -(void)initButton
 {
     [self.navigationButton addTarget:self action:@selector(pushToNavigation) forControlEvents:UIControlEventTouchUpInside];
@@ -105,6 +121,8 @@
 -(void)pushToNavigation
 {
     NavigationViewController *navigationViewController = [[NavigationViewController alloc] init];
+    navigationViewController.poi = self.poi;
+    navigationViewController.currentLocation = self.currentLocation;
     [[self navigationController] pushViewController:navigationViewController animated:YES];
 }
 
