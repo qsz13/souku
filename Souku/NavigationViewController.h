@@ -10,12 +10,14 @@
 #import <MAMapKit/MAMapKit.h>
 #import <AMapSearchKit/AMapSearchAPI.h>
 #import "APIKey.h"
-//#import "CommonUtility.h"
+#import "CommonUtility.h"
+#import "LineDashPolyline.h"
 
-
-@interface NavigationViewController : UIViewController<UIBarPositioningDelegate,MAMapViewDelegate>
+@interface NavigationViewController : UIViewController<AMapSearchDelegate,MAMapViewDelegate>
 
 @property (nonatomic, strong) MAMapView *mapView;
+@property (nonatomic, strong) AMapSearchAPI *search;
+
 @property (nonatomic, strong) UIToolbar *bottomToolbar;
 
 @property (nonatomic, strong) AMapPOI *poi;

@@ -42,6 +42,7 @@ BOOL hasGotPOI;
         LocationDetailViewController *detail = [[LocationDetailViewController alloc] initWithNibName:@"LocationDetail" bundle:nil];
         detail.poi = poiAnnotation.poi;
         detail.currentLocation = self.currentLocation.location;
+        
         /* 进入POI详情页面. */
         [self.navigationController pushViewController:detail animated:YES];
     }
@@ -226,12 +227,7 @@ updatingLocation:(BOOL)updatingLocation
     
 }
 
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
 
-}
 
 - (void)didReceiveMemoryWarning
 {

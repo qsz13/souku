@@ -13,34 +13,41 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
 @interface NavigationViewController ()
 
+@property (nonatomic, strong) AMapRoute *route;
+
 @end
 
 @implementation NavigationViewController
 
 @synthesize bottomToolbar;
+@synthesize route;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.search = [[AMapSearchAPI alloc] initWithSearchKey: (NSString *)APIKey Delegate:self];
     }
     return self;
 }
 
-- (id)init
-{
-    if (self = [super init])
-    {
-        self.startCoordinate        = self.currentLocation.coordinate;
-        self.destinationCoordinate  = CLLocationCoordinate2DMake(self.poi.location.latitude, self.poi.location.longitude);
-    }
-    
-    return self;
-}
+//- (id)init
+//{
+//    if (self = [super init])
+//    {
+//                //NSLog(@"%f",self.currentLocation.cpresentCurrentCourseoordinate.latitude);
+//    }
+//    
+//    return self;
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.startCoordinate        = self.currentLocation.coordinate;
+    self.destinationCoordinate  = CLLocationCoordinate2DMake(self.poi.location.latitude, self.poi.location.longitude);
+
+    
     
     [self initNavigationBar];
     
@@ -51,12 +58,11 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     
     [self addDefaultAnnotations];
     
+    [self searchNaviDrive];
+    
     self.mapView.showsUserLocation = YES;    //YES 为打开定位，NO为关闭定位
     [self.mapView setUserTrackingMode: MAUserTrackingModeFollow animated:YES];
-//    
-//    [self updateCourseUI];
-//    
-//    [self updateDetailUI];
+
 }
 
 -(void)initMap
@@ -70,15 +76,9 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 {
     UIToolbar *topToolbar = [[UIToolbar alloc] init];
     topToolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 60);
-//    NSMutableArray *items = [[NSMutableArray alloc] init];
-//
-//    [items addObject:];
-//    [toolbar setItems:items animated:NO];
-
     [self.view addSubview:topToolbar];
-
-   
 }
+
 
 -(void)initToolBar
 {
@@ -86,20 +86,15 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     bottomToolbar.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 60, [[UIScreen mainScreen] bounds].size.width, 60);
     
     NSMutableArray *items = [[NSMutableArray alloc] init];
-    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(back)];
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(returnAction)];
     [items addObject:back];
+    
     bottomToolbar.items = items;
 
-    
     [self.view addSubview:bottomToolbar];
 
 }
 
-
--(void)back
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -114,44 +109,71 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
 
 
+- (void)searchNaviDrive
+{
+
+    AMapNavigationSearchRequest *navi = [[AMapNavigationSearchRequest alloc] init];
+    navi.searchType       = AMapSearchType_NaviDrive;
+    navi.requireExtension = YES;
+    
+    /* 出发点. */
+    navi.origin = [AMapGeoPoint locationWithLatitude:self.startCoordinate.latitude
+                                           longitude:self.startCoordinate.longitude];
+    /* 目的地. */
+    navi.destination = [AMapGeoPoint locationWithLatitude:self.destinationCoordinate.latitude
+                                                longitude:self.destinationCoordinate.longitude];
+    
+    [self.search AMapNavigationSearch:navi];
+}
+
+- (void)onNavigationSearchDone:(AMapNavigationSearchRequest *)request
+                      response:(AMapNavigationSearchResponse *)response
+{
+    
+    if (response.route == nil)
+    {
+        return;
+    }
+    
+    self.route = response.route;
+
+    [self presentCurrentCourse];
+}
+
+- (void)presentCurrentCourse
+{
+    NSArray *polylines = nil;
+    
+    polylines = [CommonUtility polylinesForPath:self.route.paths[0]];
+
+    [self.mapView addOverlays:polylines];
+    
+    NSLog(@"%@",polylines);
+    
+    /* 缩放地图使其适应polylines的展示. */
+    self.mapView.visibleMapRect = [CommonUtility mapRectForOverlays:polylines];
+}
+
+
 - (void)addDefaultAnnotations
 {
-//    MAPointAnnotation *startAnnotation = [[MAPointAnnotation alloc] init];
-//    startAnnotation.coordinate = self.startCoordinate;
-//    startAnnotation.title      = (NSString*)NavigationViewControllerStartTitle;
-//    startAnnotation.subtitle   = [NSString stringWithFormat:@"{%f, %f}", self.startCoordinate.latitude, self.startCoordinate.longitude];
-//    
-//    MAPointAnnotation *destinationAnnotation = [[MAPointAnnotation alloc] init];
-//    destinationAnnotation.coordinate = self.destinationCoordinate;
-//    destinationAnnotation.title      = (NSString*)NavigationViewControllerDestinationTitle;
-//    destinationAnnotation.subtitle   = [NSString stringWithFormat:@"{%f, %f}", self.destinationCoordinate.latitude, self.destinationCoordinate.longitude];
-//    
-//    [self.mapView addAnnotation:startAnnotation];
-//    [self.mapView addAnnotation:destinationAnnotation];
+    MAPointAnnotation *startAnnotation = [[MAPointAnnotation alloc] init];
+    startAnnotation.coordinate = self.startCoordinate;
+    startAnnotation.title      = (NSString*)NavigationViewControllerStartTitle;
+    startAnnotation.subtitle   = [NSString stringWithFormat:@"{%f, %f}", self.startCoordinate.latitude, self.startCoordinate.longitude];
     
-    self.annotations = [NSMutableArray array];
-    //定义一个标注，放到annotations数组
-    MAPointAnnotation *red = [[MAPointAnnotation alloc] init];
-    red.coordinate = CLLocationCoordinate2DMake(39.911447, 116.406026);
-    red.title  = @"Red";
-    [self.annotations insertObject:red atIndex: 0];
-    //定义第二个标注，放到annotations数组
-    MAPointAnnotation *green = [[MAPointAnnotation alloc] init];
-    green.coordinate = CLLocationCoordinate2DMake(39.909698, 116.296248);
-    green.title  = @"Green";
-    //定义第三标注，放到annotations数组
-    [self.annotations insertObject:green atIndex:1];
-    MAPointAnnotation *purple = [[MAPointAnnotation alloc] init];
-    purple.coordinate = CLLocationCoordinate2DMake(40.045837, 116.460577);
-    purple.title  = @"Purple";
-    [self.annotations insertObject:purple atIndex:2];
-    //添加annotations数组中的标注到地图上
-    [self.mapView addAnnotations: self.annotations];
+    MAPointAnnotation *destinationAnnotation = [[MAPointAnnotation alloc] init];
+    destinationAnnotation.coordinate = self.destinationCoordinate;
+    destinationAnnotation.title      = (NSString*)NavigationViewControllerDestinationTitle;
+    destinationAnnotation.subtitle   = [NSString stringWithFormat:@"{%f, %f}", self.destinationCoordinate.latitude, self.destinationCoordinate.longitude];
+    
+    [self.mapView addAnnotation:startAnnotation];
+    [self.mapView addAnnotation:destinationAnnotation];
+
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
 {
-    NSLog(@"@@@@@@");
     if ([annotation isKindOfClass:[MAPointAnnotation class]])
     {
         static NSString *navigationCellIdentifier = @"navigationCellIdentifier";
@@ -163,11 +185,11 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
             
             poiAnnotationView.canShowCallout = YES;
         }
-            NSLog(@"??????");
+
         /* 起点. */
         if ([[annotation title] isEqualToString:(NSString*)NavigationViewControllerStartTitle])
         {
-            NSLog(@"!!!!!!!!");
+
             poiAnnotationView.image = [UIImage imageNamed:@"startPoint"];
         }
         /* 终点. */
@@ -178,10 +200,63 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
         
         return poiAnnotationView;
     }
+    return nil;
+}
+
+
+- (MAOverlayView *)mapView:(MAMapView *)mapView viewForOverlay:(id<MAOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[LineDashPolyline class]])
+    {
+        MAPolylineView *overlayView = [[MAPolylineView alloc] initWithPolyline:((LineDashPolyline *)overlay).polyline];
+        
+        overlayView.lineWidth   = 4;
+        overlayView.strokeColor = [UIColor magentaColor];
+        overlayView.lineDashPattern = @[@5, @10];
+        
+        return overlayView;
+    }
+    
+    if ([overlay isKindOfClass:[MAPolyline class]])
+    {
+        MAPolylineView *overlayView = [[MAPolylineView alloc] initWithPolyline:overlay];
+        
+        overlayView.lineWidth   = 8;
+        overlayView.strokeColor = [UIColor magentaColor];
+        
+        return overlayView;
+    }
     
     return nil;
 }
 
+
+- (void)returnAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    [self.navigationController setNavigationBarHidden:NO];
+    
+    [self clearMapView];
+    
+    [self clearSearch];
+}
+
+- (void)clearMapView
+{
+    self.mapView.showsUserLocation = NO;
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    
+    [self.mapView removeOverlays:self.mapView.overlays];
+    
+    self.mapView.delegate = nil;
+}
+
+- (void)clearSearch
+{
+    self.search.delegate = nil;
+}
 
 
 @end

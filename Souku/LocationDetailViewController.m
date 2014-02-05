@@ -123,6 +123,8 @@
     NavigationViewController *navigationViewController = [[NavigationViewController alloc] init];
     navigationViewController.poi = self.poi;
     navigationViewController.currentLocation = self.currentLocation;
+    //NSLog(@"%f", self.currentLocation);
+    
     [[self navigationController] pushViewController:navigationViewController animated:YES];
 }
 

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3505596518A12480002519E0 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3505596418A12480002519E0 /* NavigationViewController.m */; };
+		3512101718A274EE003B07BF /* CommonUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3512101618A274EE003B07BF /* CommonUtility.m */; };
+		3512101A18A2756C003B07BF /* LineDashPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 3512101918A2756C003B07BF /* LineDashPolyline.m */; };
 		353DCA35189D470300D8A6DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA34189D470300D8A6DF /* Foundation.framework */; };
 		353DCA37189D470300D8A6DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA36189D470300D8A6DF /* CoreGraphics.framework */; };
 		353DCA39189D470300D8A6DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA38189D470300D8A6DF /* UIKit.framework */; };
@@ -53,6 +55,10 @@
 /* Begin PBXFileReference section */
 		3505596318A12480002519E0 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		3505596418A12480002519E0 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
+		3512101518A274EE003B07BF /* CommonUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonUtility.h; sourceTree = "<group>"; };
+		3512101618A274EE003B07BF /* CommonUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUtility.m; sourceTree = "<group>"; };
+		3512101818A2756C003B07BF /* LineDashPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineDashPolyline.h; sourceTree = "<group>"; };
+		3512101918A2756C003B07BF /* LineDashPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineDashPolyline.m; sourceTree = "<group>"; };
 		353DCA31189D470300D8A6DF /* Souku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Souku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		353DCA34189D470300D8A6DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		353DCA36189D470300D8A6DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -194,6 +200,10 @@
 				353DCA8E189D646C00D8A6DF /* POIAnnotation.m */,
 				3505596318A12480002519E0 /* NavigationViewController.h */,
 				3505596418A12480002519E0 /* NavigationViewController.m */,
+				3512101518A274EE003B07BF /* CommonUtility.h */,
+				3512101618A274EE003B07BF /* CommonUtility.m */,
+				3512101818A2756C003B07BF /* LineDashPolyline.h */,
+				3512101918A2756C003B07BF /* LineDashPolyline.m */,
 				353DCA91189DFEAB00D8A6DF /* Images.xcassets */,
 				353DCA75189D483D00D8A6DF /* Configuration */,
 				353DCA3B189D470300D8A6DF /* Supporting Files */,
@@ -338,12 +348,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				353DCA45189D470300D8A6DF /* AppDelegate.m in Sources */,
+				3512101A18A2756C003B07BF /* LineDashPolyline.m in Sources */,
 				353DCA7E189D4FCB00D8A6DF /* AroundViewController.m in Sources */,
 				3505596518A12480002519E0 /* NavigationViewController.m in Sources */,
 				353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */,
 				35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */,
 				353DCA41189D470300D8A6DF /* main.m in Sources */,
 				353DCA79189D49F200D8A6DF /* HomeViewController.m in Sources */,
+				3512101718A274EE003B07BF /* CommonUtility.m in Sources */,
 				353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */,
 				353DCA8A189D5D7200D8A6DF /* AroundMapViewController.m in Sources */,
 				353DCA84189D4FF000D8A6DF /* SettingViewController.m in Sources */,
