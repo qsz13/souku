@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LocationDataController.h"
 
 @interface FavouriteViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *favouriteTableView;
-@property (nonatomic, strong) NSArray *favouriteItemArray;
-
+@property (nonatomic, strong) NSMutableArray *favouriteItemArray;
+@property (nonatomic, strong) LocationDataController *locationDataController;
 @end

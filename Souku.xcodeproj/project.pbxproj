@@ -40,6 +40,10 @@
 		353DCA92189DFEAB00D8A6DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA91189DFEAB00D8A6DF /* Images.xcassets */; };
 		3561939E18A0E60400030B11 /* LocationDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3561939D18A0E60400030B11 /* LocationDetail.xib */; };
 		35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AF0940189F573000642587 /* LocationDetailViewController.m */; };
+		35C06F6018A4E53A004AC9EA /* FavList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35C06F5F18A4E53A004AC9EA /* FavList.plist */; };
+		35C06F6318A4EBA5004AC9EA /* AMapPOI+storage.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C06F6218A4EBA5004AC9EA /* AMapPOI+storage.m */; };
+		35C06F6618A4FFB4004AC9EA /* AMapGeoPoint+storage.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C06F6518A4FFB4004AC9EA /* AMapGeoPoint+storage.m */; };
+		35C06F6918A5061E004AC9EA /* LocationDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C06F6818A5061E004AC9EA /* LocationDataController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +107,13 @@
 		3561939D18A0E60400030B11 /* LocationDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationDetail.xib; sourceTree = "<group>"; };
 		35AF093F189F573000642587 /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
 		35AF0940189F573000642587 /* LocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailViewController.m; sourceTree = "<group>"; };
+		35C06F5F18A4E53A004AC9EA /* FavList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FavList.plist; sourceTree = "<group>"; };
+		35C06F6118A4EBA5004AC9EA /* AMapPOI+storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMapPOI+storage.h"; sourceTree = "<group>"; };
+		35C06F6218A4EBA5004AC9EA /* AMapPOI+storage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMapPOI+storage.m"; sourceTree = "<group>"; };
+		35C06F6418A4FFB4004AC9EA /* AMapGeoPoint+storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMapGeoPoint+storage.h"; sourceTree = "<group>"; };
+		35C06F6518A4FFB4004AC9EA /* AMapGeoPoint+storage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMapGeoPoint+storage.m"; sourceTree = "<group>"; };
+		35C06F6718A5061E004AC9EA /* LocationDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDataController.h; sourceTree = "<group>"; };
+		35C06F6818A5061E004AC9EA /* LocationDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDataController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,11 +215,18 @@
 				3512101618A274EE003B07BF /* CommonUtility.m */,
 				3512101818A2756C003B07BF /* LineDashPolyline.h */,
 				3512101918A2756C003B07BF /* LineDashPolyline.m */,
+				35C06F6718A5061E004AC9EA /* LocationDataController.h */,
+				35C06F6818A5061E004AC9EA /* LocationDataController.m */,
 				353DCA91189DFEAB00D8A6DF /* Images.xcassets */,
 				353DCA75189D483D00D8A6DF /* Configuration */,
 				353DCA3B189D470300D8A6DF /* Supporting Files */,
 				353DCA90189D68D200D8A6DF /* Guangzhou.gpx */,
 				3561939D18A0E60400030B11 /* LocationDetail.xib */,
+				35C06F5F18A4E53A004AC9EA /* FavList.plist */,
+				35C06F6118A4EBA5004AC9EA /* AMapPOI+storage.h */,
+				35C06F6218A4EBA5004AC9EA /* AMapPOI+storage.m */,
+				35C06F6418A4FFB4004AC9EA /* AMapGeoPoint+storage.h */,
+				35C06F6518A4FFB4004AC9EA /* AMapGeoPoint+storage.m */,
 			);
 			path = Souku;
 			sourceTree = "<group>";
@@ -325,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35C06F6018A4E53A004AC9EA /* FavList.plist in Resources */,
 				353DCA92189DFEAB00D8A6DF /* Images.xcassets in Resources */,
 				353DCA74189D480100D8A6DF /* AMap.bundle in Resources */,
 				353DCA3F189D470300D8A6DF /* InfoPlist.strings in Resources */,
@@ -347,9 +366,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35C06F6318A4EBA5004AC9EA /* AMapPOI+storage.m in Sources */,
 				353DCA45189D470300D8A6DF /* AppDelegate.m in Sources */,
 				3512101A18A2756C003B07BF /* LineDashPolyline.m in Sources */,
+				35C06F6618A4FFB4004AC9EA /* AMapGeoPoint+storage.m in Sources */,
 				353DCA7E189D4FCB00D8A6DF /* AroundViewController.m in Sources */,
+				35C06F6918A5061E004AC9EA /* LocationDataController.m in Sources */,
 				3505596518A12480002519E0 /* NavigationViewController.m in Sources */,
 				353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */,
 				35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */,

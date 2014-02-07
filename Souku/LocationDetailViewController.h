@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "POIAnnotation.h"
 #import "NavigationViewController.h"
+#import "LocationDataController.h"
+#import "AMapPOI+storage.h"
 
 @interface LocationDetailViewController : UIViewController//<UITableViewDataSource, UITableViewDelegate>
 

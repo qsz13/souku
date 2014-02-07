@@ -11,7 +11,6 @@
 
 @interface AroundViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong, nonatomic) UITableView *aroundTableView;
 @property (strong, nonatomic) NSArray *aroundItem;
 
 @end

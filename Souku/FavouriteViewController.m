@@ -7,6 +7,8 @@
 //
 
 #import "FavouriteViewController.h"
+#import "AMapPOI+storage.h"
+#import "LocationDetailViewController.h"
 
 @interface FavouriteViewController ()
 
@@ -20,6 +22,9 @@
     if (self) {
         self.title = @"收藏";
         //self.tabBarItem.image = [UIImage imageNamed:@"favouriteItem"];
+        self.locationDataController = [[LocationDataController alloc]init];
+        [self.locationDataController initializeDefaultDataList];
+        [self initTableData];
     }
     return self;
 }
@@ -28,18 +33,32 @@
 {
     [super viewDidLoad];
     self.favouriteTableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    
     self.favouriteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.favouriteTableView.delegate = self;
     self.favouriteTableView.dataSource = self;
     [self.favouriteTableView reloadData];
-    
+
     self.view = self.favouriteTableView;
 
 }
 
 
+-(void)initTableData
+{
+    self.favouriteItemArray = [[NSMutableArray alloc]init];
+    for(AMapPOI *poi in self.locationDataController.locationList)
+    {
+        [self.favouriteItemArray addObject:poi];
+        NSLog(@"%@",poi.name);
+    }
+    
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"%d",self.favouriteItemArray.count);
     return self.favouriteItemArray.count;
 }
 
@@ -50,16 +69,22 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    
-    cell.textLabel.text = [self.favouriteItemArray objectAtIndex:indexPath.row];
+    AMapPOI *currentPOI = [self.favouriteItemArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = currentPOI.name;
     return cell;
 }
 
-
-- (void)didReceiveMemoryWarning
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    LocationDetailViewController *detail = [[LocationDetailViewController alloc] initWithNibName:@"LocationDetail" bundle:nil];
+    detail.poi = [self.favouriteItemArray objectAtIndex:indexPath.row];
+    detail.hidesBottomBarWhenPushed = YES;
+    
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.selected = NO;
+    [self.navigationController pushViewController:detail animated:YES];
+
 }
 
 @end

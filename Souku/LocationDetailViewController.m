@@ -29,20 +29,6 @@
 }
 
 
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-   
-    // Dispose of any resources that can be recreated.
-}
-
-
-
-
-
-
-
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad
@@ -82,39 +68,24 @@
     
     [self.poiNameLabel setFrame:CGRectMake(50, 50, s.width, s.height)];
     
-    
-    
-//    UILabel *testLabel = [[UILabel alloc]initWithFrame:CGRectMake(50,200,100,40)];
-//    testLabel.numberOfLines = 0;
-//    testLabel.text = self.poi.address;
-//    [testLabel sizeToFit];
-//    [self.view addSubview:testLabel];
+
     
     NSArray *phoneArray = [self.poi.tel componentsSeparatedByString:@";"];
     
     self.phoneNumber.text = self.poi.tel;
     for(NSString *p in phoneArray)
     {
-        
+        // TO BE DONE
     }
     
-//    CGSize maxSize = CGSizeMake(self.poiNameLabel.frame.size.width, MAXFLOAT);
-//    
-//    CGRect labelRect = [self.poiNameLabel.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.poiNameLabel.font} context:nil];
-//    [self.poiNameLabel setFrame:labelRect];
-    
 }
-
-
-
 
 
 -(void)initButton
 {
     [self.navigationButton addTarget:self action:@selector(pushToNavigation) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
+    [self.favouriteButton addTarget:self action:@selector(favourite) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 
@@ -123,249 +94,16 @@
     NavigationViewController *navigationViewController = [[NavigationViewController alloc] init];
     navigationViewController.poi = self.poi;
     navigationViewController.currentLocation = self.currentLocation;
-    //NSLog(@"%f", self.currentLocation);
-    
     [[self navigationController] pushViewController:navigationViewController animated:YES];
 }
 
-//-(void)initPOIName
-//{
-//
-//    UILabel *POINameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 100, 800, 30)];
-//    POINameLabel.text = self.poi.name;
-//    [self.view addSubview:POINameLabel];
-//    
-//    
-//}
-//
-//-(void)initAdress
-//{
-//    
-//    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 110, 300, 30)];
-//    addressLabel.text = self.poi.address;
-//    [self.view addSubview:addressLabel];
-//}
-
-
-
-/*
-
-- (NSString *)titleForIndexPath:(NSIndexPath *)indexPath
+-(void)favourite
 {
-    NSString *title = nil;
-    
-    if (indexPath.section == 0)
-    {
-        switch (indexPath.row)
-        {
-            case 0 : title = @"POI全局唯一ID";    break;
-            case 1 : title = @"名称";            break;
-            case 2 : title = @"兴趣点类型";       break;
-            case 3 : title = @"经纬度";          break;
-            case 4 : title = @"地址";            break;
-            case 5 : title = @"电话";            break;
-            default: title = @"距中心点距离";     break;
-        }
-    }
-    else
-    {
-        switch (indexPath.row)
-        {
-            case 0   : title = @"邮编";            break;
-            case 1   : title = @"网址";            break;
-            case 2   : title = @"电子邮件";         break;
-            case 3   : title = @"省(省编码)";       break;
-            case 4   : title = @"市(市编码)";       break;
-            case 5   : title = @"区域(区域编码)";    break;
-            case 6   : title = @"地理格ID";         break;
-            case 7   : title = @"导航点ID";         break;
-            case 8   : title = @"入口经纬度";        break;
-            case 9   : title = @"出口经纬度";        break;
-            case 10  : title = @"权重";             break;
-            case 11  : title = @"匹配";             break;
-            case 12  : title = @"推荐标识";          break;
-            case 13  : title = @"时间戳";           break;
-            case 14  : title = @"方向";             break;
-            case 15  : title = @"扩展信息";          break;
-            case 16  : title = @"行业深度信息";       break;
-            case 17  : title = @"动态市场信息";       break;
-            default  :  break;
-        }
-    }
-    
-    return title;
+    LocationDataController *locationDataController = [[LocationDataController alloc]init];
+    [locationDataController initializeDefaultDataList];
+    [locationDataController addPOI:self.poi];
 }
 
-- (NSString *)subTitleForIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *subTitle = nil;
-    
-    if (indexPath.section == 0)
-    {
-        switch (indexPath.row)
-        {
-            case 0 : subTitle = self.poi.uid;                       break;
-            case 1 : subTitle = self.poi.name;                      break;
-            case 2 : subTitle = self.poi.type;                      break;
-            case 3 : subTitle = [self.poi.location description];    break;
-            case 4 : subTitle = self.poi.address;                   break;
-            case 5 : subTitle = self.poi.tel;                       break;
-            default: subTitle = [NSString stringWithFormat:@"%d(米)", self.poi.distance];                                                   break;
-                
-        }
-    }
-    else
-    {
-        switch (indexPath.row)
-        {
-            case 0  : subTitle = self.poi.postcode;             break;
-            case 1  : subTitle = self.poi.website;              break;
-            case 2  : subTitle = self.poi.email;                break;
-            case 3  : subTitle = [NSString stringWithFormat:@"%@(%@)", self.poi.province, self.poi.pcode];                              break;
-            case 4  : subTitle = [NSString stringWithFormat:@"%@(%@)", self.poi.city, self.poi.citycode];                             break;
-            case 5  : subTitle = [NSString stringWithFormat:@"%@(%@)", self.poi.district, self.poi.adcode];                             break;
-//            case 6  : subTitle = TemporaryNotOpened;            break;
-//            case 7  : subTitle = TemporaryNotOpened;            break;
-            case 8  : subTitle = [self.poi.enterLocation description];   break;
-            case 9  : subTitle = [self.poi.exitLocation description];    break;
-//            case 10 : subTitle = TemporaryNotOpened;            break;
-//            case 11 : subTitle = TemporaryNotOpened;            break;
-//            case 12 : subTitle = TemporaryNotOpened;            break;
-//            case 13 : subTitle = TemporaryNotOpened;            break;
-            case 14 : subTitle = self.poi.direction;            break;
-            case 15 : subTitle = nil;                           break;
-            case 16 : subTitle = nil;                           break;
-            case 17 : subTitle = nil;                           break;
-                
-            default : break;
-        }
-    }
-    
-    return subTitle;
-}
-
-- (void)gotoDetailForBizExtention:(AMapBizExtention *)extention
-{
-    if (extention == nil)
-    {
-        return;
-    }
-    
-    
-    
-}
-
-- (void)gotoDetailForRichContent:(AMapRichContent *)richContent
-{
-    if (richContent.groupbuys.count == 0 && richContent.discounts.count == 0)
-    {
-        NSLog(@"no rich content");
-        return;
-    }
-    
-}
-
-- (void)gotoDetailForDeepContent:(AMapDeepContent *)deepContent
-{
-    if (deepContent == nil)
-    {
-        NSLog(@"no deep content");
-        return;
-    }
-    
-}
-
-#pragma mark - Handle Action
-
-- (void)bizExtentionAction
-{
-    [self gotoDetailForBizExtention:self.poi.bizExtention];
-}
-
-- (void)richContentAction
-{
-    [self gotoDetailForRichContent:self.poi.richContent];
-}
-
-- (void)deepContentAction
-{
-    [self gotoDetailForDeepContent:self.poi.deepContent];
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return section == 0 ? 7 : 18;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return section == 0 ? @"基础POI信息" : @"扩展信息";
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *poiDetailCellIdentifier = @"poiDetailCellIdentifier";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:poiDetailCellIdentifier];
-    
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:poiDetailCellIdentifier];
-    }
-    
-    cell.textLabel.text         = [self titleForIndexPath:indexPath];
-    cell.detailTextLabel.text   = [self subTitleForIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    if ([cell.textLabel.text isEqualToString:@"行业深度信息"] || [cell.textLabel.text isEqualToString:@"动态市场信息"] || [cell.textLabel.text isEqualToString:@"扩展信息"])
-    {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    }
-    
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    
-    if ([cell.textLabel.text isEqualToString:@"行业深度信息"])
-    {
-        [self deepContentAction];
-    }
-    else if ([cell.textLabel.text isEqualToString:@"动态市场信息"])
-    {
-        [self richContentAction];
-    }
-    else if ([cell.textLabel.text isEqualToString:@"扩展信息"])
-    {
-        [self bizExtentionAction];
-    }
-    
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - Initialization
-
-- (void)initTableView
-{
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.tableView.delegate   = self;
-    self.tableView.dataSource = self;
-    
-    [self.view addSubview:self.tableView];
-}
-*/
 
 
 @end

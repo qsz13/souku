@@ -26,14 +26,10 @@
 {
     [self configureAPIKey];
     
-    
-    
-
     UIViewController *homeViewController = [[HomeViewController alloc] init];
     UIViewController *aroundViewController = [[AroundViewController alloc] init];
     UIViewController *favouriteViewController = [[FavouriteViewController alloc] init];
     UIViewController *settingViewController = [[SettingViewController alloc] init];
-    
     
     self.tabBarController = [[UITabBarController alloc] init];
     
@@ -43,7 +39,6 @@
                                              initWithRootViewController:aroundViewController];
     UINavigationController* favouriteNavigationController = [[UINavigationController alloc] initWithRootViewController:favouriteViewController];
     UINavigationController* settingNavigationController = [[UINavigationController alloc] initWithRootViewController: settingViewController];
-    
     
     self.tabBarController.viewControllers = @[homeNavigationController, aroundNavigationController, favouriteNavigationController, settingNavigationController];
     

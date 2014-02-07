@@ -10,6 +10,11 @@
 
 @interface AroundMapViewController ()
 
+@property (strong, nonatomic) MAMapView *mapView;
+@property (strong, nonatomic) UITableView *aroundTableView;
+@property (strong, nonatomic) NSMutableArray *poiAnnotations;
+@property (strong, nonatomic) MAPinAnnotationView *poiAnnotationView;
+
 @end
 
 @implementation AroundMapViewController
@@ -53,7 +58,6 @@ BOOL hasGotPOI;
    
     if ([annotation isKindOfClass:[POIAnnotation class]])
     {
-        //NSLog(@"!!!!!");
         static NSString *poiIdentifier = @"poiIdentifier";
         poiAnnotationView = (MAPinAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:poiIdentifier];
         if (poiAnnotationView == nil)
@@ -159,14 +163,14 @@ updatingLocation:(BOOL)updatingLocation
 - (void)onPlaceSearchDone:(AMapPlaceSearchRequest *)request response:(AMapPlaceSearchResponse *)response
 {
     
-    NSString *strCount = [NSString stringWithFormat:@"count: %d",response.count];
-    NSString *strSuggestion = [NSString stringWithFormat:@"Suggestion: %@", response.suggestion];
-    NSString *strPoi = @"";
-    for (AMapPOI *p in response.pois) {
-        strPoi = [NSString stringWithFormat:@"%@\nPOI: %@", strPoi, p.description];
-    }
-    NSString *result = [NSString stringWithFormat:@"%@ \n %@ \n %@", strCount, strSuggestion, strPoi];
-    NSLog(@"Place: %@", result);
+//    NSString *strCount = [NSString stringWithFormat:@"count: %d",response.count];
+//    NSString *strSuggestion = [NSString stringWithFormat:@"Suggestion: %@", response.suggestion];
+//    NSString *strPoi = @"";
+//    for (AMapPOI *p in response.pois) {
+//        strPoi = [NSString stringWithFormat:@"%@\nPOI: %@", strPoi, p.description];
+//    }
+//    NSString *result = [NSString stringWithFormat:@"%@ \n %@ \n %@", strCount, strSuggestion, strPoi];
+//    NSLog(@"Place: %@", result);
     
     
     hasGotPOI = YES;
@@ -185,15 +189,12 @@ updatingLocation:(BOOL)updatingLocation
         
     }];
     
-    /* 将结果以annotation的形式加载到地图上. */
     [self.mapView addAnnotations:poiAnnotations];
     
-    /* 如果只有一个结果，设置其为中心点. */
     if (poiAnnotations.count == 1)
     {
         self.mapView.centerCoordinate = [poiAnnotations[0] coordinate];
     }
-    /* 如果有多个结果, 设置地图使所有的annotation都可见. */
     else
     {
         [self.mapView showAnnotations:poiAnnotations animated:YES];
@@ -203,16 +204,12 @@ updatingLocation:(BOOL)updatingLocation
 
 -(void) showAnnotations
 {
-    
-    /* 将结果以annotation的形式加载到地图上. */
+
     [self.mapView addAnnotations:poiAnnotations];
-    
-    /* 如果只有一个结果，设置其为中心点. */
     if (poiAnnotations.count == 1)
     {
         self.mapView.centerCoordinate = [poiAnnotations[0] coordinate];
     }
-    /* 如果有多个结果, 设置地图使所有的annotation都可见. */
     else
     {
         [self.mapView showAnnotations:poiAnnotations animated:YES];
@@ -220,20 +217,6 @@ updatingLocation:(BOOL)updatingLocation
 
 }
 
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-}
-
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)mapView:(MAMapView*)mapView didFailToLocateUserWithError:(NSError*)error
 {

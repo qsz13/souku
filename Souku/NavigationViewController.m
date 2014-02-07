@@ -14,7 +14,7 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 @interface NavigationViewController ()
 
 @property (nonatomic, strong) AMapRoute *route;
-
+@property (nonatomic, strong) NSLock *lock;
 @end
 
 @implementation NavigationViewController
@@ -31,39 +31,69 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     return self;
 }
 
-//- (id)init
-//{
-//    if (self = [super init])
-//    {
-//                //NSLog(@"%f",self.currentLocation.cpresentCurrentCourseoordinate.latitude);
-//    }
-//    
-//    return self;
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.startCoordinate        = self.currentLocation.coordinate;
-    self.destinationCoordinate  = CLLocationCoordinate2DMake(self.poi.location.latitude, self.poi.location.longitude);
-
-    
     
     [self initNavigationBar];
-    
     [self initMap];
-    
     [self initTitleBar];
     [self initToolBar];
+ 
+    [NSThread detachNewThreadSelector:@selector(initNavigationPoint) toTarget:self withObject:nil];
+    
+    
+}
+
+-(void)initNavigationPoint
+{
+    if(self.currentLocation == nil)
+    {
+        while(self.currentLocation == nil)
+        {
+            sleep(1);
+        }
+    }
+
+    self.startCoordinate        = self.currentLocation.coordinate;
+    self.destinationCoordinate  = CLLocationCoordinate2DMake(self.poi.location.latitude, self.poi.location.longitude);
+    
     
     [self addDefaultAnnotations];
-    
     [self searchNaviDrive];
+    [[NSRunLoop currentRunLoop] run];
+}
+
+- (void)onNavigationSearchDone:(AMapNavigationSearchRequest *)request
+                      response:(AMapNavigationSearchResponse *)response
+{
+    NSLog(@"kajsdhflkj");
     
-    self.mapView.showsUserLocation = YES;    //YES 为打开定位，NO为关闭定位
-    [self.mapView setUserTrackingMode: MAUserTrackingModeFollow animated:YES];
+    if (response.route == nil)
+    {
+        return;
+    }
+    
+    self.route = response.route;
+    [self performSelectorOnMainThread:@selector(presentCurrentCourse) withObject:nil waitUntilDone:YES];
+//    [self presentCurrentCourse];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.mapView.showsUserLocation = YES;    //YES turn on positioning, NO turn off positioning
+    [self.mapView setUserTrackingMode: MAUserTrackingModeFollowWithHeading animated:YES];
+}
+
+
+-(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
+{
+    NSLog(@"got it!");
+    self.currentLocation = userLocation.location;
 
 }
+
 
 -(void)initMap
 {
@@ -96,11 +126,6 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)initNavigationBar
 {
@@ -122,23 +147,13 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     /* 目的地. */
     navi.destination = [AMapGeoPoint locationWithLatitude:self.destinationCoordinate.latitude
                                                 longitude:self.destinationCoordinate.longitude];
-    
+
     [self.search AMapNavigationSearch:navi];
+   
+
 }
 
-- (void)onNavigationSearchDone:(AMapNavigationSearchRequest *)request
-                      response:(AMapNavigationSearchResponse *)response
-{
-    
-    if (response.route == nil)
-    {
-        return;
-    }
-    
-    self.route = response.route;
 
-    [self presentCurrentCourse];
-}
 
 - (void)presentCurrentCourse
 {
@@ -153,6 +168,9 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     /* 缩放地图使其适应polylines的展示. */
     self.mapView.visibleMapRect = [CommonUtility mapRectForOverlays:polylines];
 }
+
+
+
 
 
 - (void)addDefaultAnnotations
@@ -206,6 +224,7 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
 - (MAOverlayView *)mapView:(MAMapView *)mapView viewForOverlay:(id<MAOverlay>)overlay
 {
+ 
     if ([overlay isKindOfClass:[LineDashPolyline class]])
     {
         MAPolylineView *overlayView = [[MAPolylineView alloc] initWithPolyline:((LineDashPolyline *)overlay).polyline];
