@@ -76,7 +76,7 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     
     self.route = response.route;
     [self performSelectorOnMainThread:@selector(presentCurrentCourse) withObject:nil waitUntilDone:YES];
-//    [self presentCurrentCourse];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated

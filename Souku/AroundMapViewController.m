@@ -10,8 +10,7 @@
 
 @interface AroundMapViewController ()
 
-@property (strong, nonatomic) MAMapView *mapView;
-@property (strong, nonatomic) UITableView *aroundTableView;
+@property (strong, atomic) MAMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *poiAnnotations;
 @property (strong, nonatomic) MAPinAnnotationView *poiAnnotationView;
 
@@ -25,15 +24,61 @@
 
 BOOL hasGotPOI;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.search = [[AMapSearchAPI alloc] initWithSearchKey: (NSString *)APIKey Delegate:self];
         hasGotPOI = NO;
+        
     }
     return self;
 }
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self initBaseNavigationBar];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self initMapView];
+
+    self.mapView.showsUserLocation = YES;    //YES 为打开定位，NO为关闭定位
+    [self.mapView setUserTrackingMode: MAUserTrackingModeNone animated:YES];
+    
+    
+}
+
+-(void)initMapView
+{
+   
+    self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
+    [self.mapView setCenterCoordinate:self.currentLocation.location.coordinate];
+    self.mapView.delegate = self;
+    self.view = self.mapView;
+
+
+    
+}
+
+- (void)mapViewDidFinishLoadingMap:(MAMapView *)mapView dataSize:(NSInteger)dataSize
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+
+    NSLog(@"mapViewDidFinishLoadingMap");
+
+    
+}
+
 
 
 - (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
@@ -109,22 +154,6 @@ BOOL hasGotPOI;
 {
     self.search.delegate = nil;
 }
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
-    self.mapView.delegate = self;
-    [self.view addSubview:self.mapView];
-    [self initBaseNavigationBar];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    self.mapView.showsUserLocation = YES;    //YES 为打开定位，NO为关闭定位
-    [self.mapView setUserTrackingMode: MAUserTrackingModeNone animated:YES];
-}
-
 - (void)searchPoiByCenterCoordinate
 {
     [self.mapView removeAnnotations:self.mapView.annotations];
@@ -152,7 +181,7 @@ BOOL hasGotPOI;
 -(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation
 updatingLocation:(BOOL)updatingLocation
 {
-    currentLocation = userLocation;
+        currentLocation = userLocation;
     if(!hasGotPOI)
     {
         [self searchPoiByCenterCoordinate];

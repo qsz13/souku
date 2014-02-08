@@ -11,6 +11,6 @@
 
 /* 使用高德SearchV3, 请首先注册APIKey, 注册APIKey请参考 http://api.amap.com
  */
-const static NSString *APIKey = @"";
+const static NSString *APIKey = @"cf4445eb09d9221fb7edaa09a048daa9";
 
 #endif

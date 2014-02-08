@@ -8,15 +8,19 @@
 
 #import "AroundViewController.h"
 
+
 @interface AroundViewController ()
 
 @property (strong, nonatomic) UITableView *aroundTableView;
+@property (strong, nonatomic) AroundMapViewController *aroundMapViewController;
+@property (strong, nonatomic) MBProgressHUD *HUD;
 
 @end
 
 @implementation AroundViewController
 
 @synthesize aroundItem;
+@synthesize HUD;
 
 #pragma mark - Life Cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,17 +37,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initTableView];
+}
+
+- (void)initTableView
+{
     self.aroundTableView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.aroundTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.aroundTableView setScrollEnabled:NO];
-
     self.aroundTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+
     self.aroundTableView.delegate = self;
     self.aroundTableView.dataSource = self;
     [self.aroundTableView reloadData];
-    
     self.view = self.aroundTableView;
+
 }
+
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -58,22 +68,32 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         }
+    cell.textLabel.textColor = [UIColor colorWithRed:0.0f green:138.0f/255.0f blue:1.0f alpha:1.0];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:22.0];
     cell.textLabel.text = [self.aroundItem objectAtIndex:indexPath.row];
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator]; 
     return cell;
 }
 
 
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AroundMapViewController *aroundMapViewController = [[AroundMapViewController alloc] init];
-    aroundMapViewController.searchKey = [self.aroundItem objectAtIndex:indexPath.row];
-    aroundMapViewController.hidesBottomBarWhenPushed = YES;
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.selected = NO;
-    [[self navigationController] pushViewController:aroundMapViewController animated:YES];
+    return 50;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.selected = NO;
+    self.aroundMapViewController = [[AroundMapViewController alloc] init];
+    NSString *searchKey = [self.aroundItem objectAtIndex:indexPath.row];
+    self.aroundMapViewController.searchKey = searchKey;
+    self.aroundMapViewController.hidesBottomBarWhenPushed = YES;
+    [[self navigationController] pushViewController:self.aroundMapViewController animated:YES];
+
+}
 
 
 @end

@@ -32,6 +32,9 @@
     UIViewController *settingViewController = [[SettingViewController alloc] init];
     
     self.tabBarController = [[UITabBarController alloc] init];
+    [self.tabBarController.tabBar setBackgroundImage:[UIImage imageNamed:@"tabbar"]];
+    
+    
     
     UINavigationController* homeNavigationController = [[UINavigationController alloc]
                                                         initWithRootViewController:homeViewController];
@@ -39,6 +42,14 @@
                                              initWithRootViewController:aroundViewController];
     UINavigationController* favouriteNavigationController = [[UINavigationController alloc] initWithRootViewController:favouriteViewController];
     UINavigationController* settingNavigationController = [[UINavigationController alloc] initWithRootViewController: settingViewController];
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navigationBar"]  forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                            UITextAttributeTextColor: [UIColor whiteColor],
+                                                            UITextAttributeTextShadowColor: [UIColor clearColor],
+                                                            UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
+                                                            UITextAttributeFont: [UIFont fontWithName:@"Helvetica-Bold" size:20.0],
+                                                            }];
     
     self.tabBarController.viewControllers = @[homeNavigationController, aroundNavigationController, favouriteNavigationController, settingNavigationController];
     

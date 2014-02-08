@@ -7,13 +7,13 @@
 //
 
 #import "SettingOfflineViewController.h"
-#import <AMapSearchKit/MA>
+#import <MAMapKit/MAOfflineMap.h>
 
 @interface SettingOfflineViewController ()
 
 @property(nonatomic,strong) UITableView *citysSelectTable;
 @property(nonatomic,strong) UILabel *tableTitle;
-
+@property(nonatomic,strong) NSArray *cityList;
 @end
 
 @implementation SettingOfflineViewController
@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor lightGrayColor]];
+    [self getCities];
     self.navigationController.title = @"离线地图";
     [self initTableView];
 
@@ -38,7 +39,7 @@
 
 - (void)getCities
 {
-    NSArray*cities = [MAOfflineMap sharedOfflineMap].offlineCities;
+     self.cityList = [MAOfflineMap sharedOfflineMap].offlineCities;
 }
 
 -(void)initTableView
@@ -63,10 +64,12 @@
     self.citysSelectTable.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.citysSelectTable.delegate = self;
     self.citysSelectTable.dataSource = self;
-    [self.citysSelectTable reloadData];
+    self.citysSelectTable.separatorStyle = UITableViewCellSeparatorStyleNone;
 
-    
-    [self.view addSubview:self.citysSelectTable];
+    [self.citysSelectTable reloadData];
+    if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }    [self.view addSubview:self.citysSelectTable];
     
     
     CGRect textFrame = CGRectMake(x,y+viewHeight,viewWidth,40);
@@ -80,11 +83,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return
+    return self.cityList.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    static NSString *cellIdentifier = @"aroundCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    }
+    MAOfflineCity *selected = [self.cityList objectAtIndex:indexPath.row];
+    cell.textLabel.text = selected.cityName;
+    return cell;
+    
+}
 
 
 

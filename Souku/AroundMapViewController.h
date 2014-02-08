@@ -12,8 +12,9 @@
 #import "APIKey.h"
 #import "POIAnnotation.h"
 #import "LocationDetailViewController.h"
+#import "MBProgressHUD.h"
 
-@interface AroundMapViewController : UIViewController<MAMapViewDelegate, AMapSearchDelegate>
+@interface AroundMapViewController : UIViewController<MAMapViewDelegate, AMapSearchDelegate,MBProgressHUDDelegate>
 
 
 @property (strong, nonatomic) AMapSearchAPI *search;
