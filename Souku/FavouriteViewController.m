@@ -23,8 +23,7 @@
         self.title = @"收藏";
         //self.tabBarItem.image = [UIImage imageNamed:@"favouriteItem"];
         self.locationDataController = [[LocationDataController alloc]init];
-        [self.locationDataController initializeDefaultDataList];
-        [self initTableData];
+
     }
     return self;
 }
@@ -33,7 +32,8 @@
 {
     [super viewDidLoad];
     self.favouriteTableView = [[UITableView alloc] initWithFrame:CGRectZero];
-    
+    self.favouriteTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
     self.favouriteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.favouriteTableView.delegate = self;
     self.favouriteTableView.dataSource = self;
@@ -43,6 +43,13 @@
 
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.locationDataController initializeDefaultDataList];
+    [self initTableData];
+    [self.favouriteTableView reloadData];
+}
 
 -(void)initTableData
 {
@@ -67,10 +74,11 @@
     static NSString *cellIdentifier = @"favCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     AMapPOI *currentPOI = [self.favouriteItemArray objectAtIndex:indexPath.row];
     cell.textLabel.text = currentPOI.name;
+    cell.detailTextLabel.text = currentPOI.address;
     return cell;
 }
 

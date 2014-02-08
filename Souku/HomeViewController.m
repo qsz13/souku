@@ -80,6 +80,8 @@
 -(void)initTableView
 {
     self.parkingLotTableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.parkingLotTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
     self.parkingLotTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.parkingLotTableView.delegate = self;
     self.parkingLotTableView.dataSource = self;
@@ -155,7 +157,7 @@
     static NSString *cellIdentifier = @"homeCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = [self.parkArray objectAtIndex:indexPath.row];
     return cell;

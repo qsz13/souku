@@ -38,6 +38,7 @@
 		353DCA8C189D60C200D8A6DF /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */; };
 		353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA8E189D646C00D8A6DF /* POIAnnotation.m */; };
 		353DCA92189DFEAB00D8A6DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 353DCA91189DFEAB00D8A6DF /* Images.xcassets */; };
+		354E3A5218A609E40039AE16 /* SettingOfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 354E3A5118A609E40039AE16 /* SettingOfflineViewController.m */; };
 		3561939E18A0E60400030B11 /* LocationDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3561939D18A0E60400030B11 /* LocationDetail.xib */; };
 		35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AF0940189F573000642587 /* LocationDetailViewController.m */; };
 		35C06F6018A4E53A004AC9EA /* FavList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35C06F5F18A4E53A004AC9EA /* FavList.plist */; };
@@ -104,6 +105,8 @@
 		353DCA8E189D646C00D8A6DF /* POIAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAnnotation.m; sourceTree = "<group>"; };
 		353DCA90189D68D200D8A6DF /* Guangzhou.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Guangzhou.gpx; sourceTree = "<group>"; };
 		353DCA91189DFEAB00D8A6DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		354E3A5018A609E40039AE16 /* SettingOfflineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingOfflineViewController.h; sourceTree = "<group>"; };
+		354E3A5118A609E40039AE16 /* SettingOfflineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingOfflineViewController.m; sourceTree = "<group>"; };
 		3561939D18A0E60400030B11 /* LocationDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationDetail.xib; sourceTree = "<group>"; };
 		35AF093F189F573000642587 /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
 		35AF0940189F573000642587 /* LocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailViewController.m; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 				353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */,
 				353DCA82189D4FF000D8A6DF /* SettingViewController.h */,
 				353DCA83189D4FF000D8A6DF /* SettingViewController.m */,
+				354E3A5018A609E40039AE16 /* SettingOfflineViewController.h */,
+				354E3A5118A609E40039AE16 /* SettingOfflineViewController.m */,
 				35AF093F189F573000642587 /* LocationDetailViewController.h */,
 				35AF0940189F573000642587 /* LocationDetailViewController.m */,
 				353DCA8D189D646C00D8A6DF /* POIAnnotation.h */,
@@ -375,6 +380,7 @@
 				3505596518A12480002519E0 /* NavigationViewController.m in Sources */,
 				353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */,
 				35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */,
+				354E3A5218A609E40039AE16 /* SettingOfflineViewController.m in Sources */,
 				353DCA41189D470300D8A6DF /* main.m in Sources */,
 				353DCA79189D49F200D8A6DF /* HomeViewController.m in Sources */,
 				3512101718A274EE003B07BF /* CommonUtility.m in Sources */,

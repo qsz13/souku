@@ -34,6 +34,9 @@
 {
     [super viewDidLoad];
     self.aroundTableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.aroundTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.aroundTableView setScrollEnabled:NO];
+
     self.aroundTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.aroundTableView.delegate = self;
     self.aroundTableView.dataSource = self;
@@ -53,7 +56,7 @@
     static NSString *cellIdentifier = @"aroundCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         }
     cell.textLabel.text = [self.aroundItem objectAtIndex:indexPath.row];
     return cell;
