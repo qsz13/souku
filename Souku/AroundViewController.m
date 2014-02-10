@@ -89,7 +89,6 @@
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.selected = NO;
-    //SearchResultViewController *searchResultViewController = nil;
     searchResultViewController = [[SearchResultViewController alloc] init];
     NSString *searchKey = [self.aroundItem objectAtIndex:indexPath.row];
     searchResultViewController.searchKey = searchKey;

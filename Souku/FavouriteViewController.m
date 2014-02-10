@@ -65,7 +65,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //NSLog(@"%d",self.favouriteItemArray.count);
     return self.favouriteItemArray.count;
 }
 

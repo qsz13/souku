@@ -42,12 +42,11 @@ static MAUserLocation *currentLocation = nil;
 -(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
 {
     currentLocation = userLocation;
-    //NSLog(@"%@",currentLocation);
 }
 
 - (void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
-    NSLog(@"failed");
+    NSLog(@"get location failed, should warn user");
 }
 
 -(MAMapView *)getMap

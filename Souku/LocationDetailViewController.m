@@ -60,22 +60,14 @@
     [self initTitle];
     [self initContent];
     [self initButton];
-
 }
 
 - (void)initTitle
 {
-//    UILabel *titleLabel = [[UILabel alloc] init];
-//    titleLabel.backgroundColor  = [UIColor clearColor];
-//    titleLabel.text             = @"详细信息";
-//    [titleLabel sizeToFit];
+
     self.navigationItem.title= @"详细信息";
 }
 
--(void)viewDidLayoutSubviews
-{
-    
-}
 
 -(void)initContent
 {
@@ -85,7 +77,7 @@
     
     poiNameLabel = [[UILabel alloc]init];
     poiNameLabel.numberOfLines = 0;
-    poiNameLabel.text = self.poi.name;      //[self.poiNameLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    poiNameLabel.text = self.poi.name;
     poiNameLabel.frame = CGRectMake(30, 50, screenWidth-2*30, 20);
     [poiNameLabel setFont:[UIFont systemFontOfSize:20]];
     [poiNameLabel sizeToFit];
@@ -201,7 +193,6 @@
 {
     self.navigationViewController = [[NavigationViewController alloc] init];
     self.navigationViewController.poi = self.poi;
-    //self.navigationViewController.currentLocation = self.currentLocation;
     [[self navigationController] pushViewController:self.navigationViewController animated:YES];
 }
 
@@ -213,26 +204,6 @@
 }
 
 
-
-
-
-- (void)returnAction
-{
-        
-    
-    
-    
-    
-}
-
-
-
--(void) viewWillDisappear:(BOOL)animated {
-    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
-        [self returnAction];
-    }
-    [super viewWillDisappear:animated];
-}
 
 
 

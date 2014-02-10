@@ -76,13 +76,7 @@
             [[self navigationController] pushViewController:self.settingOfflineViewController animated:YES];
             break;
     }
-    
-//    AroundMapViewController *aroundMapViewController = [[AroundMapViewController alloc] init];
-//    aroundMapViewController.searchKey = [self.aroundItem objectAtIndex:indexPath.row];
-//    aroundMapViewController.hidesBottomBarWhenPushed = YES;
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    cell.selected = NO;
-//    [[self navigationController] pushViewController:aroundMapViewController animated:YES];
+
 }
 
 

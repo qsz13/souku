@@ -70,8 +70,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    self.mapView.showsUserLocation = YES;    //YES turn on positioning, NO turn off positioning
-//    [self.mapView setUserTrackingMode: MAUserTrackingModeFollowWithHeading animated:YES];
 }
 
 
@@ -93,7 +91,6 @@
 {
     self.mapView = [[MapView sharedManager] getMap];
     self.mapView.frame = self.view.bounds;
-    //self.mapView.delegate = self;
 }
 
 -(void)initToggleButon
@@ -150,12 +147,6 @@
 }
 
 
-//#pragma mark - Positioning Callback
--(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
-{
- //   NSLog(@"!!!!!");
-}
-
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -173,13 +164,12 @@
     }
     cell.textLabel.text = [self.parkArray objectAtIndex:indexPath.row];
     return cell;
-    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    //self.mapView.delegate = nil;
+    self.mapView.delegate = [MapView sharedManager];
     
 }
 

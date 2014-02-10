@@ -15,7 +15,6 @@
 @interface LocationDetailViewController : UIViewController
 
 @property (nonatomic, strong) AMapPOI *poi;
-//@property (strong, nonatomic) CLLocation *currentLocation;
 
 
 

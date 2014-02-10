@@ -16,7 +16,6 @@
 @interface NavigationViewController : UIViewController<AMapSearchDelegate,MAMapViewDelegate>
 
 @property (nonatomic, strong) AMapPOI *poi;
-//@property (strong, nonatomic) CLLocation *currentLocation;
 
 
 @end

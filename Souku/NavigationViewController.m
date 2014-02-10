@@ -42,12 +42,8 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self initNavigationBar];
     [self initMap];
-    [self initToolBar];
     [self initNavigationPoint];
- //   [NSThread detachNewThreadSelector:@selector(initNavigationPoint) toTarget:self withObject:nil];
 
 }
 
@@ -68,7 +64,6 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     
     [self addDefaultAnnotations];
     [self searchNaviDrive];
-    //[[NSRunLoop currentRunLoop] run];
 }
 
 - (void)onNavigationSearchDone:(AMapNavigationSearchRequest *)request
@@ -87,15 +82,6 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
 
 
-
-//-(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
-//{
-//    //NSLog(@"got it!");
-//    self.currentLocation = userLocation.location;
-//
-//}
-
-
 -(void)initMap
 {
     self.mapView = [[MapView sharedManager] getMap];
@@ -104,34 +90,7 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     [self.view addSubview:self.mapView];
 }
 
--(void)initToolBar
-{
-//    UIToolbar *topToolbar = [[UIToolbar alloc] init];
-//    topToolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 60);
-//    [self.view addSubview:topToolbar];
-}
 
-
-
-
--(void)initNavigationBar
-{
-
-//    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 60, [[UIScreen mainScreen] bounds].size.width, 60);
-//    [self.navigationController.navigationBar setFrame:frame];
-    
-    //self.navigationController.view.frame = CGRectMake(0.0, 100.0, 320.0, 426.0);
-//    CGRect screenRect = [[UIScreen mainScreen] bounds];
-//    CGFloat screenWidth = screenRect.size.width;
-//    CGFloat screenHeight = screenRect.size.height;
-//    CGFloat viewWidth = screenWidth;
-//    CGFloat viewHeight = 44;
-//    CGFloat x =0;
-//    CGFloat y = screenHeight-viewHeight;
-
-//    CGRect navigationBarFrame = CGRectMake(x, y, viewWidth, viewHeight);
-    //self.navigationController.navigationBar.frame = navigationBarFrame;
-}
 
 
 
@@ -163,8 +122,6 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     polylines = [CommonUtility polylinesForPath:self.route.paths[0]];
 
     [self.mapView addOverlays:polylines];
-    
-
     
     /* 缩放地图使其适应polylines的展示. */
     self.mapView.visibleMapRect = [CommonUtility mapRectForOverlays:polylines];
@@ -263,7 +220,6 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
 - (void)clearMapView
 {
-//    self.mapView.showsUserLocation = NO;
     
     [self.mapView removeAnnotations:self.mapView.annotations];
     

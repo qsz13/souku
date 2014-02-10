@@ -60,24 +60,21 @@ BOOL hasGotPOI;
 {
     [super viewDidAppear:animated];
     [self initMapView];
+    
     if(poiAnnotations == nil || self.poiArray == nil)
     {
         [self searchPoiByCenterCoordinate];
-
     }
     else
     {
         [self addAnnotationsReloadData];
     }
     
-    
     if((![self.view.subviews containsObject:self.resultTableView])&&
        (![self.view.subviews containsObject:self.mapView]))
     {
         [self.view addSubview:self.mapView];
     }
-    
-    
 }
 
 - (void)initHUD
@@ -102,7 +99,6 @@ BOOL hasGotPOI;
     self.mapView = [[MapView sharedManager] getMap];
     self.mapView.frame = self.view.bounds;
     self.mapView.delegate = self;
-
 }
 
 -(void)initTableView
@@ -113,8 +109,6 @@ BOOL hasGotPOI;
     self.resultTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.resultTableView.delegate = self;
     self.resultTableView.dataSource = self;
-
-    
 }
 
 - (void)mapView:(MAMapView *)mapView regionDidChangeAnimated:(BOOL)animated
@@ -134,7 +128,6 @@ BOOL hasGotPOI;
         
         LocationDetailViewController *detail = [[LocationDetailViewController alloc] init];
         detail.poi = poiAnnotation.poi;
-        //detail.currentLocation = self.currentLocation.location;
         [self clearMapView];
         /* 进入POI详情页面. */
         [self.navigationController pushViewController:detail animated:YES];
@@ -192,7 +185,6 @@ BOOL hasGotPOI;
     }
     
     [self.view addSubview: self.resultTableView];
-    //NSLog(@"%@",self.resultTableView);
     [self.resultTableView reloadData];
 
     
@@ -202,11 +194,8 @@ BOOL hasGotPOI;
                                                           style:UIBarButtonItemStyleBordered
                                                          target:self
                                                          action:@selector(map)];
-
     }
-    
     self.navigationItem.rightBarButtonItem = self.mapButton;
-    
 }
 
 -(void)map
@@ -337,7 +326,6 @@ BOOL hasGotPOI;
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.selected = NO;
     self.locationDetailViewController = [[LocationDetailViewController alloc] init];
-    //self.locationDetailViewController.currentLocation = self.currentLocation.location;
     self.locationDetailViewController.poi = [self.poiArray objectAtIndex:indexPath.row];
     self.locationDetailViewController.hidesBottomBarWhenPushed = YES;
     [self clearMapView];
@@ -364,11 +352,9 @@ BOOL hasGotPOI;
 
 -(void)mapView:(MAMapView*)mapView didFailToLocateUserWithError:(NSError*)error
 {
-    NSLog(@"qsz:get location failed");
+    NSLog(@"get location failed should warn user");
     [self.hud hide:YES];
-
 }
-
 
 
 - (void)returnAction
@@ -376,35 +362,17 @@ BOOL hasGotPOI;
     [self clearMapView];
     
     [self clearSearch];
-    
-    
-    self.searchKey = nil;
-   // self.currentLocation = nil;
-    self.poiArray = nil;
-    self.resultTableView = nil;
-    
-
-    self.poiAnnotations = nil;
-    self.poiAnnotationView = nil;
-    self.hud = nil;
-    self.mapButton = nil;
-    self.tableButton = nil;
-    self.locationDetailViewController = nil;
-    
 }
 
 
 - (void)clearMapView
 {
-    //self.mapView.showsUserLocation = NO;
     
     [self.mapView removeAnnotations:self.mapView.annotations];
     
     [self.mapView removeOverlays:self.mapView.overlays];
     
     self.mapView.delegate = [MapView sharedManager];
-    
-    
 
 }
 
