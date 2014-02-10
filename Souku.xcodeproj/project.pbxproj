@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3505596518A12480002519E0 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3505596418A12480002519E0 /* NavigationViewController.m */; };
+		3510C24E18A7DD5E007C1901 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3510C24D18A7DD5E007C1901 /* MapView.m */; };
 		3512101718A274EE003B07BF /* CommonUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3512101618A274EE003B07BF /* CommonUtility.m */; };
 		3512101A18A2756C003B07BF /* LineDashPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 3512101918A2756C003B07BF /* LineDashPolyline.m */; };
 		353DCA35189D470300D8A6DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA34189D470300D8A6DF /* Foundation.framework */; };
@@ -32,7 +33,7 @@
 		353DCA7E189D4FCB00D8A6DF /* AroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA7D189D4FCB00D8A6DF /* AroundViewController.m */; };
 		353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */; };
 		353DCA84189D4FF000D8A6DF /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA83189D4FF000D8A6DF /* SettingViewController.m */; };
-		353DCA8A189D5D7200D8A6DF /* AroundMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA89189D5D7200D8A6DF /* AroundMapViewController.m */; };
+		353DCA8A189D5D7200D8A6DF /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA89189D5D7200D8A6DF /* SearchResultViewController.m */; };
 		353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 353DCA8E189D646C00D8A6DF /* POIAnnotation.m */; };
 		354E3A5218A609E40039AE16 /* SettingOfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 354E3A5118A609E40039AE16 /* SettingOfflineViewController.m */; };
 		354E3A5618A627660039AE16 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354E3A5518A627660039AE16 /* OpenGLES.framework */; };
@@ -63,6 +64,8 @@
 		021D05ABD1AF4434BB12B74E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3505596318A12480002519E0 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		3505596418A12480002519E0 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
+		3510C24C18A7DD5E007C1901 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
+		3510C24D18A7DD5E007C1901 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapView.m; sourceTree = "<group>"; };
 		3512101518A274EE003B07BF /* CommonUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonUtility.h; sourceTree = "<group>"; };
 		3512101618A274EE003B07BF /* CommonUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUtility.m; sourceTree = "<group>"; };
 		3512101818A2756C003B07BF /* LineDashPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineDashPolyline.h; sourceTree = "<group>"; };
@@ -100,8 +103,8 @@
 		353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavouriteViewController.m; sourceTree = "<group>"; };
 		353DCA82189D4FF000D8A6DF /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		353DCA83189D4FF000D8A6DF /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
-		353DCA88189D5D7200D8A6DF /* AroundMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AroundMapViewController.h; sourceTree = "<group>"; };
-		353DCA89189D5D7200D8A6DF /* AroundMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AroundMapViewController.m; sourceTree = "<group>"; };
+		353DCA88189D5D7200D8A6DF /* SearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewController.h; sourceTree = "<group>"; };
+		353DCA89189D5D7200D8A6DF /* SearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
 		353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AMapSearchKit.framework; path = AMap_iOS_API_Lib_V2.1.3/Search/AMapSearchKit.framework; sourceTree = "<group>"; };
 		353DCA8D189D646C00D8A6DF /* POIAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAnnotation.h; sourceTree = "<group>"; };
 		353DCA8E189D646C00D8A6DF /* POIAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAnnotation.m; sourceTree = "<group>"; };
@@ -209,12 +212,14 @@
 			children = (
 				353DCA43189D470300D8A6DF /* AppDelegate.h */,
 				353DCA44189D470300D8A6DF /* AppDelegate.m */,
+				3510C24C18A7DD5E007C1901 /* MapView.h */,
+				3510C24D18A7DD5E007C1901 /* MapView.m */,
 				353DCA77189D49F200D8A6DF /* HomeViewController.h */,
 				353DCA78189D49F200D8A6DF /* HomeViewController.m */,
 				353DCA7C189D4FCB00D8A6DF /* AroundViewController.h */,
 				353DCA7D189D4FCB00D8A6DF /* AroundViewController.m */,
-				353DCA88189D5D7200D8A6DF /* AroundMapViewController.h */,
-				353DCA89189D5D7200D8A6DF /* AroundMapViewController.m */,
+				353DCA88189D5D7200D8A6DF /* SearchResultViewController.h */,
+				353DCA89189D5D7200D8A6DF /* SearchResultViewController.m */,
 				353DCA7F189D4FE000D8A6DF /* FavouriteViewController.h */,
 				353DCA80189D4FE000D8A6DF /* FavouriteViewController.m */,
 				353DCA82189D4FF000D8A6DF /* SettingViewController.h */,
@@ -422,6 +427,7 @@
 				353DCA45189D470300D8A6DF /* AppDelegate.m in Sources */,
 				3512101A18A2756C003B07BF /* LineDashPolyline.m in Sources */,
 				35C06F6618A4FFB4004AC9EA /* AMapGeoPoint+storage.m in Sources */,
+				3510C24E18A7DD5E007C1901 /* MapView.m in Sources */,
 				353DCA7E189D4FCB00D8A6DF /* AroundViewController.m in Sources */,
 				35C06F6918A5061E004AC9EA /* LocationDataController.m in Sources */,
 				3505596518A12480002519E0 /* NavigationViewController.m in Sources */,
@@ -432,7 +438,7 @@
 				353DCA79189D49F200D8A6DF /* HomeViewController.m in Sources */,
 				3512101718A274EE003B07BF /* CommonUtility.m in Sources */,
 				353DCA8F189D646C00D8A6DF /* POIAnnotation.m in Sources */,
-				353DCA8A189D5D7200D8A6DF /* AroundMapViewController.m in Sources */,
+				353DCA8A189D5D7200D8A6DF /* SearchResultViewController.m in Sources */,
 				353DCA84189D4FF000D8A6DF /* SettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

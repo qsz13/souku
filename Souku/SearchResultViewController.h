@@ -14,10 +14,12 @@
 #import "LocationDetailViewController.h"
 #import "MBProgressHUD.h"
 
-@interface AroundMapViewController : UIViewController<MAMapViewDelegate, AMapSearchDelegate,MBProgressHUDDelegate>
+@interface SearchResultViewController : UIViewController<MAMapViewDelegate, AMapSearchDelegate,MBProgressHUDDelegate,UITableViewDelegate, UITableViewDataSource>
 
 
 @property (strong, nonatomic) AMapSearchAPI *search;
 @property (strong, nonatomic) NSString *searchKey;
 @property (strong, nonatomic) MAUserLocation *currentLocation;
+@property (strong, nonatomic) NSMutableArray *poiArray;
+
 @end

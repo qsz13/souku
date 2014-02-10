@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AroundMapViewController.h"
 
 @interface AroundViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 

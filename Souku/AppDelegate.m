@@ -24,6 +24,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+    
     [self configureAPIKey];
     
     UIViewController *homeViewController = [[HomeViewController alloc] init];

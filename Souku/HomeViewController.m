@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "MapView.h"
 
 @interface HomeViewController ()
 
@@ -53,7 +54,7 @@
     [super viewDidLoad];
     [self initTableView];
     [self initMapView];
-    self.view = self.parkingLotTableView;
+    [self.view addSubview: self.parkingLotTableView];
 }
 
 
@@ -69,8 +70,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.mapView.showsUserLocation = YES;    //YES turn on positioning, NO turn off positioning
-    [self.mapView setUserTrackingMode: MAUserTrackingModeFollowWithHeading animated:YES];
+//    self.mapView.showsUserLocation = YES;    //YES turn on positioning, NO turn off positioning
+//    [self.mapView setUserTrackingMode: MAUserTrackingModeFollowWithHeading animated:YES];
 }
 
 
@@ -90,18 +91,19 @@
 
 -(void)initMapView
 {
-    self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
-    self.mapView.delegate = self;
+    self.mapView = [[MapView sharedManager] getMap];
+    self.mapView.frame = self.view.bounds;
+    //self.mapView.delegate = self;
 }
 
 -(void)initToggleButon
 {
-    if(self.view == self.parkingLotTableView)
+    if([self.view.subviews containsObject: self.parkingLotTableView])
     {
         NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.mapButton,self.refreshButton,self.searchButton, nil];
         self.navigationItem.rightBarButtonItems = topRightButtons;
     }
-    else if(self.view == self.mapView)
+    else if([self.view.subviews containsObject: self.mapView])
     {
         NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.listButton,self.refreshButton,self.searchButton, nil];
         self.navigationItem.rightBarButtonItems = topRightButtons;
@@ -111,7 +113,12 @@
 #pragma mark - Button Callback
 -(void)map
 {
-    self.view = self.mapView;
+    if([self.view.subviews containsObject:self.parkingLotTableView])
+    {
+        [self.parkingLotTableView removeFromSuperview];
+    }
+    
+    [self.view addSubview: self.mapView];
     if(self.listButton ==nil){
         self.listButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(list)];
     }
@@ -122,9 +129,14 @@
 -(void)list
 {
     
+    if([self.view.subviews containsObject:self.mapView])
+    {
+        [self.mapView removeFromSuperview];
+    }
+    
     NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.mapButton,self.refreshButton,self.searchButton, nil];
     self.navigationItem.rightBarButtonItems = topRightButtons;
-    self.view = self.parkingLotTableView;
+    [self.view addSubview: self.parkingLotTableView];
 }
 
 -(void)refresh
@@ -138,10 +150,10 @@
 }
 
 
-#pragma mark - Positioning Callback
+//#pragma mark - Positioning Callback
 -(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
 {
-    self.currentLocation = userLocation.location;
+ //   NSLog(@"!!!!!");
 }
 
 
@@ -161,6 +173,13 @@
     }
     cell.textLabel.text = [self.parkArray objectAtIndex:indexPath.row];
     return cell;
+    
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    //self.mapView.delegate = nil;
     
 }
 

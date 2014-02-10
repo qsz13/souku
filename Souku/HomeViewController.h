@@ -13,5 +13,6 @@
 
 
 @property (strong, nonatomic) NSArray *parkArray;
-@property (strong, nonatomic) CLLocation *currentLocation;
+//@property (strong, nonatomic) CLLocation *currentLocation;
+
 @end

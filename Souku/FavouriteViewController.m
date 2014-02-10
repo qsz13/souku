@@ -57,7 +57,7 @@
     for(AMapPOI *poi in self.locationDataController.locationList)
     {
         [self.favouriteItemArray addObject:poi];
-        NSLog(@"%@",poi.name);
+
     }
     
 }
@@ -65,7 +65,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%d",self.favouriteItemArray.count);
+    //NSLog(@"%d",self.favouriteItemArray.count);
     return self.favouriteItemArray.count;
 }
 
@@ -84,7 +84,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LocationDetailViewController *detail = [[LocationDetailViewController alloc] initWithNibName:@"LocationDetail" bundle:nil];
+    LocationDetailViewController *detail = [[LocationDetailViewController alloc] init];
     detail.poi = [self.favouriteItemArray objectAtIndex:indexPath.row];
     detail.hidesBottomBarWhenPushed = YES;
     

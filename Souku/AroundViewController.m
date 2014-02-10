@@ -7,12 +7,13 @@
 //
 
 #import "AroundViewController.h"
+#import "SearchResultViewController.h"
 
 
 @interface AroundViewController ()
 
 @property (strong, nonatomic) UITableView *aroundTableView;
-@property (strong, nonatomic) AroundMapViewController *aroundMapViewController;
+@property (strong, nonatomic) SearchResultViewController *searchResultViewController;
 @property (strong, nonatomic) MBProgressHUD *HUD;
 
 @end
@@ -20,6 +21,7 @@
 @implementation AroundViewController
 
 @synthesize aroundItem;
+@synthesize searchResultViewController;
 @synthesize HUD;
 
 #pragma mark - Life Cycle
@@ -87,12 +89,13 @@
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.selected = NO;
-    self.aroundMapViewController = [[AroundMapViewController alloc] init];
+    //SearchResultViewController *searchResultViewController = nil;
+    searchResultViewController = [[SearchResultViewController alloc] init];
     NSString *searchKey = [self.aroundItem objectAtIndex:indexPath.row];
-    self.aroundMapViewController.searchKey = searchKey;
-    self.aroundMapViewController.hidesBottomBarWhenPushed = YES;
-    [[self navigationController] pushViewController:self.aroundMapViewController animated:YES];
-
+    searchResultViewController.searchKey = searchKey;
+    searchResultViewController.hidesBottomBarWhenPushed = YES;
+    [[self navigationController] pushViewController:
+     searchResultViewController animated:YES];
 }
 
 

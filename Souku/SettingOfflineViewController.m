@@ -54,9 +54,6 @@
     CGFloat viewHeight = screenHeight - 2*y;
     
     CGRect tableFrame = CGRectMake(x, y, viewWidth, viewHeight);
-    //    NSLog(@"%f",screenWidth);
-    //    NSLog(@"x:%f,y:%f,width:%f,height:%f",2*w,h,screenWidth-2*w,screenHeight-2*h);
-    //    NSLog(@"%f,%f",w,h);
     self.citysSelectTable = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStyleGrouped];
     
     self.citysSelectTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

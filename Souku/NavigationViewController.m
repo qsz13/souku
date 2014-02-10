@@ -7,19 +7,27 @@
 //
 
 #import "NavigationViewController.h"
+#import "MapView.h"
+
 
 const NSString *NavigationViewControllerStartTitle       = @"起点";
 const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
 @interface NavigationViewController ()
 
+
 @property (nonatomic, strong) AMapRoute *route;
-@property (nonatomic, strong) NSLock *lock;
+@property (nonatomic) CLLocationCoordinate2D startCoordinate;
+@property (nonatomic) CLLocationCoordinate2D destinationCoordinate;
+@property (strong,nonatomic) NSMutableArray *annotations;
+@property (nonatomic, strong) MAMapView *mapView;
+@property (nonatomic, strong) AMapSearchAPI *search;
+
 @end
 
 @implementation NavigationViewController
 
-@synthesize bottomToolbar;
+
 @synthesize route;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,38 +45,36 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     
     [self initNavigationBar];
     [self initMap];
-    [self initTitleBar];
     [self initToolBar];
- 
-    [NSThread detachNewThreadSelector:@selector(initNavigationPoint) toTarget:self withObject:nil];
-    
-    
+    [self initNavigationPoint];
+ //   [NSThread detachNewThreadSelector:@selector(initNavigationPoint) toTarget:self withObject:nil];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
 }
 
 -(void)initNavigationPoint
 {
-    if(self.currentLocation == nil)
-    {
-        while(self.currentLocation == nil)
-        {
-            sleep(1);
-        }
-    }
-
-    self.startCoordinate        = self.currentLocation.coordinate;
+    
+    MAUserLocation *currentLocation = [[MapView sharedManager] getCurrentLocation];
+    NSLog(@"%@",currentLocation);
+    self.startCoordinate        = currentLocation.coordinate;
     self.destinationCoordinate  = CLLocationCoordinate2DMake(self.poi.location.latitude, self.poi.location.longitude);
     
     
     [self addDefaultAnnotations];
     [self searchNaviDrive];
-    [[NSRunLoop currentRunLoop] run];
+    //[[NSRunLoop currentRunLoop] run];
 }
 
 - (void)onNavigationSearchDone:(AMapNavigationSearchRequest *)request
                       response:(AMapNavigationSearchResponse *)response
 {
-    NSLog(@"kajsdhflkj");
-    
+     NSLog(@"search done");
     if (response.route == nil)
     {
         return;
@@ -79,57 +85,52 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    self.mapView.showsUserLocation = YES;    //YES turn on positioning, NO turn off positioning
-    [self.mapView setUserTrackingMode: MAUserTrackingModeFollowWithHeading animated:YES];
-}
 
 
--(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
-{
-    NSLog(@"got it!");
-    self.currentLocation = userLocation.location;
 
-}
+//-(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
+//{
+//    //NSLog(@"got it!");
+//    self.currentLocation = userLocation.location;
+//
+//}
 
 
 -(void)initMap
 {
-    self.mapView=[[MAMapView alloc] initWithFrame:self.view.bounds];
+    self.mapView = [[MapView sharedManager] getMap];
+    self.mapView.frame = self.view.bounds;
     self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
 }
 
--(void)initTitleBar
-{
-    UIToolbar *topToolbar = [[UIToolbar alloc] init];
-    topToolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 60);
-    [self.view addSubview:topToolbar];
-}
-
-
 -(void)initToolBar
 {
-    bottomToolbar = [[UIToolbar alloc] init];
-    bottomToolbar.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 60, [[UIScreen mainScreen] bounds].size.width, 60);
-    
-    NSMutableArray *items = [[NSMutableArray alloc] init];
-    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(returnAction)];
-    [items addObject:back];
-    
-    bottomToolbar.items = items;
-
-    [self.view addSubview:bottomToolbar];
-
+//    UIToolbar *topToolbar = [[UIToolbar alloc] init];
+//    topToolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 60);
+//    [self.view addSubview:topToolbar];
 }
+
 
 
 
 -(void)initNavigationBar
 {
-    [self.navigationController setNavigationBarHidden:YES];
+
+//    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 60, [[UIScreen mainScreen] bounds].size.width, 60);
+//    [self.navigationController.navigationBar setFrame:frame];
+    
+    //self.navigationController.view.frame = CGRectMake(0.0, 100.0, 320.0, 426.0);
+//    CGRect screenRect = [[UIScreen mainScreen] bounds];
+//    CGFloat screenWidth = screenRect.size.width;
+//    CGFloat screenHeight = screenRect.size.height;
+//    CGFloat viewWidth = screenWidth;
+//    CGFloat viewHeight = 44;
+//    CGFloat x =0;
+//    CGFloat y = screenHeight-viewHeight;
+
+//    CGRect navigationBarFrame = CGRectMake(x, y, viewWidth, viewHeight);
+    //self.navigationController.navigationBar.frame = navigationBarFrame;
 }
 
 
@@ -163,7 +164,7 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
     [self.mapView addOverlays:polylines];
     
-    NSLog(@"%@",polylines);
+
     
     /* 缩放地图使其适应polylines的展示. */
     self.mapView.visibleMapRect = [CommonUtility mapRectForOverlays:polylines];
@@ -252,30 +253,40 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 
 - (void)returnAction
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    
-    [self.navigationController setNavigationBarHidden:NO];
-    
     [self clearMapView];
     
     [self clearSearch];
+
+
+
 }
 
 - (void)clearMapView
 {
-    self.mapView.showsUserLocation = NO;
+//    self.mapView.showsUserLocation = NO;
     
     [self.mapView removeAnnotations:self.mapView.annotations];
     
     [self.mapView removeOverlays:self.mapView.overlays];
     
-    self.mapView.delegate = nil;
+    self.mapView.delegate = [MapView sharedManager];
+
+    
+    self.poi = nil;
 }
 
 - (void)clearSearch
 {
     self.search.delegate = nil;
 }
+
+-(void) viewWillDisappear:(BOOL)animated {
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+        [self returnAction];
+    }
+    [super viewWillDisappear:animated];
+}
+
 
 
 @end
