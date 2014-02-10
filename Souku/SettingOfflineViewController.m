@@ -32,7 +32,6 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor lightGrayColor]];
     [self getCities];
-    self.navigationController.title = @"离线地图";
     [self initTableView];
 
 }

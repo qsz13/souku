@@ -34,7 +34,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"主页";
-        //self.tabBarItem.image = [UIImage imageNamed:@"homeItem"];
+
+//        self.tabBarItem.image = [UIImage imageNamed:@"homeItem"];
         self.navigationItem.title = @"";
         self.mapButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemAction) target:(self) action:@selector(map)];
         self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemRefresh) target:(self) action:@selector(refresh)];

@@ -200,7 +200,16 @@
 {
     LocationDataController *locationDataController = [[LocationDataController alloc]init];
     [locationDataController initializeDefaultDataList];
-    [locationDataController addPOI:self.poi];
+    
+    if([locationDataController containsPOI:self.poi])
+    {
+        [locationDataController removePOI:self.poi];
+    }
+    else
+    {
+        [locationDataController addPOI:self.poi];
+    }
+    
 }
 
 

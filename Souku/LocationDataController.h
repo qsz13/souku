@@ -14,5 +14,6 @@
 @property (nonatomic)NSMutableArray *locationList;
 -(void)initializeDefaultDataList;
 -(void)addPOI:(AMapPOI *)poi;
-
+-(void) removePOI:(AMapPOI *)poi;
+-(bool)containsPOI:(AMapPOI *)poi;
 @end
