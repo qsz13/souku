@@ -11,6 +11,7 @@
 		3510C24E18A7DD5E007C1901 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3510C24D18A7DD5E007C1901 /* MapView.m */; };
 		3512101718A274EE003B07BF /* CommonUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3512101618A274EE003B07BF /* CommonUtility.m */; };
 		3512101A18A2756C003B07BF /* LineDashPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 3512101918A2756C003B07BF /* LineDashPolyline.m */; };
+		351EBB4418B1C5BA002DC07C /* POIAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 351EBB4318B1C5BA002DC07C /* POIAnnotationView.m */; };
 		353DCA35189D470300D8A6DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA34189D470300D8A6DF /* Foundation.framework */; };
 		353DCA37189D470300D8A6DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA36189D470300D8A6DF /* CoreGraphics.framework */; };
 		353DCA39189D470300D8A6DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA38189D470300D8A6DF /* UIKit.framework */; };
@@ -70,6 +71,8 @@
 		3512101618A274EE003B07BF /* CommonUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUtility.m; sourceTree = "<group>"; };
 		3512101818A2756C003B07BF /* LineDashPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineDashPolyline.h; sourceTree = "<group>"; };
 		3512101918A2756C003B07BF /* LineDashPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineDashPolyline.m; sourceTree = "<group>"; };
+		351EBB4218B1C5BA002DC07C /* POIAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAnnotationView.h; sourceTree = "<group>"; };
+		351EBB4318B1C5BA002DC07C /* POIAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAnnotationView.m; sourceTree = "<group>"; };
 		353DCA31189D470300D8A6DF /* Souku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Souku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		353DCA34189D470300D8A6DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		353DCA36189D470300D8A6DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -230,6 +233,8 @@
 				35AF0940189F573000642587 /* LocationDetailViewController.m */,
 				353DCA8D189D646C00D8A6DF /* POIAnnotation.h */,
 				353DCA8E189D646C00D8A6DF /* POIAnnotation.m */,
+				351EBB4218B1C5BA002DC07C /* POIAnnotationView.h */,
+				351EBB4318B1C5BA002DC07C /* POIAnnotationView.m */,
 				3505596318A12480002519E0 /* NavigationViewController.h */,
 				3505596418A12480002519E0 /* NavigationViewController.m */,
 				3512101518A274EE003B07BF /* CommonUtility.h */,
@@ -433,6 +438,7 @@
 				3505596518A12480002519E0 /* NavigationViewController.m in Sources */,
 				353DCA81189D4FE000D8A6DF /* FavouriteViewController.m in Sources */,
 				35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */,
+				351EBB4418B1C5BA002DC07C /* POIAnnotationView.m in Sources */,
 				354E3A5218A609E40039AE16 /* SettingOfflineViewController.m in Sources */,
 				353DCA41189D470300D8A6DF /* main.m in Sources */,
 				353DCA79189D49F200D8A6DF /* HomeViewController.m in Sources */,

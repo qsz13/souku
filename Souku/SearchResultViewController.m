@@ -145,7 +145,7 @@ BOOL hasGotPOI;
         {
             poiAnnotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:poiIdentifier];
             
-            poiAnnotationView.canShowCallout = YES;
+            poiAnnotationView.canShowCallout = NO;
             
             poiAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
             
@@ -163,10 +163,17 @@ BOOL hasGotPOI;
 {
     if(self.tableButton == nil)
     {
-        self.tableButton = [[UIBarButtonItem alloc] initWithTitle:@"table"
-                                                    style:UIBarButtonItemStyleBordered
-                                                    target:self
-                                                    action:@selector(table)];
+        CGFloat squareSize = self.navigationController.navigationBar.frame.size.height*2/3;
+        
+        UIButton *tableButtonTemp = [UIButton buttonWithType:UIButtonTypeCustom];
+        [tableButtonTemp setImage:[UIImage imageNamed:@"listButton"] forState:UIControlStateNormal];
+        [tableButtonTemp addTarget:self action:@selector(table) forControlEvents:UIControlEventTouchUpInside];
+        [tableButtonTemp setFrame:CGRectMake(0, 0, squareSize, squareSize)];
+        
+        self.tableButton = [[UIBarButtonItem alloc] initWithCustomView:tableButtonTemp];
+        
+        
+        
     }
     
     self.navigationItem.rightBarButtonItem = self.tableButton;
@@ -190,10 +197,16 @@ BOOL hasGotPOI;
     
     if(self.mapButton == nil)
     {
-        self.mapButton = [[UIBarButtonItem alloc] initWithTitle:@"map"
-                                                          style:UIBarButtonItemStyleBordered
-                                                         target:self
-                                                         action:@selector(map)];
+        CGFloat squareSize = self.navigationController.navigationBar.frame.size.height*2/3;
+        
+        UIButton *mapButtonTemp = [UIButton buttonWithType:UIButtonTypeCustom];
+        [mapButtonTemp setImage:[UIImage imageNamed:@"mapButton"] forState:UIControlStateNormal];
+        [mapButtonTemp addTarget:self action:@selector(map) forControlEvents:UIControlEventTouchUpInside];
+        [mapButtonTemp setFrame:CGRectMake(0, 0, squareSize, squareSize)];
+        
+        self.mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapButtonTemp];
+        
+
     }
     self.navigationItem.rightBarButtonItem = self.mapButton;
 }
@@ -252,8 +265,9 @@ BOOL hasGotPOI;
     AMapPlaceSearchRequest *request = [[AMapPlaceSearchRequest alloc] init];
     
     request.searchType          = AMapSearchType_PlaceAround;
-    //request.location            = [AMapGeoPoint locationWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude];
-    request.location            = [AMapGeoPoint locationWithLatitude:23.134993 longitude:113.312591];
+    self.currentLocation = [[MapView sharedManager]getCurrentLocation];
+    request.location            = [AMapGeoPoint locationWithLatitude:self.currentLocation.coordinate.latitude longitude:self.currentLocation.coordinate.longitude];
+    //request.location            = [AMapGeoPoint locationWithLatitude:23.134993 longitude:113.312591];
     request.keywords            = self.searchKey;
     /* 按照距离排序. */
     request.sortrule            = 1;
@@ -273,14 +287,14 @@ BOOL hasGotPOI;
 - (void)onPlaceSearchDone:(AMapPlaceSearchRequest *)request response:(AMapPlaceSearchResponse *)response
 {
     
-//    NSString *strCount = [NSString stringWithFormat:@"count: %d",response.count];
-//    NSString *strSuggestion = [NSString stringWithFormat:@"Suggestion: %@", response.suggestion];
-//    NSString *strPoi = @"";
-//    for (AMapPOI *p in response.pois) {
-//        strPoi = [NSString stringWithFormat:@"%@\nPOI: %@", strPoi, p.description];
-//    }
-//    NSString *result = [NSString stringWithFormat:@"%@ \n %@ \n %@", strCount, strSuggestion, strPoi];
-//    NSLog(@"Place: %@", result);
+    NSString *strCount = [NSString stringWithFormat:@"count: %d",response.count];
+    NSString *strSuggestion = [NSString stringWithFormat:@"Suggestion: %@", response.suggestion];
+    NSString *strPoi = @"";
+    for (AMapPOI *p in response.pois) {
+        strPoi = [NSString stringWithFormat:@"%@\nPOI: %@", strPoi, p.description];
+    }
+    NSString *result = [NSString stringWithFormat:@"%@ \n %@ \n %@", strCount, strSuggestion, strPoi];
+    NSLog(@"Place: %@", result);
     
     
     

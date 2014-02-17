@@ -121,7 +121,7 @@
     AMapPlaceSearchRequest *request = [[AMapPlaceSearchRequest alloc] init];
     
     request.searchType          = AMapSearchType_PlaceKeyword;
-    request.keywords            = @"肯德基";
+    request.keywords            = @"停车场";
     request.city                = @[@"010"];
     request.requireExtension    = YES;
     [self.search AMapPlaceSearch:request];
@@ -134,7 +134,7 @@
     
     request.searchType          = AMapSearchType_PlaceAround;
     request.location            = [AMapGeoPoint locationWithLatitude:39.990459 longitude:116.481476];
-    request.keywords            = @"餐饮";
+    request.keywords            = @"停车场";
     /* 按照距离排序. */
     request.sortrule            = 1;
     request.requireExtension    = YES;

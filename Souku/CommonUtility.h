@@ -42,4 +42,7 @@
 
 + (MAMapRect)minMapRectForAnnotations:(NSArray *)annotations;
 
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
+
+
 @end

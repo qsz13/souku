@@ -31,7 +31,7 @@
     if (self) {
         self.title = @"周边";
         //self.tabBarItem.image = [UIImage imageNamed:@"aroundItem"];
-        self.aroundItem = @[@"酒店住宿",@"餐饮服务",@"购物服务",@"生活服务",@"体育休闲",@"医疗保健",@"风景名胜"];
+        self.aroundItem = @[@"停车场",@"餐饮服务",@"购物服务",@"生活服务",@"体育休闲",@"医疗保健",@"风景名胜"];
     }
     return self;
 }

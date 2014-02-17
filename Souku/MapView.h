@@ -18,6 +18,7 @@
 +(MapView *)sharedManager;
 -(MAMapView *)getMap;
 -(MAUserLocation *)getCurrentLocation;
+-(void)setCurrentLocation:(MAUserLocation *)location;
 
 @end
 

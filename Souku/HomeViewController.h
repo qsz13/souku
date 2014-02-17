@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MAMapKit/MAMapKit.h>
+#import <AMapSearchKit/AMapSearchAPI.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 
-@interface HomeViewController:UIViewController<UITableViewDelegate, UITableViewDataSource, MAMapViewDelegate, UISearchBarDelegate>
+@interface HomeViewController:UIViewController<UITableViewDelegate, UITableViewDataSource, MAMapViewDelegate,AMapSearchDelegate,UISearchBarDelegate,MBProgressHUDDelegate>
 
 
-@property (strong, nonatomic) NSArray *parkArray;
 
 @end

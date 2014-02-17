@@ -7,7 +7,12 @@
 //
 
 #import "HomeViewController.h"
+#import "APIKey.h"
 #import "MapView.h"
+#import "CommonUtility.h"
+#import "POIAnnotation.h"
+
+
 
 @interface HomeViewController ()
 
@@ -17,13 +22,24 @@
 @property (strong, nonatomic) UIBarButtonItem *listButton;
 @property (strong, nonatomic) UIBarButtonItem *appLogo;
 @property (strong, nonatomic) UIBarButtonItem *appName;
+@property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UITableView *parkingLotTableView;
+@property (strong, nonatomic) UITableView *searchResultTable;
 @property (strong, nonatomic) MAMapView *mapView;
+@property (strong, nonatomic) AMapSearchAPI *searchAPI;
+@property (strong, nonatomic) NSMutableArray *searchResultArray;
+@property (strong, nonatomic) UITapGestureRecognizer *cancelSearchTap;
+@property (strong, nonatomic) MAUserLocation *currentLocation;
+@property (strong, nonatomic) NSMutableArray *parkArray;
+@property (strong, nonatomic) NSMutableArray *parkAnnotations;
+@property (strong, nonatomic) MBProgressHUD *hud;
 
 @end
 
 @implementation HomeViewController
 
+BOOL gotParkingInfo;
+BOOL loadParkingInfo;
 
 
 
@@ -34,17 +50,12 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"主页";
-
-//        self.tabBarItem.image = [UIImage imageNamed:@"homeItem"];
         self.navigationItem.title = @"";
-        self.mapButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemAction) target:(self) action:@selector(map)];
-        self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemRefresh) target:(self) action:@selector(refresh)];
-        self.searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemSearch) target:(self) action:@selector(search)];
+        self.searchAPI = [[AMapSearchAPI alloc] initWithSearchKey: (NSString *)APIKey Delegate:self];
+        self.searchResultArray = [[NSMutableArray alloc]init];
+        self.parkArray = [[NSMutableArray alloc]init];
+        gotParkingInfo = NO;
         
-        self.appLogo = [[UIBarButtonItem alloc] init];
-        [self.appLogo setTitle:@"logo"];
-        self.appName = [[UIBarButtonItem alloc] init];
-        [self.appName setTitle:@"搜库"];
     }
     return self;
 }
@@ -53,10 +64,216 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initNavigationBar];
     [self initTableView];
     [self initMapView];
     [self.view addSubview: self.parkingLotTableView];
+    [self.parkingLotTableView reloadData];
+    [self initHUD];
 }
+
+
+
+- (void)initHUD
+{
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.dimBackground = YES;
+    self.hud.delegate = self;
+    [self.navigationController.view addSubview:self.hud];
+   // UITapGestureRecognizer *HUDSingleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(singleTap:)];
+   // [self.hud addGestureRecognizer:HUDSingleTap];
+}
+
+
+- (void)initNavigationBar
+{
+    UIImage *logo =[UIImage imageNamed:@"logo"];
+    UIImageView *logoView= [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.height, self.navigationController.navigationBar.frame.size.height)];
+    logoView.image = logo;
+    self.appLogo = [[UIBarButtonItem alloc] initWithCustomView:logoView];
+    
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.height, self.navigationController.navigationBar.frame.size.height)];
+    nameLabel.text = @"搜 库";
+    [nameLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+    nameLabel.textColor = [UIColor whiteColor];
+    [nameLabel sizeToFit];
+    self.appName = [[UIBarButtonItem alloc] initWithCustomView:nameLabel];
+    
+    
+    CGFloat squareSize = self.navigationController.navigationBar.frame.size.height*2/3;
+    
+    UIButton *mapButtonTemp = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mapButtonTemp setImage:[UIImage imageNamed:@"mapButton"] forState:UIControlStateNormal];
+    [mapButtonTemp addTarget:self action:@selector(map) forControlEvents:UIControlEventTouchUpInside];
+    [mapButtonTemp setFrame:CGRectMake(0, 0, squareSize, squareSize)];
+    
+    UIButton *refreshButtonTemp = [UIButton buttonWithType:UIButtonTypeCustom];
+    [refreshButtonTemp setImage:[UIImage imageNamed:@"refreshButton"] forState:UIControlStateNormal];
+    [refreshButtonTemp addTarget:self action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
+    [refreshButtonTemp setFrame:CGRectMake(0, 0, squareSize, squareSize)];
+    
+    UIButton *searchButtonTemp = [UIButton buttonWithType:UIButtonTypeCustom];
+    [searchButtonTemp setImage:[UIImage imageNamed:@"searchButton"] forState:UIControlStateNormal];
+    [searchButtonTemp addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
+    [searchButtonTemp setFrame:CGRectMake(0, 0, squareSize, squareSize)];
+    
+    self.mapButton = [[UIBarButtonItem alloc] initWithCustomView:mapButtonTemp];
+    self.refreshButton = [[UIBarButtonItem alloc] initWithCustomView:refreshButtonTemp];
+    self.searchButton = [[UIBarButtonItem alloc] initWithCustomView:searchButtonTemp];
+    
+}
+
+
+- (void)searchParkingLot
+{
+    
+    
+
+    AMapPlaceSearchRequest *request = [[AMapPlaceSearchRequest alloc] init];
+    request.searchType          = AMapSearchType_PlaceKeyword;
+    request.keywords            = @"停车场";
+    request.city = @[@"020"];
+    //request.location            = [AMapGeoPoint locationWithLatitude:self.currentLocation.coordinate.latitude longitude:self.currentLocation.coordinate.longitude];
+    request.requireExtension    = YES;
+    [self.searchAPI AMapPlaceSearch:request];
+
+}
+
+
+- (void)searchPoiByKeyWord:(NSString *)keyWord
+{
+    AMapPlaceSearchRequest *request = [[AMapPlaceSearchRequest alloc] init];
+    
+    request.searchType          = AMapSearchType_PlaceKeyword;
+    
+    self.currentLocation = [[MapView sharedManager]getCurrentLocation];
+    
+    request.location            = [AMapGeoPoint locationWithLatitude:self.currentLocation.coordinate.latitude longitude:self.currentLocation.coordinate.longitude];
+    //request.location            = [AMapGeoPoint locationWithLatitude:23.134993 longitude:113.312591];
+    request.keywords            = keyWord;
+    /* 按照距离排序. */
+    request.sortrule            = 1;
+    request.requireExtension    = YES;
+    
+    /* 添加搜索结果过滤 */
+    AMapPlaceSearchFilter *filter = [[AMapPlaceSearchFilter alloc] init];
+    //filter.costFilter = @[@"100", @"200"];
+    filter.requireFilter = AMapRequireGroupbuy;
+    request.searchFilter = filter;
+    //NSLog(@"%@",keyWord);
+    [self.searchAPI AMapPlaceSearch:request];
+}
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if([searchText  isEqual: @""])
+    {
+        [self.searchResultTable removeFromSuperview];
+        
+        [self addGesture];
+       
+
+    }
+    else
+    {
+        [self.view addSubview:self.searchResultTable];
+        [self removeGesture];
+
+    }
+
+    [self searchPoiByKeyWord:searchText];
+    
+
+}
+
+
+- (void)onPlaceSearchDone:(AMapPlaceSearchRequest *)request response:(AMapPlaceSearchResponse *)response
+{
+    
+        NSString *strCount = [NSString stringWithFormat:@"count: %d",response.count];
+        NSString *strSuggestion = [NSString stringWithFormat:@"Suggestion: %@", response.suggestion];
+        NSString *strPoi = @"";
+        for (AMapPOI *p in response.pois) {
+            strPoi = [NSString stringWithFormat:@"%@\nPOI: %@", strPoi, p.description];
+        }
+        NSString *result = [NSString stringWithFormat:@"%@ \n %@ \n %@", strCount, strSuggestion, strPoi];
+        NSLog(@"Place: %@", result);
+    
+    
+    if(loadParkingInfo == NO)
+    {
+        loadParkingInfo = YES;
+        self.parkAnnotations = [NSMutableArray arrayWithCapacity:response.pois.count];
+        
+        [response.pois enumerateObjectsUsingBlock:^(AMapPOI *poi, NSUInteger idx, BOOL *stop) {
+            
+            [self.parkAnnotations addObject:[[POIAnnotation alloc] initWithPOI:poi]];
+            [self.parkArray addObject:poi];
+        }];
+        NSLog(@"!!!!!");
+        
+
+    }
+    else
+    {
+        [self.searchResultArray removeAllObjects];
+        [response.pois enumerateObjectsUsingBlock:^(AMapPOI *poi, NSUInteger idx, BOOL *stop) {
+            [self.searchResultArray addObject:poi];
+        }];
+        
+        
+    }
+    [self addAnnotationsReloadData];
+    [self.searchResultTable reloadData];
+    [self.parkingLotTableView reloadData];
+    
+
+    
+    
+}
+
+-(void)addAnnotationsReloadData
+{
+    [self.mapView addAnnotations:self.parkAnnotations];
+    
+    if (self.parkAnnotations.count == 1)
+    {
+        self.mapView.centerCoordinate = [self.parkAnnotations[0] coordinate];
+    }
+    else
+    {
+        [self.mapView showAnnotations:self.parkAnnotations animated:YES];
+    }
+    [self.parkingLotTableView reloadData];
+}
+
+
+
+- (void)addGesture
+{
+    if([self.view.subviews containsObject:self.parkingLotTableView])
+    {
+        [self.parkingLotTableView addGestureRecognizer:self.cancelSearchTap];
+    }
+    else if([self.view.subviews containsObject:self.mapView])
+    {
+        [self.mapView addGestureRecognizer:self.cancelSearchTap];
+    }
+}
+
+- (void)removeGesture
+{
+    if([self.view.subviews containsObject:self.parkingLotTableView])
+    {
+        [self.parkingLotTableView removeGestureRecognizer:self.cancelSearchTap];
+    }
+    else if([self.view.subviews containsObject:self.mapView])
+    {
+        [self.mapView removeGestureRecognizer:self.cancelSearchTap];
+    }
+}
+
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -68,42 +285,66 @@
 }
 
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
 
 
 #pragma mark - Init Views
 
 -(void)initTableView
 {
-    self.parkingLotTableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.parkingLotTableView = [[UITableView alloc] init];
+    self.parkingLotTableView.frame = self.view.bounds;
+
     self.parkingLotTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     self.parkingLotTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.parkingLotTableView.delegate = self;
     self.parkingLotTableView.dataSource = self;
     [self.parkingLotTableView reloadData];
+    
+
+    
 }
 
 -(void)initMapView
 {
     self.mapView = [[MapView sharedManager] getMap];
     self.mapView.frame = self.view.bounds;
+    self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
+    [self.mapView setUserTrackingMode: MAUserTrackingModeFollowWithHeading animated:YES];
+
 }
+
+-(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
+{
+    [self.hud hide:YES];
+    if ([[MapView sharedManager]getCurrentLocation]==nil)
+    {
+        [[MapView sharedManager]setCurrentLocation:userLocation];
+
+    }
+    self.currentLocation = [[MapView sharedManager]getCurrentLocation];
+    //NSLog(@"%@",self.currentLocation.);
+    if(!gotParkingInfo)
+    {
+        [self searchParkingLot];
+        gotParkingInfo = YES;
+    }
+    
+    
+}
+
 
 -(void)initToggleButon
 {
     if([self.view.subviews containsObject: self.parkingLotTableView])
     {
-        NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.mapButton,self.refreshButton,self.searchButton, nil];
+        NSArray *topRightButtons= @[self.mapButton,self.refreshButton,self.searchButton];
         self.navigationItem.rightBarButtonItems = topRightButtons;
     }
     else if([self.view.subviews containsObject: self.mapView])
     {
-        NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.listButton,self.refreshButton,self.searchButton, nil];
+        NSArray *topRightButtons= @[self.listButton,self.refreshButton,self.searchButton];
         self.navigationItem.rightBarButtonItems = topRightButtons;
     }
 }
@@ -118,9 +359,18 @@
     
     [self.view addSubview: self.mapView];
     if(self.listButton ==nil){
-        self.listButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(list)];
+        CGFloat squareSize = self.navigationController.navigationBar.frame.size.height*2/3;
+        
+        UIButton *listButtonTemp = [UIButton buttonWithType:UIButtonTypeCustom];
+        [listButtonTemp setImage:[UIImage imageNamed:@"listButton"] forState:UIControlStateNormal];
+        [listButtonTemp addTarget:self action:@selector(list) forControlEvents:UIControlEventTouchUpInside];
+        [listButtonTemp setFrame:CGRectMake(0, 0, squareSize, squareSize)];
+        
+        self.listButton = [[UIBarButtonItem alloc] initWithCustomView:listButtonTemp];
     }
-    NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.listButton,self.refreshButton,self.searchButton, nil];
+    
+    
+    NSArray *topRightButtons= @[self.listButton,self.refreshButton,self.searchButton];
     self.navigationItem.rightBarButtonItems = topRightButtons;
 }
 
@@ -132,7 +382,7 @@
         [self.mapView removeFromSuperview];
     }
     
-    NSArray *topRightButtons= [[NSArray alloc] initWithObjects:self.mapButton,self.refreshButton,self.searchButton, nil];
+    NSArray *topRightButtons= @[self.mapButton,self.refreshButton,self.searchButton];
     self.navigationItem.rightBarButtonItems = topRightButtons;
     [self.view addSubview: self.parkingLotTableView];
 }
@@ -145,26 +395,126 @@
 -(void)search
 {
     NSLog(@"search");
+    NSArray *topLeftButtons= @[self.appLogo];
+    self.navigationItem.leftBarButtonItems = topLeftButtons;
+    self.navigationItem.rightBarButtonItems = nil;
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 255.0f,44.0f)];
+    self.searchBar.delegate = self;   
+    
+    [self.searchBar setSearchFieldBackgroundImage:[CommonUtility imageWithImage:[UIImage imageNamed:@"searchBar"] scaledToSize:self.searchBar.frame.size] forState:UIControlStateNormal];
+    
+    
+    
+    self.navigationItem.titleView = self.searchBar;
+
+    self.cancelSearchTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    
+    [self addGesture];
+    [self.searchBar becomeFirstResponder];
+    
+    [self initSearchResultTableView];
+
+    
+    
 }
 
+- (void)dismissKeyboard
+{
+    [self removeGesture];
+    [self.searchBar resignFirstResponder];
+    self.navigationItem.titleView = nil;
+    NSArray *topLeftButtons= @[self.appLogo,self.appName];
+    self.navigationItem.leftBarButtonItems = topLeftButtons;
+    
+    [self initToggleButon];
+}
+
+-(void)initSearchResultTableView
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    CGFloat x = 10;
+    CGFloat y = 10;
+    CGFloat viewWidth = screenWidth - 2*x;
+    CGFloat viewHeight = screenHeight - 2*y;
+    
+    CGRect tableFrame = CGRectMake(x, y, viewWidth, viewHeight);
+    
+    
+    self.searchResultTable = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStyleGrouped];
+    
+    self.searchResultTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.searchResultTable.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    self.searchResultTable.delegate = self;
+    self.searchResultTable.dataSource = self;
+    self.searchResultTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.searchResultTable.contentInset = UIEdgeInsetsZero;
+    [self.searchResultTable reloadData];
+    if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
+    
+}
 
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.parkArray.count;
+    if(tableView == self.parkingLotTableView)
+    {
+        return self.parkArray.count;
+    }
+    else if(tableView == self.searchResultTable)
+    {
+        return self.searchResultArray.count;
+    }
+    NSLog(@"table unknow");
+    return 0;
+    
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"homeCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+  
+    
+    if(tableView == self.parkingLotTableView)
+    {
+        static NSString *cellIdentifier = @"parkCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        }
+        //cell.textLabel.text = [self.parkArray objectAtIndex:indexPath.row];
+        AMapPOI *poi = [self.parkArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = poi.name;
+        cell.detailTextLabel.text = poi.address;
+
+        return cell;
     }
-    cell.textLabel.text = [self.parkArray objectAtIndex:indexPath.row];
-    return cell;
+    else if(tableView == self.searchResultTable)
+    {
+        static NSString *cellIdentifier = @"searchCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        }
+        
+        
+        AMapPOI *poi = [self.searchResultArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = poi.name;
+        cell.detailTextLabel.text = poi.address;
+
+        return cell;
+    }
+    NSLog(@"table unknow");
+
+    return nil;
+    
+   
 }
 
 -(void)viewDidDisappear:(BOOL)animated

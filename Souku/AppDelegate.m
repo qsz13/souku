@@ -72,6 +72,14 @@
                                                             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
                                                             UITextAttributeFont: [UIFont fontWithName:@"Helvetica-Bold" size:20.0],
                                                             }];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{
+                                                           UITextAttributeTextColor: [UIColor whiteColor],
+                                                           UITextAttributeTextShadowColor: [UIColor clearColor],
+                                                           UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
+                                                           UITextAttributeFont: [UIFont fontWithName:@"Helvetica-Bold" size:20.0],
+                                                           } forState:UIControlStateNormal];
+    
+    
     
     self.tabBarController.viewControllers = @[homeNavigationController, aroundNavigationController, favouriteNavigationController, settingNavigationController];
     
