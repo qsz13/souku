@@ -7,16 +7,24 @@
 //
 
 #import <MAMapKit/MAMapKit.h>
+#import "MapCalloutView.h"
 
 @interface POIAnnotationView : MAAnnotationView
 
-@property (nonatomic, copy) NSString *name;
 
-@property (nonatomic, assign) NSInteger *idNumber;
 
-@property (nonatomic, strong) UIImage *portrait;
 
-@property (nonatomic, strong) UIView *calloutView;
+@property (nonatomic, strong) MapCalloutView *calloutView;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic,strong) UIViewController *parentViewController;
+
+
+
+- (void)setIconImage:(UIImage *)icon;
+
+- (NSString*)getIDString;
+
+- (void)setIDLabel:(NSString *)idStirng;
 
 
 @end

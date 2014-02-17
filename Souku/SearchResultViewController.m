@@ -8,12 +8,13 @@
 
 #import "SearchResultViewController.h"
 #import "MapView.h"
+#import "POIAnnotationView.h"
 @interface SearchResultViewController ()
 
 @property (strong, nonatomic) MAMapView *mapView;
 @property (strong, nonatomic) UITableView *resultTableView;
 @property (strong, nonatomic) NSMutableArray *poiAnnotations;
-@property (strong, nonatomic) MAPinAnnotationView *poiAnnotationView;
+@property (strong, nonatomic) POIAnnotationView *poiAnnotationView;
 @property (strong, nonatomic) MBProgressHUD *hud;
 @property (strong, nonatomic) UIBarButtonItem *mapButton;
 @property (strong, nonatomic) UIBarButtonItem *tableButton;
@@ -140,17 +141,22 @@ BOOL hasGotPOI;
     if ([annotation isKindOfClass:[POIAnnotation class]])
     {
         static NSString *poiIdentifier = @"poiIdentifier";
-        poiAnnotationView = (MAPinAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:poiIdentifier];
+        poiAnnotationView = (POIAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:poiIdentifier];
         if (poiAnnotationView == nil)
         {
-            poiAnnotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:poiIdentifier];
+            poiAnnotationView = [[POIAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:poiIdentifier];
             
             poiAnnotationView.canShowCallout = NO;
             
-            poiAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            //poiAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
             
         }
         
+        [poiAnnotationView setIconImage :[UIImage imageNamed:@"locationResultIcon"] ];
+        int num = [poiAnnotations indexOfObject:annotation];
+        NSString *numString = [NSString stringWithFormat:@"%d",num+1];
+        [poiAnnotationView setIDLabel:numString];
+        poiAnnotationView.parentViewController = self;
         return poiAnnotationView;
     }
     

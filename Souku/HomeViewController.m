@@ -11,7 +11,8 @@
 #import "MapView.h"
 #import "CommonUtility.h"
 #import "POIAnnotation.h"
-
+#import "POIAnnotationView.h"
+#import "SearchResultViewController.h"
 
 
 @interface HomeViewController ()
@@ -33,6 +34,11 @@
 @property (strong, nonatomic) NSMutableArray *parkArray;
 @property (strong, nonatomic) NSMutableArray *parkAnnotations;
 @property (strong, nonatomic) MBProgressHUD *hud;
+@property (strong, nonatomic) LocationDetailViewController *locationDetailViewController;
+@property (strong, nonatomic) NSString *searchKey;
+@property (strong, nonatomic) POIAnnotationView *poiAnnotationView;
+
+
 
 @end
 
@@ -41,7 +47,7 @@
 BOOL gotParkingInfo;
 BOOL loadParkingInfo;
 
-
+@synthesize poiAnnotationView;
 
 #pragma mark - Life Cycle
 
@@ -77,7 +83,7 @@ BOOL loadParkingInfo;
 - (void)initHUD
 {
     self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.hud.dimBackground = YES;
+    self.hud.dimBackground = NO;
     self.hud.delegate = self;
     [self.navigationController.view addSubview:self.hud];
    // UITapGestureRecognizer *HUDSingleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(singleTap:)];
@@ -144,7 +150,7 @@ BOOL loadParkingInfo;
 {
     AMapPlaceSearchRequest *request = [[AMapPlaceSearchRequest alloc] init];
     
-    request.searchType          = AMapSearchType_PlaceKeyword;
+    request.searchType          = AMapSearchType_PlaceAround;
     
     self.currentLocation = [[MapView sharedManager]getCurrentLocation];
     
@@ -187,6 +193,11 @@ BOOL loadParkingInfo;
 
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.searchKey = searchBar.text;
+}
+
 
 - (void)onPlaceSearchDone:(AMapPlaceSearchRequest *)request response:(AMapPlaceSearchResponse *)response
 {
@@ -222,7 +233,6 @@ BOOL loadParkingInfo;
             [self.searchResultArray addObject:poi];
         }];
         
-        
     }
     [self addAnnotationsReloadData];
     [self.searchResultTable reloadData];
@@ -248,6 +258,32 @@ BOOL loadParkingInfo;
     [self.parkingLotTableView reloadData];
 }
 
+- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
+{
+    
+    if ([annotation isKindOfClass:[POIAnnotation class]])
+    {
+        static NSString *poiIdentifier = @"poiIdentifier";
+        poiAnnotationView = (POIAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:poiIdentifier];
+        if (poiAnnotationView == nil)
+        {
+            poiAnnotationView = [[POIAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:poiIdentifier];
+            
+            poiAnnotationView.canShowCallout = NO;
+            
+            poiAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            
+        }
+        
+        [poiAnnotationView setIconImage :[UIImage imageNamed:@"locationResultIcon"] ];
+        int num = [self.parkAnnotations indexOfObject:annotation]+1;
+        NSString *numString = [NSString stringWithFormat:@"%d",num];
+        [poiAnnotationView setIDLabel:numString];
+        return poiAnnotationView;
+    }
+    
+    return nil;
+}
 
 
 - (void)addGesture
@@ -515,6 +551,32 @@ BOOL loadParkingInfo;
     return nil;
     
    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+   
+    if(tableView == self.searchResultTable)
+    {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.selected = NO;
+        self.locationDetailViewController = [[LocationDetailViewController alloc] init];
+        
+        self.locationDetailViewController.poi = [self.searchResultArray objectAtIndex:indexPath.row];
+        self.locationDetailViewController.hidesBottomBarWhenPushed = YES;
+        [[self navigationController] pushViewController: self.locationDetailViewController animated:YES];
+    }
+    else if(tableView == self.parkingLotTableView)
+    {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.selected = NO;
+        self.locationDetailViewController = [[LocationDetailViewController alloc] init];
+        self.locationDetailViewController.poi = [self.parkArray objectAtIndex:indexPath.row];
+        self.locationDetailViewController.hidesBottomBarWhenPushed = YES;
+        [[self navigationController] pushViewController: self.locationDetailViewController animated:YES];
+    }
+    
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated

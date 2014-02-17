@@ -13,6 +13,7 @@
 #import "AroundViewController.h"
 #import "FavouriteViewController.h"
 #import "SettingViewController.h"
+#import "CommonUtility.h"
 
 @implementation AppDelegate
 
@@ -35,23 +36,41 @@
     
     self.tabBarController = [[UITabBarController alloc] init];
     [self.tabBarController.tabBar setBackgroundImage:[UIImage imageNamed:@"tabbar"]];
-
-
     
     
+    
+
+    [[UITabBar appearance] setSelectionIndicatorImage:[CommonUtility imageWithImage:[UIImage imageNamed:@"tabbarSelected"] scaledToSize:CGSizeMake(self.tabBarController.tabBar.frame.size.width/4, self.tabBarController.tabBar.frame.size.height)]];
+    [self.tabBarController.tabBar setBarTintColor:[UIColor blackColor]];
+
+    
+    CGFloat tabIconHeight = self.tabBarController.tabBar.frame.size.height;
+    CGFloat tabIconWidth = self.tabBarController.tabBar.frame.size.width;
     
     
     
     UINavigationController* homeNavigationController = [[UINavigationController alloc]
                                                         initWithRootViewController:homeViewController];
-    
-    
+    UIImage *homeIcon = [CommonUtility imageWithImage:[UIImage imageNamed:@"homeIcon" ] scaledToSize:CGSizeMake(tabIconWidth/10, tabIconHeight/2)];
+    [homeNavigationController.tabBarItem setFinishedSelectedImage:homeIcon withFinishedUnselectedImage:homeIcon];
     
     
     UINavigationController* aroundNavigationController = [[UINavigationController alloc]
                                              initWithRootViewController:aroundViewController];
+    UIImage *aroundIcon = [CommonUtility imageWithImage:[UIImage imageNamed:@"aroundIcon" ] scaledToSize:CGSizeMake(tabIconWidth/11, tabIconHeight/1.8)];
+    [aroundNavigationController.tabBarItem setFinishedSelectedImage:aroundIcon withFinishedUnselectedImage:aroundIcon];
+
+    
+    
     UINavigationController* favouriteNavigationController = [[UINavigationController alloc] initWithRootViewController:favouriteViewController];
+    UIImage *favouriteIcon = [CommonUtility imageWithImage:[UIImage imageNamed:@"favouriteIcon" ] scaledToSize:CGSizeMake(tabIconWidth/11, tabIconHeight/1.8)];
+    [favouriteNavigationController.tabBarItem setFinishedSelectedImage:favouriteIcon withFinishedUnselectedImage:favouriteIcon];
+    
+    
     UINavigationController* settingNavigationController = [[UINavigationController alloc] initWithRootViewController: settingViewController];
+    UIImage *settingIcon = [CommonUtility imageWithImage:[UIImage imageNamed:@"settingIcon" ] scaledToSize:CGSizeMake(tabIconWidth/11, tabIconHeight/1.8)];
+    [settingNavigationController.tabBarItem setFinishedSelectedImage:settingIcon withFinishedUnselectedImage:settingIcon];
+    
     
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{
@@ -82,6 +101,10 @@
     
     
     self.tabBarController.viewControllers = @[homeNavigationController, aroundNavigationController, favouriteNavigationController, settingNavigationController];
+    
+   
+    
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tabBarController;

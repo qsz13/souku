@@ -40,6 +40,7 @@
 		354E3A5618A627660039AE16 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354E3A5518A627660039AE16 /* OpenGLES.framework */; };
 		354E3A5818A627BC0039AE16 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 354E3A5718A627BC0039AE16 /* AMap.bundle */; };
 		3561939E18A0E60400030B11 /* LocationDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3561939D18A0E60400030B11 /* LocationDetail.xib */; };
+		356D38FD18B22EB500499BEA /* MapCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D38FC18B22EB500499BEA /* MapCalloutView.m */; };
 		3594AAE618A6B351007A4E79 /* MAMapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354E3A5318A626FC0039AE16 /* MAMapKit.framework */; };
 		3594AAE718A6B35B007A4E79 /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 353DCA8B189D60C200D8A6DF /* AMapSearchKit.framework */; };
 		35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35AF0940189F573000642587 /* LocationDetailViewController.m */; };
@@ -118,6 +119,8 @@
 		354E3A5518A627660039AE16 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		354E3A5718A627BC0039AE16 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
 		3561939D18A0E60400030B11 /* LocationDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationDetail.xib; sourceTree = "<group>"; };
+		356D38FB18B22EB500499BEA /* MapCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCalloutView.h; sourceTree = "<group>"; };
+		356D38FC18B22EB500499BEA /* MapCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCalloutView.m; sourceTree = "<group>"; };
 		35AF093F189F573000642587 /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
 		35AF0940189F573000642587 /* LocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailViewController.m; sourceTree = "<group>"; };
 		35C06F5F18A4E53A004AC9EA /* FavList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FavList.plist; sourceTree = "<group>"; };
@@ -235,6 +238,8 @@
 				353DCA8E189D646C00D8A6DF /* POIAnnotation.m */,
 				351EBB4218B1C5BA002DC07C /* POIAnnotationView.h */,
 				351EBB4318B1C5BA002DC07C /* POIAnnotationView.m */,
+				356D38FB18B22EB500499BEA /* MapCalloutView.h */,
+				356D38FC18B22EB500499BEA /* MapCalloutView.m */,
 				3505596318A12480002519E0 /* NavigationViewController.h */,
 				3505596418A12480002519E0 /* NavigationViewController.m */,
 				3512101518A274EE003B07BF /* CommonUtility.h */,
@@ -440,6 +445,7 @@
 				35AF0941189F573000642587 /* LocationDetailViewController.m in Sources */,
 				351EBB4418B1C5BA002DC07C /* POIAnnotationView.m in Sources */,
 				354E3A5218A609E40039AE16 /* SettingOfflineViewController.m in Sources */,
+				356D38FD18B22EB500499BEA /* MapCalloutView.m in Sources */,
 				353DCA41189D470300D8A6DF /* main.m in Sources */,
 				353DCA79189D49F200D8A6DF /* HomeViewController.m in Sources */,
 				3512101718A274EE003B07BF /* CommonUtility.m in Sources */,
