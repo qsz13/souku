@@ -92,6 +92,7 @@ CGFloat screenHeight;
 - (void)setTitleLabelText:(NSString *)title
 {
     self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 7, screenWidth-60, screenHeight/10)];
+    [self.titleLabel setBackgroundColor:[UIColor clearColor]];
     self.titleLabel.numberOfLines = 0;
     self.titleLabel.text = title;
     [self.titleLabel sizeToFit];
@@ -100,6 +101,7 @@ CGFloat screenHeight;
 - (void)setSubTitleLabelText:(NSString *)title
 {
     self.subTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 13+self.titleLabel.frame.size.height, screenWidth-60, 20)];
+    [self.subTitleLabel setBackgroundColor:[UIColor clearColor]];
     self.subTitleLabel.numberOfLines = 2;
     self.subTitleLabel.text = title;
     [self.subTitleLabel setFont:[UIFont systemFontOfSize:13]];

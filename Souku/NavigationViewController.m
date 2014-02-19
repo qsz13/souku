@@ -44,7 +44,7 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     [super viewDidLoad];
     [self initMap];
     [self initNavigationPoint];
-
+    self.title = @"导航";
 }
 
 -(void)viewDidAppear:(BOOL)animated

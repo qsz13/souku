@@ -66,8 +66,7 @@
     {
         return;
     }
-    
-    if (selected)
+    if (selected&&self.canShowButtomCallout)
     {
         if (self.calloutView == nil)
         {
@@ -99,7 +98,7 @@
 - (id)initWithAnnotation:(id<MAAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
-    
+    self.canShowButtomCallout = YES;
     if (self)
     {
         self.bounds = CGRectMake(0.f, 0.f, kWidth, kHeight);

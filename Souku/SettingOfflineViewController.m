@@ -54,7 +54,12 @@
     
     CGRect tableFrame = CGRectMake(x, y, viewWidth, viewHeight);
     self.citysSelectTable = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStyleGrouped];
-    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
+        self.citysSelectTable.contentInset = UIEdgeInsetsMake(-40, 0, 0, 0);
+    }
+    //self.citysSelectTable.contentInset = UIEdgeInsetsZero;
+    [self.citysSelectTable setBackgroundView:[[UIView alloc]init] ];
+    [self.citysSelectTable setBackgroundColor:[UIColor clearColor]];
     self.citysSelectTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.citysSelectTable.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;

@@ -17,7 +17,7 @@
 @property (nonatomic, strong) MapCalloutView *calloutView;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic,strong) UIViewController *parentViewController;
-
+@property (nonatomic, assign) BOOL canShowButtomCallout;
 
 
 - (void)setIconImage:(UIImage *)icon;

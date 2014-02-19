@@ -40,6 +40,7 @@ BOOL hasGotPOI;
         hasGotPOI = NO;
         self.currentLocation = [[MapView sharedManager]getCurrentLocation];
         self.poiArray = [[NSMutableArray alloc]init];
+        
     }
     return self;
 }
@@ -52,7 +53,7 @@ BOOL hasGotPOI;
     [self initBaseNavigationBar];
     [self initHUD];
     [self initTableView];
-
+    self.title = self.searchKey;
     self.search.delegate = self;
 
 }

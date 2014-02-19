@@ -41,7 +41,7 @@
     
 
     [[UITabBar appearance] setSelectionIndicatorImage:[CommonUtility imageWithImage:[UIImage imageNamed:@"tabbarSelected"] scaledToSize:CGSizeMake(self.tabBarController.tabBar.frame.size.width/4, self.tabBarController.tabBar.frame.size.height)]];
-    [self.tabBarController.tabBar setBarTintColor:[UIColor blackColor]];
+    
 
     
     CGFloat tabIconHeight = self.tabBarController.tabBar.frame.size.height;
@@ -102,9 +102,16 @@
     
     self.tabBarController.viewControllers = @[homeNavigationController, aroundNavigationController, favouriteNavigationController, settingNavigationController];
     
-   
-    
-    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+
+    UIImage *backButtonImage = [CommonUtility imageWithImage:[UIImage imageNamed:@"backButton"] scaledToSize:CGSizeMake(100, self.tabBarController.tabBar.frame.size.height*0.6)];
+    if ([UINavigationBar instancesRespondToSelector:@selector(setBackIndicatorImage:)]) {
+        [[UINavigationBar appearance] setBackIndicatorImage:backButtonImage];
+        [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backButtonImage];
+    } else {
+        
+        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[backButtonImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 20, 0, 20)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    }
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tabBarController;
