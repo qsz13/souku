@@ -86,9 +86,10 @@ CGFloat screenHeight;
 {
     self.navigationViewController = [[NavigationViewController alloc] init];
     self.navigationViewController.poi = self.poi;
-    [self.parentViewController performSelectorInBackground:@selector(clearMapView) withObject:nil] ;    
+    [self.parentViewController performSelectorInBackground:@selector(clearMapView) withObject:nil];
     [self.parentViewController.navigationController setNavigationBarHidden:YES animated:YES];
     [self.parentViewController.navigationController pushViewController:self.navigationViewController animated:YES];
+    [self.parentViewController performSelectorInBackground:@selector(clearMapView) withObject:nil]; 
     [self removeFromSuperview];
 }
 

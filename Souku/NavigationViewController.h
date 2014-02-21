@@ -12,8 +12,10 @@
 #import "APIKey.h"
 #import "CommonUtility.h"
 #import "LineDashPolyline.h"
+#import "MBProgressHUD.h"
 
-@interface NavigationViewController : UIViewController<AMapSearchDelegate,MAMapViewDelegate,UIAlertViewDelegate>
+
+@interface NavigationViewController : UIViewController<AMapSearchDelegate,MAMapViewDelegate,UIAlertViewDelegate,MBProgressHUDDelegate>
 
 @property (nonatomic, strong) AMapPOI *poi;
 

@@ -135,9 +135,9 @@ BOOL hasGotPOI;
 //        [self.navigationController pushViewController:detail animated:YES];
 //    }
 //}
+
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view
 {
-    
     
     self.currentAnnotation = (POIAnnotationView *)view;
 }
@@ -403,7 +403,7 @@ BOOL hasGotPOI;
 {
     
     [self.mapView removeAnnotations:self.mapView.annotations];
-    NSLog(@"removed");
+
     [self.mapView removeOverlays:self.mapView.overlays];
     
     self.mapView.delegate = [MapView sharedManager];

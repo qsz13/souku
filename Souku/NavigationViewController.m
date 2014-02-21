@@ -24,8 +24,11 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 @property (nonatomic, strong) AMapSearchAPI *search;
 @property (nonatomic, strong) UIView *buttomBar;
 @property (nonatomic, strong) UIView *topBar;
-
+@property (nonatomic, strong) UILabel *distanceLabel;
+@property (nonatomic, strong) UILabel *estimatedTimeLabel;
 @property (nonatomic, strong) UIAlertView *exitAlertView;
+@property (strong, nonatomic) MBProgressHUD *hud;
+
 @end
 
 CGRect screenRect;
@@ -57,7 +60,23 @@ CGFloat screenHeight;
     [self initNavigationPoint];
     [self initTopBar];
     [self initButtomBar];
+    [self initHUD];
     self.title = @"导航";
+}
+
+- (void)initHUD
+{
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.dimBackground = YES;
+    self.hud.delegate = self;
+    [self.navigationController.view addSubview:self.hud];
+    UITapGestureRecognizer *HUDSingleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(singleTap:)];
+    [self.hud addGestureRecognizer:HUDSingleTap];
+}
+
+- (void)singleTap:(UITapGestureRecognizer*)sender
+{
+    [self.hud hide:YES];
 }
 
 - (void)initTopBar
@@ -100,6 +119,15 @@ CGFloat screenHeight;
     [exitButton addTarget:self action:@selector(exitButtonTouched) forControlEvents:UIControlEventTouchDown];
     [self.buttomBar addSubview:exitButton];
     
+    self.distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/4, self.buttomBar.frame.size.height/3, 120, self.buttomBar.frame.size.height/3)];
+    self.distanceLabel.text = @"计算中";
+    [self.buttomBar addSubview:self.distanceLabel];
+
+    self.estimatedTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/5+130, self.buttomBar.frame.size.height/3, 150, self.buttomBar.frame.size.height/3)];
+    self.estimatedTimeLabel.text = @"计算中";
+    [self.buttomBar addSubview:self.estimatedTimeLabel];
+
+    
     [self.view addSubview:self.buttomBar];
 }
 
@@ -135,13 +163,25 @@ CGFloat screenHeight;
 - (void)onNavigationSearchDone:(AMapNavigationSearchRequest *)request
                       response:(AMapNavigationSearchResponse *)response
 {
-     NSLog(@"search done");
+    [self.hud hide:YES];
     if (response.route == nil)
     {
         return;
     }
     
     self.route = response.route;
+    AMapPath *path = self.route.paths[0];
+    self.distanceLabel.text = [NSString stringWithFormat:@"%d米",path.distance];
+    self.estimatedTimeLabel.text = [NSString stringWithFormat:@"%d 分钟",path.duration/60];
+//    
+//    @property (nonatomic, assign) NSInteger distance; // 起点和终点的距离
+//    @property (nonatomic, assign) NSInteger duration; // 预计耗时（单位：秒）
+//    @property (nonatomic, strong) NSString *strategy; // 导航策略
+//    @property (nonatomic, strong) NSArray *steps; // 导航路段 AMapStep数组
+//    @property (nonatomic, assign) float tolls; // 此方案费用（单位：元）
+//    @property (nonatomic, assign) NSInteger tollDistance; // 此方案收费路段长度（单位：米）
+//    
+
     [self performSelectorOnMainThread:@selector(presentCurrentCourse) withObject:nil waitUntilDone:YES];
 
 }
