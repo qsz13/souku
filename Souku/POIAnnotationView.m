@@ -83,7 +83,6 @@
             self.calloutView.parentViewController = self.parentViewController;
             
         }
-        
         [self.superview.superview.superview.superview.superview.superview addSubview:self.calloutView];
 
     }
@@ -93,6 +92,12 @@
     }
     
     [super setSelected:selected animated:animated];
+}
+
+
+- (void)removeCalloutView
+{
+    [self.calloutView removeFromSuperview];
 }
 
 - (id)initWithAnnotation:(id<MAAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier

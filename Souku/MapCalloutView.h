@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <AMapSearchKit/AMapCommonObj.h>
 
-
+@protocol MapCalloutViewDelegate <NSObject>
+- (void)clearMapView;
+@end
 
 @interface MapCalloutView : UIView
 
 @property (nonatomic,strong) UIViewController *parentViewController;
-
+@property (assign) id <MapCalloutViewDelegate> delegate;
 - (void)setPOI:(AMapPOI *)poi;
 - (void)setTitleLabelText:(NSString *)title;
 - (void)setSubTitleLabelText:(NSString *)title;

@@ -19,7 +19,7 @@
 @property (strong, nonatomic) UIBarButtonItem *mapButton;
 @property (strong, nonatomic) UIBarButtonItem *tableButton;
 @property (strong, nonatomic) LocationDetailViewController *locationDetailViewController;
-
+@property (strong, nonatomic) POIAnnotationView *currentAnnotation;
 
 @end
 
@@ -120,21 +120,29 @@ BOOL hasGotPOI;
 }
 
 
-- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+//- (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+//{
+//    id<MAAnnotation> annotation = view.annotation;
+//    
+//    if ([annotation isKindOfClass:[POIAnnotation class]])
+//    {
+//        POIAnnotation *poiAnnotation = (POIAnnotation*)annotation;
+//        
+//        LocationDetailViewController *detail = [[LocationDetailViewController alloc] init];
+//        detail.poi = poiAnnotation.poi;
+//        [self clearMapView];
+//        /* 进入POI详情页面. */
+//        [self.navigationController pushViewController:detail animated:YES];
+//    }
+//}
+- (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view
 {
-    id<MAAnnotation> annotation = view.annotation;
     
-    if ([annotation isKindOfClass:[POIAnnotation class]])
-    {
-        POIAnnotation *poiAnnotation = (POIAnnotation*)annotation;
-        
-        LocationDetailViewController *detail = [[LocationDetailViewController alloc] init];
-        detail.poi = poiAnnotation.poi;
-        [self clearMapView];
-        /* 进入POI详情页面. */
-        [self.navigationController pushViewController:detail animated:YES];
-    }
+    
+    self.currentAnnotation = (POIAnnotationView *)view;
 }
+
+
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
 {
@@ -158,6 +166,7 @@ BOOL hasGotPOI;
         NSString *numString = [NSString stringWithFormat:@"%d",num+1];
         [poiAnnotationView setIDLabel:numString];
         poiAnnotationView.parentViewController = self;
+        poiAnnotationView.calloutView.delegate = self;
         return poiAnnotationView;
     }
     
@@ -198,9 +207,13 @@ BOOL hasGotPOI;
         [self.mapView removeFromSuperview];
     }
     
+    
     [self.view addSubview: self.resultTableView];
     [self.resultTableView reloadData];
-
+    if(self.currentAnnotation != nil)
+    {
+        [self.currentAnnotation removeCalloutView];
+    }
     
     if(self.mapButton == nil)
     {
@@ -390,7 +403,7 @@ BOOL hasGotPOI;
 {
     
     [self.mapView removeAnnotations:self.mapView.annotations];
-    
+    NSLog(@"removed");
     [self.mapView removeOverlays:self.mapView.overlays];
     
     self.mapView.delegate = [MapView sharedManager];

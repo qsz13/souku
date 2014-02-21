@@ -13,7 +13,7 @@
 #import "CommonUtility.h"
 #import "LineDashPolyline.h"
 
-@interface NavigationViewController : UIViewController<AMapSearchDelegate,MAMapViewDelegate>
+@interface NavigationViewController : UIViewController<AMapSearchDelegate,MAMapViewDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) AMapPOI *poi;
 

@@ -13,8 +13,9 @@
 #import "POIAnnotation.h"
 #import "LocationDetailViewController.h"
 #import "MBProgressHUD.h"
+#import "MapCalloutView.h"
 
-@interface SearchResultViewController : UIViewController<MAMapViewDelegate, AMapSearchDelegate,MBProgressHUDDelegate,UITableViewDelegate, UITableViewDataSource>
+@interface SearchResultViewController : UIViewController<MAMapViewDelegate, AMapSearchDelegate,MBProgressHUDDelegate,UITableViewDelegate, UITableViewDataSource,MapCalloutViewDelegate>
 
 
 @property (strong, nonatomic) AMapSearchAPI *search;

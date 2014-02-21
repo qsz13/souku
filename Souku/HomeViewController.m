@@ -38,6 +38,7 @@
 @property (strong, nonatomic) NSString *searchKey;
 @property (strong, nonatomic) POIAnnotationView *poiAnnotationView;
 @property (strong, nonatomic) UIButton *parkSwitchButton;
+@property (strong, nonatomic) SearchResultViewController *searchResultViewController;
 @property (nonatomic) ParkingMapState parkingMapState;
 
 @end
@@ -175,7 +176,7 @@ BOOL loadParkingInfo;
     //filter.costFilter = @[@"100", @"200"];
     filter.requireFilter = AMapRequireGroupbuy;
     request.searchFilter = filter;
-    //NSLog(@"%@",keyWord);
+
     [self.searchAPI AMapPlaceSearch:request];
 }
 
@@ -205,6 +206,11 @@ BOOL loadParkingInfo;
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     self.searchKey = searchBar.text;
+    self.searchResultViewController = [[SearchResultViewController alloc] init];
+   
+    self.searchResultViewController.searchKey = self.searchKey;
+    self.searchResultViewController.hidesBottomBarWhenPushed = YES;
+    [[self navigationController] pushViewController: self.searchResultViewController animated:YES];
 }
 
 
@@ -231,7 +237,6 @@ BOOL loadParkingInfo;
             [self.parkAnnotations addObject:[[POIAnnotation alloc] initWithPOI:poi]];
             [self.parkArray addObject:poi];
         }];
-        NSLog(@"!!!!!");
         
 
     }
@@ -279,7 +284,6 @@ BOOL loadParkingInfo;
             
             poiAnnotationView.canShowCallout = YES;
             poiAnnotationView.canShowButtomCallout = NO;
-            //poiAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
             
         }
         
@@ -520,6 +524,10 @@ BOOL loadParkingInfo;
     
     [self initToggleButon];
 }
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    self.searchResultTable.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
+}
 
 -(void)initSearchResultTableView
 {
@@ -537,8 +545,12 @@ BOOL loadParkingInfo;
     self.searchResultTable = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStyleGrouped];
     
     self.searchResultTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.searchResultTable setBackgroundView:[[UIView alloc]init]];
-    
+    [self.searchResultTable setBackgroundColor:[UIColor clearColor]];
+
+//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
+//        self.searchResultTable.contentInset = UIEdgeInsetsMake(-100, 0, 0, 0);
+//    }
+    self.searchResultTable.contentOffset = CGPointMake(0, 0);
     self.searchResultTable.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.searchResultTable.delegate = self;
     self.searchResultTable.dataSource = self;
@@ -583,7 +595,11 @@ BOOL loadParkingInfo;
         }
         //cell.textLabel.text = [self.parkArray objectAtIndex:indexPath.row];
         AMapPOI *poi = [self.parkArray objectAtIndex:indexPath.row];
-        cell.textLabel.text = poi.name;
+        
+        
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"%d.%@",indexPath.row+1,poi.name];
+
         cell.detailTextLabel.text = poi.address;
 
         return cell;
@@ -607,7 +623,6 @@ BOOL loadParkingInfo;
 
     return nil;
     
-   
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -621,6 +636,7 @@ BOOL loadParkingInfo;
         
         self.locationDetailViewController.poi = [self.searchResultArray objectAtIndex:indexPath.row];
         self.locationDetailViewController.hidesBottomBarWhenPushed = YES;
+        [self clearMapView];
         [self.navigationController pushViewController: self.locationDetailViewController animated:YES];
     }
     else if(tableView == self.parkingLotTableView)
@@ -630,6 +646,7 @@ BOOL loadParkingInfo;
         self.locationDetailViewController = [[LocationDetailViewController alloc] init];
         self.locationDetailViewController.poi = [self.parkArray objectAtIndex:indexPath.row];
         self.locationDetailViewController.hidesBottomBarWhenPushed = YES;
+        [self clearMapView];
         [self.navigationController pushViewController: self.locationDetailViewController animated:YES];
     }
     
@@ -673,7 +690,36 @@ BOOL loadParkingInfo;
 {
     [super viewDidDisappear:animated];
     self.mapView.delegate = [MapView sharedManager];
+    [self initMapView];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self initMapView];
     
+    if(self.parkArray == nil || self.parkAnnotations == nil)
+    {
+        loadParkingInfo = NO;
+        [self searchParkingLot];
+    }
+    else
+    {
+        [self addAnnotationsReloadData];
+    }
+    
+    if((![self.view.subviews containsObject:self.parkingLotTableView])&&
+       (![self.view.subviews containsObject:self.mapView]))
+    {
+        [self.view addSubview:self.mapView];
+    }
+    if([self.view.subviews containsObject:self.searchResultTable])
+    {
+        [self.searchResultTable removeFromSuperview];
+        [self.view addSubview:self.searchResultTable];
+    }
+
 }
 
 @end

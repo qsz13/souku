@@ -12,7 +12,8 @@
 @interface SettingViewController ()
 
 @property (nonatomic,strong) SettingOfflineViewController *settingOfflineViewController;
-
+@property (nonatomic,strong) UIButton *notificationButton;
+@property (nonatomic) BOOL notificationIsOn;
 @end
 
 @implementation SettingViewController
@@ -22,8 +23,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"设置";
-        //self.tabBarItem.image = [UIImage imageNamed:@"settingItem"];
         self.settingItems = @[@"离线地图",@"停车位刷新间隔",@"通知栏消息",@"反馈",@"关于"];
+        self.settingOfflineViewController = [[SettingOfflineViewController alloc] init];
     }
     return self;
 }
@@ -60,7 +61,38 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = [self.settingItems objectAtIndex:indexPath.row];
+    [cell.textLabel setTextColor:[UIColor colorWithRed:0.0f green:138.0f/255.0f blue:1.0f alpha:1.0]];
+    [cell.textLabel setFont:[UIFont boldSystemFontOfSize:20]];
+    
+    if([cell.textLabel.text  isEqual: @"通知栏消息"])
+    {
+        self.notificationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.notificationButton.frame = CGRectMake(cell.contentView.bounds.size.width - 70 - 5.0f,
+                                     (cell.contentView.bounds.size.height +128 ) / 2.0f,60,48);
+
+        [self.notificationButton setImage:[UIImage imageNamed:@"switchIconOn"] forState:UIControlStateNormal];
+        [self.view addSubview:self.notificationButton];
+        [self.notificationButton addTarget:self action:@selector(notificationSwitch) forControlEvents:UIControlEventTouchDragInside];
+        
+        
+        
+    }
+
     return cell;
+}
+
+- (void)notificationSwitch
+{
+    if(self.notificationIsOn)
+    {
+        self.notificationIsOn = NO;
+        [self.notificationButton setImage:[UIImage imageNamed:@"switchIconOff"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        self.notificationIsOn = YES;
+        [self.notificationButton setImage:[UIImage imageNamed:@"switchIconOn"] forState:UIControlStateNormal];
+    }
 }
 
 

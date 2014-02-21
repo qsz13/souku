@@ -30,7 +30,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"周边";
-        //self.tabBarItem.image = [UIImage imageNamed:@"aroundItem"];
         self.aroundItem = @[@"酒店住宿",@"餐饮服务",@"购物服务",@"生活服务",@"体育休闲",@"医疗保健",@"风景名胜"];
     }
     return self;
@@ -93,8 +92,7 @@
     NSString *searchKey = [self.aroundItem objectAtIndex:indexPath.row];
     searchResultViewController.searchKey = searchKey;
     searchResultViewController.hidesBottomBarWhenPushed = YES;
-    [[self navigationController] pushViewController:
-    searchResultViewController animated:YES];
+    [[self navigationController] pushViewController: searchResultViewController animated:YES];
 }
 
 

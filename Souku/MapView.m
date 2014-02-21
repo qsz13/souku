@@ -29,12 +29,12 @@ static MAUserLocation *currentLocation = nil;
 }
 
 - (id)init {
-    if (self = [super init]) {
+    if (self = [super init])
+    {
         map = [[MAMapView alloc]init];
         map.showsUserLocation = YES;
         [map setUserTrackingMode: MAUserTrackingModeFollowWithHeading animated:YES];
         map.delegate = self;
-        NSLog(@"init map");
     }
     return self;
 }

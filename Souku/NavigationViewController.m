@@ -22,8 +22,15 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 @property (strong,nonatomic) NSMutableArray *annotations;
 @property (nonatomic, strong) MAMapView *mapView;
 @property (nonatomic, strong) AMapSearchAPI *search;
+@property (nonatomic, strong) UIView *buttomBar;
+@property (nonatomic, strong) UIView *topBar;
 
+@property (nonatomic, strong) UIAlertView *exitAlertView;
 @end
+
+CGRect screenRect;
+CGFloat screenWidth;
+CGFloat screenHeight;
 
 @implementation NavigationViewController
 
@@ -35,6 +42,10 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.search = [[AMapSearchAPI alloc] initWithSearchKey: (NSString *)APIKey Delegate:self];
+        screenRect = [[UIScreen mainScreen] bounds];
+        screenWidth = screenRect.size.width;
+        screenHeight = screenRect.size.height;
+        self.exitAlertView = [[UIAlertView alloc] initWithTitle:@"确定退出导航？" message:@"" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
     }
     return self;
 }
@@ -44,13 +55,68 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     [super viewDidLoad];
     [self initMap];
     [self initNavigationPoint];
+    [self initTopBar];
+    [self initButtomBar];
     self.title = @"导航";
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (void)initTopBar
 {
-    [super viewDidAppear:animated];
+    self.topBar = [[UIView alloc]init];
+    [self.topBar setFrame:CGRectMake(0, -1, screenWidth, screenHeight/10)];
+    
+    UIImageView *background = [[UIImageView alloc]init];
+    background.image = [UIImage imageNamed:@"navigationTopBackground"];
+    [background setFrame:CGRectMake(0, 0, screenWidth , 20+screenHeight/12)];
+    [self.topBar addSubview:background];
+    UILabel *nameLabel = [[UILabel alloc] init];
+    nameLabel.text = self.poi.name;
+    [nameLabel setTextColor:[UIColor whiteColor]];
+    [nameLabel setFrame:CGRectMake(screenWidth/3.5, 10, screenWidth-screenWidth/3.5, self.topBar.frame.size.height)];
+    nameLabel.adjustsFontSizeToFitWidth = NO;
+    nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    
+    [nameLabel setFont:[UIFont boldSystemFontOfSize:20]];
+    
+    [self.topBar addSubview:nameLabel];
+    
+    [self.view addSubview:self.topBar];
+}
 
+- (void)initButtomBar
+{
+    self.buttomBar = [[UIView alloc]init];
+    [self.buttomBar setFrame:CGRectMake(0,screenHeight*11/12, screenWidth, screenHeight/12)];
+
+    UIImageView *background = [[UIImageView alloc]init];
+    background.image = [UIImage imageNamed:@"navigationButtomBackground"];
+    [background setFrame:CGRectMake(0, 0, screenWidth , screenHeight/12)];
+    [self.buttomBar addSubview:background];
+    
+    UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [exitButton setImage:[UIImage imageNamed:@"navigationExit"] forState:UIControlStateNormal];
+    [exitButton setImage:[UIImage imageNamed:@"navigationExit"] forState:UIControlStateHighlighted];
+    [exitButton setFrame:CGRectMake(screenWidth/20, self.buttomBar.frame.size.height/3, self.buttomBar.frame.size.height/3, self.buttomBar.frame.size.height/3)];
+    [exitButton addTarget:self action:@selector(exitButtonTouched) forControlEvents:UIControlEventTouchDown];
+    [self.buttomBar addSubview:exitButton];
+    
+    [self.view addSubview:self.buttomBar];
+}
+
+- (void)exitButtonTouched
+{
+    
+    [self.exitAlertView show];
+
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == [self.exitAlertView cancelButtonIndex])
+    {
+        
+    }else{
+        [self returnAction];
+    }
 }
 
 -(void)initNavigationPoint
@@ -213,7 +279,10 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     [self clearMapView];
     
     [self clearSearch];
-
+    
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 
 
 }
@@ -236,12 +305,6 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
     self.search.delegate = nil;
 }
 
--(void) viewWillDisappear:(BOOL)animated {
-    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
-        [self returnAction];
-    }
-    [super viewWillDisappear:animated];
-}
 
 
 

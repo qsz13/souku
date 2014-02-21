@@ -193,6 +193,7 @@
 {
     self.navigationViewController = [[NavigationViewController alloc] init];
     self.navigationViewController.poi = self.poi;
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     [[self navigationController] pushViewController:self.navigationViewController animated:YES];
 }
 

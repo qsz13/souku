@@ -26,5 +26,6 @@
 
 - (void)setIDLabel:(NSString *)idStirng;
 
+- (void)removeCalloutView;
 
 @end
