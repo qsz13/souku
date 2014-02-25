@@ -25,6 +25,8 @@
 @property (strong, nonatomic) UIButton *navigationButton;
 @property (strong, nonatomic) UIButton *favouriteButton;
 @property (strong, nonatomic) UIButton *shareButton;
+@property (nonatomic, strong) UIAlertView *favouriteAlertView;
+
 
 @end
 
@@ -185,6 +187,7 @@
     
     [self.navigationButton addTarget:self action:@selector(pushToNavigation) forControlEvents:UIControlEventTouchUpInside];
     [self.favouriteButton addTarget:self action:@selector(favourite) forControlEvents:UIControlEventTouchUpInside];
+    [self.shareButton addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
 
 }
 
@@ -205,15 +208,28 @@
     if([locationDataController containsPOI:self.poi])
     {
         [locationDataController removePOI:self.poi];
+        self.favouriteAlertView = [[UIAlertView alloc] init];
+        self.favouriteAlertView.title = @"已取消收藏";
+        [self.favouriteAlertView addButtonWithTitle:@"确定"];
+        [self.favouriteAlertView show];
+
     }
     else
     {
         [locationDataController addPOI:self.poi];
+        self.favouriteAlertView = [[UIAlertView alloc] init];
+        self.favouriteAlertView.title = @"已收藏";
+        [self.favouriteAlertView addButtonWithTitle:@"确定"];
+        [self.favouriteAlertView show];
+
     }
     
 }
 
-
+- (void)share
+{
+    
+}
 
 
 

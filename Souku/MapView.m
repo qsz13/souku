@@ -43,7 +43,6 @@ static MAUserLocation *currentLocation = nil;
 
 -(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
 {
-    //NSLog(@"asdf");
     currentLocation = userLocation;
 }
 

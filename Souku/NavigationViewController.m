@@ -19,6 +19,8 @@ const NSString *NavigationViewControllerDestinationTitle = @"终点";
 @property (nonatomic, strong) AMapRoute *route;
 @property (nonatomic) CLLocationCoordinate2D startCoordinate;
 @property (nonatomic) CLLocationCoordinate2D destinationCoordinate;
+@property (nonatomic) CLLocationCoordinate2D currentCoordinate;
+@property (strong, nonatomic) MAUserLocation *currentLocation;
 @property (strong,nonatomic) NSMutableArray *annotations;
 @property (nonatomic, strong) MAMapView *mapView;
 @property (nonatomic, strong) AMapSearchAPI *search;
@@ -61,6 +63,7 @@ CGFloat screenHeight;
     [self initTopBar];
     [self initButtomBar];
     [self initHUD];
+
     self.title = @"导航";
 }
 
@@ -89,6 +92,7 @@ CGFloat screenHeight;
     [background setFrame:CGRectMake(0, 0, screenWidth , 20+screenHeight/12)];
     [self.topBar addSubview:background];
     UILabel *nameLabel = [[UILabel alloc] init];
+    [nameLabel setBackgroundColor:[UIColor clearColor]];
     nameLabel.text = self.poi.name;
     [nameLabel setTextColor:[UIColor whiteColor]];
     [nameLabel setFrame:CGRectMake(screenWidth/3.5, 10, screenWidth-screenWidth/3.5, self.topBar.frame.size.height)];
@@ -105,8 +109,20 @@ CGFloat screenHeight;
 - (void)initButtomBar
 {
     self.buttomBar = [[UIView alloc]init];
-    [self.buttomBar setFrame:CGRectMake(0,screenHeight*11/12, screenWidth, screenHeight/12)];
 
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        [self.buttomBar setFrame:CGRectMake(0,screenHeight*11/12, screenWidth, screenHeight/12)];
+
+    }
+    else
+    {
+        [self.buttomBar setFrame:CGRectMake(0,screenHeight*11/12-20, screenWidth, screenHeight/12)];
+
+    }
+    
+    
+    
     UIImageView *background = [[UIImageView alloc]init];
     background.image = [UIImage imageNamed:@"navigationButtomBackground"];
     [background setFrame:CGRectMake(0, 0, screenWidth , screenHeight/12)];
@@ -142,17 +158,18 @@ CGFloat screenHeight;
     if (buttonIndex == [self.exitAlertView cancelButtonIndex])
     {
         
-    }else{
+    }
+    else
+    {
         [self returnAction];
     }
 }
 
 -(void)initNavigationPoint
 {
-    
-    MAUserLocation *currentLocation = [[MapView sharedManager] getCurrentLocation];
-    NSLog(@"%@",currentLocation);
-    self.startCoordinate        = currentLocation.coordinate;
+    self.currentLocation = [[MapView sharedManager] getCurrentLocation];
+    NSLog(@"%@",self.currentLocation);
+    self.startCoordinate        = self.currentLocation.coordinate;
     self.destinationCoordinate  = CLLocationCoordinate2DMake(self.poi.location.latitude, self.poi.location.longitude);
     
     
@@ -164,6 +181,8 @@ CGFloat screenHeight;
                       response:(AMapNavigationSearchResponse *)response
 {
     [self.hud hide:YES];
+    
+
     if (response.route == nil)
     {
         return;
@@ -173,15 +192,11 @@ CGFloat screenHeight;
     AMapPath *path = self.route.paths[0];
     self.distanceLabel.text = [NSString stringWithFormat:@"%d米",path.distance];
     self.estimatedTimeLabel.text = [NSString stringWithFormat:@"%d 分钟",path.duration/60];
-//    
-//    @property (nonatomic, assign) NSInteger distance; // 起点和终点的距离
-//    @property (nonatomic, assign) NSInteger duration; // 预计耗时（单位：秒）
-//    @property (nonatomic, strong) NSString *strategy; // 导航策略
-//    @property (nonatomic, strong) NSArray *steps; // 导航路段 AMapStep数组
-//    @property (nonatomic, assign) float tolls; // 此方案费用（单位：元）
-//    @property (nonatomic, assign) NSInteger tollDistance; // 此方案收费路段长度（单位：米）
-//    
-
+    [self.distanceLabel setBackgroundColor:[UIColor clearColor]];
+    [self.estimatedTimeLabel setBackgroundColor:[UIColor clearColor]];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView removeOverlays:self.mapView.overlays];
+    [self addDefaultAnnotations];
     [self performSelectorOnMainThread:@selector(presentCurrentCourse) withObject:nil waitUntilDone:YES];
 
 }
@@ -193,9 +208,22 @@ CGFloat screenHeight;
     self.mapView = [[MapView sharedManager] getMap];
     self.mapView.frame = self.view.bounds;
     self.mapView.delegate = self;
+    
     [self.view addSubview:self.mapView];
 }
 
+-(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation*)userLocation updatingLocation:(BOOL)updatingLocation
+{
+//    NSLog(@"userlocation :%f,%f",userLocation.coordinate.latitude,userLocation.coordinate.longitude);
+//    NSLog(@"currentlocation :%f,%f",self.currentLocation.coordinate.latitude,self.currentLocation.coordinate.longitude);
+    if(userLocation.coordinate.longitude != self.currentCoordinate.longitude || userLocation.coordinate.latitude != self.currentCoordinate.latitude)
+    {
+        self.currentCoordinate = userLocation.coordinate;
+        self.startCoordinate = userLocation.coordinate;
+        [self searchNaviDrive];
+    }
+    
+}
 
 
 
@@ -215,7 +243,7 @@ CGFloat screenHeight;
                                                 longitude:self.destinationCoordinate.longitude];
 
     [self.search AMapNavigationSearch:navi];
-   
+
 
 }
 
@@ -224,8 +252,11 @@ CGFloat screenHeight;
 - (void)presentCurrentCourse
 {
     NSArray *polylines = nil;
-    
-    polylines = [CommonUtility polylinesForPath:self.route.paths[0]];
+    if(self.route.paths.count>0)
+    {
+        polylines = [CommonUtility polylinesForPath:self.route.paths[0]];
+
+    }
 
     [self.mapView addOverlays:polylines];
     
@@ -239,17 +270,17 @@ CGFloat screenHeight;
 
 - (void)addDefaultAnnotations
 {
-    MAPointAnnotation *startAnnotation = [[MAPointAnnotation alloc] init];
-    startAnnotation.coordinate = self.startCoordinate;
-    startAnnotation.title      = (NSString*)NavigationViewControllerStartTitle;
-    startAnnotation.subtitle   = [NSString stringWithFormat:@"{%f, %f}", self.startCoordinate.latitude, self.startCoordinate.longitude];
-    
+//    MAPointAnnotation *startAnnotation = [[MAPointAnnotation alloc] init];
+//    startAnnotation.coordinate = self.startCoordinate;
+//    startAnnotation.title      = (NSString*)NavigationViewControllerStartTitle;
+//    startAnnotation.subtitle   = [NSString stringWithFormat:@"{%f, %f}", self.startCoordinate.latitude, self.startCoordinate.longitude];
+//    
     MAPointAnnotation *destinationAnnotation = [[MAPointAnnotation alloc] init];
     destinationAnnotation.coordinate = self.destinationCoordinate;
     destinationAnnotation.title      = (NSString*)NavigationViewControllerDestinationTitle;
     destinationAnnotation.subtitle   = [NSString stringWithFormat:@"{%f, %f}", self.destinationCoordinate.latitude, self.destinationCoordinate.longitude];
     
-    [self.mapView addAnnotation:startAnnotation];
+    //[self.mapView addAnnotation:startAnnotation];
     [self.mapView addAnnotation:destinationAnnotation];
 
 }

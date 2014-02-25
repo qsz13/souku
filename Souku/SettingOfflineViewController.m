@@ -94,13 +94,19 @@ NSString const *DownloadStageInfoKey      = @"DownloadStageInfoKey";
     [self.view addSubview:self.citysSelectTable];
     
     
+    
+    
+
     self.tableTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(x,viewHeight,viewWidth,20)];
+    [self.tableLeftLabel setBackgroundColor:[UIColor clearColor]];
     self.tableTitleLabel.text = @"全部";
     self.tableTitleLabel.textAlignment = NSTextAlignmentCenter;
     [self.tableTitleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
     [self.view addSubview:self.tableTitleLabel];
     
     self.tableLeftLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0.45*screenHeight,0.25*viewWidth,20)];
+    [self.tableLeftLabel setBackgroundColor:[UIColor clearColor]];
+
     self.tableLeftLabel.text = @"已选";
     self.tableLeftLabel.textAlignment = NSTextAlignmentCenter;
     [self.tableLeftLabel setFont:[UIFont fontWithName:@"Helvetica" size:16]];
@@ -108,6 +114,8 @@ NSString const *DownloadStageInfoKey      = @"DownloadStageInfoKey";
     
     
     self.tableRightLabel = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth-0.25*viewWidth,0.45*screenHeight,0.25*viewWidth,20)];
+    [self.tableRightLabel setBackgroundColor:[UIColor clearColor]];
+
     self.tableRightLabel.text = @"未选";
     self.tableRightLabel.textAlignment = NSTextAlignmentCenter;
     [self.tableRightLabel setFont:[UIFont fontWithName:@"Helvetica" size:16]];
@@ -130,11 +138,17 @@ NSString const *DownloadStageInfoKey      = @"DownloadStageInfoKey";
 
 - (void)leftTable
 {
+
     
 }
 
+
 -(void)rightTable
 {
+    
+    
+    
+    
     
 }
 
@@ -311,7 +325,8 @@ NSString const *DownloadStageInfoKey      = @"DownloadStageInfoKey";
         if (city.status == MAOfflineCityStatusCached)
         {
 
-            detailText = [NSString stringWithFormat:@"%lld/%lld", city.downloadedSize, city.size];
+            detailText = [NSString stringWithFormat:@"已缓存:%.1f%%", (city.downloadedSize)/(float)(city.size)*100];
+
         }
         else if(city.status == MAOfflineCityStatusInstalled)
         {
@@ -319,7 +334,7 @@ NSString const *DownloadStageInfoKey      = @"DownloadStageInfoKey";
         }
         else
         {
-            detailText = [NSString stringWithFormat:@"大小:%lld", city.size];
+            detailText = [NSString stringWithFormat:@"大小:%.2lfM", (float)(city.size)/(1024*1024)];
         }
     }
     else
@@ -347,7 +362,7 @@ NSString const *DownloadStageInfoKey      = @"DownloadStageInfoKey";
                 long long recieved = [[progressDict objectForKey:MAOfflineMapDownloadReceivedSizeKey] longLongValue];
                 long long expected = [[progressDict objectForKey:MAOfflineMapDownloadExpectedSizeKey] longLongValue];
                 
-                detailText = [NSString stringWithFormat:@"%lld/%lld(%.1f%%)", recieved, expected, recieved/(float)expected*100];
+                detailText = [NSString stringWithFormat:@"下载中:%.1f%%",recieved/(float)expected*100];
                 break;
             }
             case MAOfflineMapDownloadStatusCompleted:

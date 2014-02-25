@@ -106,7 +106,17 @@ BOOL hasGotPOI;
 -(void)initTableView
 {
     self.resultTableView = [[UITableView alloc] init];
-    self.resultTableView.frame = self.view.bounds;
+    CGRect tableViewFrame = self.view.bounds;
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
+        tableViewFrame.size.height -= self.navigationController.navigationBar.frame.size.height-20;
+    }
+    else
+    {
+        tableViewFrame.size.height -= self.navigationController.navigationBar.frame.size.height;
+
+    }
+    tableViewFrame.size.height -= self.navigationController.navigationBar.frame.size.height;
+    self.resultTableView.frame = tableViewFrame;
     self.resultTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.resultTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.resultTableView.delegate = self;
@@ -272,7 +282,7 @@ BOOL hasGotPOI;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     AMapPOI *poi = [self.poiArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = poi.name;
+    cell.textLabel.text = [NSString stringWithFormat:@"%d.%@",indexPath.row+1,poi.name];
     cell.detailTextLabel.text = poi.address;
     return cell;
 }

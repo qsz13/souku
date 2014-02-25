@@ -95,10 +95,14 @@ BOOL loadParkingInfo;
     self.hud.dimBackground = NO;
     self.hud.delegate = self;
     [self.navigationController.view addSubview:self.hud];
-   // UITapGestureRecognizer *HUDSingleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(singleTap:)];
-   // [self.hud addGestureRecognizer:HUDSingleTap];
+    UITapGestureRecognizer *HUDSingleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(singleTap:)];
+    [self.hud addGestureRecognizer:HUDSingleTap];
 }
 
+- (void)singleTap:(UITapGestureRecognizer*)sender
+{
+    [self.hud hide:YES];
+}
 
 - (void)initNavigationBar
 {
@@ -148,7 +152,7 @@ BOOL loadParkingInfo;
     AMapPlaceSearchRequest *request = [[AMapPlaceSearchRequest alloc] init];
     request.searchType          = AMapSearchType_PlaceKeyword;
     request.keywords            = @"停车场";
-    request.city = @[@"020"];
+    request.city = @[@"021"];
     //request.location            = [AMapGeoPoint locationWithLatitude:self.currentLocation.coordinate.latitude longitude:self.currentLocation.coordinate.longitude];
     request.requireExtension    = YES;
     [self.searchAPI AMapPlaceSearch:request];
@@ -195,10 +199,10 @@ BOOL loadParkingInfo;
     {
         [self.view addSubview:self.searchResultTable];
         [self removeGesture];
-
+        [self searchPoiByKeyWord:searchText];
     }
 
-    [self searchPoiByKeyWord:searchText];
+    
     
 
 }
@@ -225,7 +229,6 @@ BOOL loadParkingInfo;
         }
         NSString *result = [NSString stringWithFormat:@"%@ \n %@ \n %@", strCount, strSuggestion, strPoi];
         NSLog(@"Place: %@", result);
-    
     
     if(loadParkingInfo == NO)
     {
@@ -351,7 +354,7 @@ BOOL loadParkingInfo;
     self.parkingLotTableView.frame = self.view.bounds;
 
     self.parkingLotTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
+    
     self.parkingLotTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.parkingLotTableView.delegate = self;
     self.parkingLotTableView.dataSource = self;
@@ -524,20 +527,23 @@ BOOL loadParkingInfo;
     
     [self initToggleButon];
 }
--(void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    self.searchResultTable.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
-}
+
+//-(void)viewDidLayoutSubviews {
+//    [super viewDidLayoutSubviews];
+//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
+//        self.searchResultTable.contentInset = UIEdgeInsetsMake(-25, 10, -10, 10);
+//    }
+//}
 
 -(void)initSearchResultTableView
 {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
-    CGFloat x = 10;
-    CGFloat y = 10;
-    CGFloat viewWidth = screenWidth - 2*x;
-    CGFloat viewHeight = screenHeight - 2*y;
+    CGFloat x = 0;
+    CGFloat y = 0;
+    CGFloat viewWidth = screenWidth;
+    CGFloat viewHeight = screenHeight;
     
     CGRect tableFrame = CGRectMake(x, y, viewWidth, viewHeight);
     
@@ -546,10 +552,11 @@ BOOL loadParkingInfo;
     
     self.searchResultTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.searchResultTable setBackgroundColor:[UIColor clearColor]];
+    if(self.searchResultTable.backgroundView)
+    {
+        self.searchResultTable.backgroundView = [[UIView alloc]init];
+    }
 
-//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
-//        self.searchResultTable.contentInset = UIEdgeInsetsMake(-100, 0, 0, 0);
-//    }
     self.searchResultTable.contentOffset = CGPointMake(0, 0);
     self.searchResultTable.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.searchResultTable.delegate = self;
@@ -557,6 +564,7 @@ BOOL loadParkingInfo;
     self.searchResultTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.searchResultTable.contentInset = UIEdgeInsetsZero;
     [self.searchResultTable reloadData];
+    [self.searchResultTable setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f]];
     if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }

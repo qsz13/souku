@@ -119,6 +119,7 @@
 		354E3A5518A627660039AE16 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		354E3A5718A627BC0039AE16 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AMap.bundle; sourceTree = "<group>"; };
 		3561939D18A0E60400030B11 /* LocationDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationDetail.xib; sourceTree = "<group>"; };
+		356A055118B7990300FF57F0 /* Shanghai.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Shanghai.gpx; sourceTree = "<group>"; };
 		356D38FB18B22EB500499BEA /* MapCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCalloutView.h; sourceTree = "<group>"; };
 		356D38FC18B22EB500499BEA /* MapCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCalloutView.m; sourceTree = "<group>"; };
 		35AF093F189F573000642587 /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		35C06F6518A4FFB4004AC9EA /* AMapGeoPoint+storage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMapGeoPoint+storage.m"; sourceTree = "<group>"; };
 		35C06F6718A5061E004AC9EA /* LocationDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDataController.h; sourceTree = "<group>"; };
 		35C06F6818A5061E004AC9EA /* LocationDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDataController.m; sourceTree = "<group>"; };
+		35D7E98F18B8D480005DC627 /* Shanghai#2.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Shanghai#2.gpx"; sourceTree = "<group>"; };
 		35FECCFF18A6676F00105950 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		617A54FEFF1946089B1F3018 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -256,6 +258,8 @@
 				353DCA75189D483D00D8A6DF /* Configuration */,
 				353DCA3B189D470300D8A6DF /* Supporting Files */,
 				353DCA90189D68D200D8A6DF /* Guangzhou.gpx */,
+				356A055118B7990300FF57F0 /* Shanghai.gpx */,
+				35D7E98F18B8D480005DC627 /* Shanghai#2.gpx */,
 				3561939D18A0E60400030B11 /* LocationDetail.xib */,
 				35C06F5F18A4E53A004AC9EA /* FavList.plist */,
 				354E3A5718A627BC0039AE16 /* AMap.bundle */,

@@ -29,6 +29,8 @@
     
     [self configureAPIKey];
     
+
+    
     UIViewController *homeViewController = [[HomeViewController alloc] init];
     UIViewController *aroundViewController = [[AroundViewController alloc] init];
     UIViewController *favouriteViewController = [[FavouriteViewController alloc] init];
